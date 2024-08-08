@@ -14,7 +14,7 @@ As fases do CRISP-DM são:
   
 **Fases do CRISP-DM**
 
-![Fases do CRISP-DM](/img/)
+![Fases do CRISP-DM](/img/CRISP-DM.png)
 
 **Fonte:** Data Science Process Alliance
 
