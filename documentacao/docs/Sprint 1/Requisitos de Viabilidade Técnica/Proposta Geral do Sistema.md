@@ -28,7 +28,9 @@ No **Frontend**, há a possibilidade de acessar tanto os **outputs** do modelo c
 No **Backend**, os inputs recebidos pelo usuário serão ou repassados para o modelo para serem processados, ou serão armazenados para re-treinar o modelo posteriormente, atualizando-o com novos dados.
 
 ### Modelo
-O **modelo** 
+O **modelo** será o microsserviço de inteligência artificial que irá processar os dados e devolverá uma classificação dos carros, dizendo se há uma probabilidade alta ou baixa de falhas e qual o teste mais indicado para cada caso.
+Esse **output** será repassado para o backend, que irá repassar para o frontend, tornando o resultado visível para o usuário.
 
 
 ### Armazenamento de dados
+Essa parte nada mais é que o armazenamendo dos arquivos *csv que serão enviados pelo usuário para o treinamento do modelo, ou seja, o histórico de dados de treinamento ficará salvo.
