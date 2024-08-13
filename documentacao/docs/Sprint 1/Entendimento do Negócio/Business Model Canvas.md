@@ -1,4 +1,4 @@
-# Business Model Canvas para o Modelo Preditivo da Volkswagen
+# Business Model Canvas
 
 ## **1.1** Introdução
 
