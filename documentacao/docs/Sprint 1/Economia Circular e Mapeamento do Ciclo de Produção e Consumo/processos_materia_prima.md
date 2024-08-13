@@ -17,10 +17,14 @@ A parte da pintura envolve desde a preparação do carro para receber a pintura 
 - Remoção de Impurezas: "O carro é mergulhado no Elpo, um líquido anticorrosivo que tem a função de nivelar a superfície da carroceria."[1] 
 - Preparação da pintura: Para que a pintura fique uniforme, é aplicado primer visando ser uma camada de proteção para a carroceria. Além disso é uma etapa preparatória para a pintura.
 - Lixamento da carroceria: Esse processo consiste em remover possíveis saliências através do processo de lixamento. 
-- Aplicação da pintura: De forma automatizada, é aplicada a base por spray, via maquinário. Logo após, é aplicado verniz, trazendo o brilho final da pintura.
+- Aplicação da tinta: De forma automatizada, é aplicada a base por spray, via maquinário. Logo após, é aplicado verniz, trazendo o brilho final da pintura.
 
 ### Montagem Final:
-
+Nesse estágio, todos os componentes do veículo são montados. As etapas geralmente incluem:
+- Instalação do Interior: Os bancos, painel, e outros componentes internos são instalados.
+- Montagem de Sistemas: Motores, sistemas elétricos, suspensão e outros componentes mecânicos são integrados à carroceria.
+- Testes Funcionais: O veículo passa por testes para verificar se todos os sistemas estão funcionando corretamente.
+- Inspeção Final: Um controle de qualidade final é realizado para garantir que o veículo atenda a todos os padrões antes da entrega.
 
 ### Referências
 
