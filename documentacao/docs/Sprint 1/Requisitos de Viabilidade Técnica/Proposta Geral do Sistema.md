@@ -15,14 +15,14 @@ Para uma melhor visualização da estrutura do sistema mencionado acima, é poss
 
 **Diagrama de Blocos**
 
-![Diagrama de blocos](/img/Diagrama-de-blocos.png)
+![Diagrama de blocos](/img/diagrama-de-blocos.png)
 
 **Fonte:** Elaborado pela equipe Toretto 
 
 </div>
 
 ### Frontend e Backend
-Ambos constituem a formação da **interface**, sendo o Frontend a interface visual que o usuário consegue acessar e o Backend responsável por gerir as informações recebidas (tanto do modelo quanto do usuário), utilizando-se de APIs.
+Ambos constituem a formação da **interface**, sendo o Frontend a interface visual que o usuário consegue acessar e o Backend o responsável por gerir as informações, utilizando-se de uma API para realizar .
 No **Frontend**, há a possibilidade de acessar tanto os **outputs** do modelo com a classificação dos carros, quanto realizar o upload de informações para o treinamento do modelo, ou dados sobre um carro específico para realizar uma classificação, ou seja, os **inputs**.
 
 No **Backend**, os inputs recebidos pelo usuário serão ou repassados para o modelo para serem processados, ou serão armazenados para re-treinar o modelo posteriormente, atualizando-o com novos dados.
