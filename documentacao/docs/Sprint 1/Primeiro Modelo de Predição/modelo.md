@@ -1,5 +1,5 @@
 # Primeiro modelo de predição
-# 1. Metodologia CRISP-DM
+# 1. Método CRISP-DM
 
 O CRISP-DM, acrônimo para CRoss Industry Standard Process for Data Mining, é um método iterativo utilizado nos processos de ciência de dados. Seis etapas compõem esse método que, aliado a um time Agile, traz expressiva eficiência para o desenvolvimento de um projeto[1].
 
@@ -21,7 +21,7 @@ As fases do CRISP-DM são:
 
 </div>
 
-
+Essa padronização de processos de mineração de dados CRISP-DM foi elegida para ser implementada no nosso projeto por alguns motivos. Primeiro, porque trata-se de uma padronização que estrutura bem os processos, o que vai ser importante para o desenvolvimento do modelo preditivo que atenda adequadamente as necessidades da Volkswagen. Além disso, esse método dá enfoque na qualidade dos dados, aprimorada sempre que necessário por meio do caráter iterativo do CRISP-DM. Ele também traz bastante flexibilidade, por exemplo permitindo adaptar o projeto à medida que novas ideias de melhoria surgem.
 
 # 2. Da implementação do CRISP-DM no projeto
 
