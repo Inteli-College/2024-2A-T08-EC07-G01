@@ -17,7 +17,7 @@ Para uma melhor visualização da estrutura do sistema mencionado acima, é poss
 
 ![Diagrama de blocos](/img/diagrama-de-blocos.png)
 
-**Fonte:** Elaborado pela equipe Toretto 
+**Fonte:** Elaborado pela equipe 
 
 </div>
 
@@ -25,7 +25,7 @@ Para uma melhor visualização da estrutura do sistema mencionado acima, é poss
 Ambos constituem a formação da **interface**, sendo o Frontend a interface visual que o usuário consegue acessar e o Backend o responsável por gerir as informações, utilizando-se de uma API para realizar .
 No **Frontend**, há a possibilidade de acessar tanto os **outputs** do modelo com a classificação dos carros, quanto realizar o upload de informações para o treinamento do modelo, ou dados sobre um carro específico para realizar uma classificação, ou seja, os **inputs**.
 
-No **Backend**, os inputs recebidos pelo usuário serão ou repassados para o modelo para serem processados, ou serão armazenados para re-treinar o modelo posteriormente, atualizando-o com novos dados.
+No **Backend**, os inputs recebidos pelo usuário serão ou repassados para o modelo para serem processados, ou serão *armazenados em nuvem* para re-treinar o modelo posteriormente de maneira mensal, atualizando-o com novos dados. 
 
 ### Modelo
 O **modelo** será o microsserviço de inteligência artificial que irá processar os dados e devolverá uma classificação dos carros, dizendo se há uma probabilidade alta ou baixa de falhas e qual o teste mais indicado para cada caso.
@@ -33,4 +33,4 @@ Esse **output** será repassado para o backend, que irá repassar para o fronten
 
 
 ### Armazenamento de dados
-Essa parte nada mais é que o armazenamendo dos arquivos *csv que serão enviados pelo usuário para o treinamento do modelo, ou seja, o histórico de dados de treinamento ficará salvo.
+Haverão duas formas: um **banco de dados** local e um **armazenamento de dados em nuvem.** No banco de dados, ficarão salvos os outputs (predições) do modelo, que serão comparados posteriormente com os dados reais a fim de re-treinar o modelo. Para haver a comparação com dados reais, o usuário poderá salvar em nuvem a cada mês os resultados das falhas nos carros em um arquivo *csv ou *xlsx, o que também irá contribuir para a melhora do modelo.
