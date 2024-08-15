@@ -21,7 +21,7 @@ Os requisitos funcionais descrevem as funcionalidades específicas e as operaç�
 **1.2 RF-2:** O modelo deve prever e identificar prováveis erros antes que o carro seja levado para o test-drive.
 
 **Casos de teste:**
-- Simular em quanto tempo o modelo consegue divulgar um resultado após receber as informações e até que etapa da linha de montagem o modelo possui informações suficientes para fazer previsões precisas.
+- Simular se o modelo consegue divulgar um resultado preciso com as informações adquiridas até a etapa especificada da linha de montagem.
 
 ---
 
@@ -63,6 +63,7 @@ Os requisitos não funcionais referem-se às características e qualidades do si
 
 **Casos de teste:**
 - Realizar vários testes de UX na plataforma final.
+- Colher métricas como Sucess-rate, Feedback, Consistência...
 
 ---
 
