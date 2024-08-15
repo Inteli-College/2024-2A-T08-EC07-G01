@@ -65,8 +65,8 @@ As seguintes oportunidades foram identificadas para o projeto do modelo preditiv
   - **Ação:** Manter-se atualizado com os avanços em machine learning e experimentar técnicas inovadoras para aprimorar o desempenho do modelo.
 
 - **O sucesso do modelo preditivo pode posicionar a Volkswagen como uma líder em inovação dentro da indústria automotiva**
-  - **Explicação:** A implementação bem-sucedida deste modelo preditivo pode reforçar a reputação da Volkswagen como uma empresa inovadora na indústria automotiva, proporcionando uma vantagem competitiva.
-  - **Ação:** Destacar o sucesso do projeto em comunicações internas e externas para fortalecer a imagem da Volkswagen como líder em tecnologia.
+  - **Explicação:** A implementação bem-sucedida deste modelo preditivo pode reforçar a reputação da Volkswagen como uma empresa inovadora na indústria automotiva, aumentando o TRL da mesma e logo, melhorando sua imagem de mercado.
+  - **Ação:** Destacar o sucesso do projeto em vias de comunicações externas afim de fortalecer a imagem da Volkswagen como líder em tecnologia.
 
 ### **3.3** Oportunidades de Probabilidade Moderada e Alto Impacto
 - **A integração do modelo preditivo com outras iniciativas de digitalização dentro da Volkswagen pode criar sinergias**

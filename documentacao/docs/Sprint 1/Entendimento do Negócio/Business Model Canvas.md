@@ -23,7 +23,7 @@ As atividades principais do projeto incluem:
 - **Integração do modelo aos sistemas existentes da Volkswagen:** O modelo deve ser integrado aos sistemas de controle de qualidade da Volkswagen para que seus resultados possam ser aplicados diretamente nos processos de inspeção.
 - **Manutenção e atualização contínua do modelo:** À medida que novos dados são coletados, o modelo deve ser reavaliado e ajustado para manter sua eficácia.
 
-:::tip
+:::tip Nota
 Essas atividades são essenciais para garantir que o modelo preditivo não só seja implementado com sucesso, mas também permaneça eficaz ao longo do tempo.
 :::
 
@@ -37,7 +37,7 @@ Os principais recursos necessários para o projeto incluem:
 - **Acesso contínuo a dados históricos e atuais de produção:** Dados de qualidade são essenciais para o treinamento e ajuste do modelo.
 - **Infraestrutura de computação em nuvem robusta:** Para processar grandes volumes de dados e executar o modelo em tempo real, uma infraestrutura em nuvem confiável é necessária.
 
-:::important
+:::important Importante!
 Os recursos-chave garantem a capacidade técnica e operacional necessária para desenvolver e manter o modelo preditivo, o que é crucial para o sucesso do projeto.
 :::
 
@@ -95,7 +95,7 @@ Os principais custos associados ao projeto incluem:
 - **Custos de coleta, limpeza e preparação de dados:** Garantir que os dados usados pelo modelo sejam de alta qualidade requer investimento em processos de coleta e preparação.
 - **Suporte técnico e manutenção contínua:** Custos associados à manutenção tanto do modelo preditivo quanto do sistema cloud.
 
-:::tip
+:::tip Nota
 A estrutura de custos foca nos elementos essenciais para manter o projeto operante e sustentável a longo prazo, **garantindo** a **continuidade** dos benefícios propostos.
 :::
 
@@ -109,7 +109,7 @@ As fontes de receita ou benefícios financeiros incluem:
 - **Redução de custos associados a falhas, como recall e garantia:** Ao prever e prevenir falhas antes que elas ocorram, os custos relacionados a recalls e garantias são reduzidos.
 - **Melhoria na satisfação do cliente final, resultando em maior fidelidade à marca:** Produtos de maior qualidade levam a clientes mais satisfeitos, que são mais propensos a permanecer fiéis à marca.
 
-:::tip
+:::tip Nota
 As fontes de receita destacam como a implementação do modelo preditivo contribui diretamente para os resultados financeiros da Volkswagen, **fortalecendo** a posição competitiva da empresa.
 :::
 
