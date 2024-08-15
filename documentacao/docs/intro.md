@@ -8,11 +8,11 @@ import {Membro} from "@site/src/components/profile.jsx";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import styles from "@site/src/css/profile.module.css";
 
-# Introdução ao Projeto (NOME)
+# Introdução ao Projeto Cross The Line
 
 ## Visão Geral
 
-&emsp;&emsp; O projeto (NOME) busca desenvolver um algoritmo ou modelo preditivo para maximizar a eficiência nos testes de rodagem de veículos da Volkswagen. Nossa equipe pretende criar uma solução que, ao receber uma lista de parâmetros, classifique os veículos com alta precisão, facilitando o processo de inspeção. O modelo deverá ser facilmente modificável e treinável, com uma calibração mensal baseada nos novos dados de produção. Esperamos alcançar uma assertividade superior a 95%, garantindo sua aplicabilidade prática. O desenvolvimento será preferencialmente em Python (E JAVASCRIPT SE TIVER APP WEB), para maior compatibilidade e facilidade de uso. O sistema será utilizado pelo analista de sistemas da fábrica, que adaptará o processo e apresentará os resultados de forma visual para que o motorista inspetor possa identificar rapidamente o tipo de inspeção necessária para cada veículo.
+&emsp;&emsp; O projeto Cross The Line busca desenvolver um algoritmo ou modelo preditivo para maximizar a eficiência nos testes de rodagem de veículos da Volkswagen. Nossa equipe pretende criar uma solução que, ao receber uma lista de parâmetros, classifique os veículos com alta precisão, facilitando o processo de inspeção. O modelo deverá ser facilmente modificável e treinável, com uma calibração mensal baseada nos novos dados de produção. Esperamos alcançar uma assertividade superior a 95%, garantindo sua aplicabilidade prática. O desenvolvimento será preferencialmente em Python (E JAVASCRIPT SE TIVER APP WEB), para maior compatibilidade e facilidade de uso. O sistema será utilizado pelo analista de sistemas da fábrica, que adaptará o processo e apresentará os resultados de forma visual para que o motorista inspetor possa identificar rapidamente o tipo de inspeção necessária para cada veículo.
 
 ## Participantes do Projeto
 
@@ -29,9 +29,5 @@ import styles from "@site/src/css/profile.module.css";
 ## Objetivo do Projeto
 
 &emsp;&emsp; Nosso objetivo é desenvolver uma solução tecnológica para a Volkswagen que maximize a eficiência dos testes de rodagem dos veículos, reduzindo o tempo necessário para classificação e inspeção. Espera-se que o algoritmo preditivo possa processar uma lista de parâmetros, classificar os veículos com alta precisão, e fornecer informações de forma clara e integrada para que a equipe de inspeção possa tomar decisões rápidas e informadas.
-
-## Resumo do Projeto
-
-A FAZER mais pra frente
 
 ---

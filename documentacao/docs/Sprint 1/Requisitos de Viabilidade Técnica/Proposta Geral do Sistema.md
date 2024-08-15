@@ -17,7 +17,7 @@ Para uma melhor visualização da estrutura do sistema mencionado acima, é poss
 
 ![Diagrama de blocos](/img/diagrama-de-blocos.png)
 
-**Fonte:** Elaborado pela equipe 
+**Fonte:** Elaborado pela equipe Cross The Line
 
 </div>
 
