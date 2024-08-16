@@ -23,7 +23,7 @@ Esta análise é crucial para a tomada de decisões financeiras e deve ser revis
 
 ### **1.2.1** Custos dos Desenvolvedores
 
-| **Descrição**                    | **Quantidade** | **Custo parcial** | **Custo total** | **Tempo Estimado (horas)** |
+| **Descrição**                    | **Quantidade** | **Custo parcial (Custo mensal)** | **Custo total (Custo Parcial x Tempo Estimado)** | **Tempo Estimado (horas)** |
 |----------------------------------|----------------|-------------------|-----------------|---------------------------|
 | Desenvolvedor sênior full stack  | 3              | R$ 11.000,00       | R$ 33.000,00    | 500                       |
 | Especialista em I.A              | 2              | R$ 15.000,00       | R$ 30.000,00    | 650                       |
@@ -42,11 +42,11 @@ Os custos totais para os desenvolvedores representam uma parte significativa do 
 
 ### **1.2.2** Custos Ferramentas
 
-| **Descrição**                    | **Quantidade** | **Custo parcial** | **Custo total** | **Tempo Estimado (horas)** |
-|----------------------------------|----------------|-------------------|-----------------|---------------------------|
-| Licenças de software e ferramentas | 1            | R$ 12.000,00       | R$ 12.000,00    | NaN                         |
-| Ferramentas de IA                | 1              | R$ 25.000,00       | R$ 25.000,00    | NaN                         |
-| **Total Ferramentas**            |                |                   | **R$ 37.000,00** |                           |
+| **Descrição**                    | **Quantidade** | **Custo Unitário** | **Custo Final** |
+|----------------------------------|----------------|-------------------|-----------------|
+| Licenças de software e ferramentas | 1            | R$ 12.000,00       | R$ 12.000,00    |
+| Ferramentas de IA                | 1              | R$ 25.000,00       | R$ 25.000,00    |
+| **Total Ferramentas**            |                |                   | **R$ 37.000,00** |
 
 Esta tabela apresenta os custos relacionados às ferramentas e licenças de software que serão utilizadas no desenvolvimento da IA para a Volkswagen. As ferramentas de inteligência artificial são fundamentais para garantir a eficácia do sistema de detecção de falhas na montagem dos veículos. O custo total reflete o investimento necessário em tecnologia para suportar o desenvolvimento e a operação da IA.
 
@@ -54,12 +54,12 @@ Esses recursos tecnológicos são indispensáveis para o sucesso do projeto, gar
 
 ### **1.2.3** Custo Cloud
 
-| **Descrição**                    | **Quantidade** | **Custo parcial** | **Custo total** | **Tempo Estimado (horas)** |
+| **Descrição**                    | **Quantidade** | **Custo por hora** | **Custo total** | **Tempo Estimado (horas)** |
 |----------------------------------|----------------|-------------------|-----------------|---------------------------|
-| Armazenamento AWS (30TB)         | 1              | R$ 4.126,35        | R$ 4.126,35     | 8760                      |
-| Armazenamento em Camadas (7TB)   | 1              | R$ 336,00          | R$ 336,00       | 8760                      |
-| Catalogação de Dados             | 1              | R$ 5,50            | R$ 5,50         | 1200                      |
-| Computação para IA AWS           | 1              | R$ 9.000,00        | R$ 9.000,00     | 3600                      |
+| Armazenamento AWS (30TB)         | 1              | R$ 4.126,35        | R$ 49.516,20     | 8760                      |
+| Armazenamento em Camadas (7TB)   | 1              | R$ 336,00          | R$ 4.032,00       | 8760                      |
+| Catalogação de Dados             | 1              | R$ 5,50            | R$ 1.200,00         | 1200                      |
+| Computação para IA AWS           | 1              | R$ 9.000,00        | R$ 108.000,00     | 3600                      |
 | **Total Cloud**                  |                |                   | **R$ 168.148,20** |                           |
 
 A tabela acima detalha os custos relacionados aos serviços de nuvem que serão utilizados para o armazenamento, processamento e catalogação de dados necessários para a IA da Volkswagen. O armazenamento em nuvem é essencial para lidar com os grandes volumes de dados gerados durante a montagem dos veículos, enquanto a computação em nuvem suporta o processamento das informações para detectar possíveis falhas.
