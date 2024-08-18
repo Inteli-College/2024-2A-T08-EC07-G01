@@ -10,7 +10,7 @@ De acordo com o estudo realizado pelo grupo, a empresa produz diversas de suas p
 - Plástico: A maioria das peças internas são produzidas de plástico, em especial as peças do painel.
 
 ## Processos:
-### Armação/Carroceria
+### Armação/Carroceria (Funilaria)
 Esse processo consiste na produção das peças que envolvem o “esqueleto” do veículo, ou seja, as estruturas que darão sustentação e forma ao veículo. Nas etapas, podem ser citadas:
 - Corte de Materiais:  As chapas de metais devem ser cortadas para atingir as especificações necessárias.
 - Moldagem: As peças cortadas, são dobradas e moldadas para poder atingir o formato desejado, sem sair dos limites de erro.
