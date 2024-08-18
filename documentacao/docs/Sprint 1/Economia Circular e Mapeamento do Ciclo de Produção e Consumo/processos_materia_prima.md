@@ -57,8 +57,6 @@ A indústria automobilística, apesar de seus benefícios em termos de mobilidad
 
 ## Referências
 
-Aqui estão as referências formatadas no padrão APA:
-
 1. Pensenova. (n.d.). *Processo de pintura automotiva*. Pensenova. Disponível em https://www.pensenova.com/processo-de-pintura-automotiva/
 
 2. Arpi Aspersul. (n.d.). *Como preparar o carro para pintura*. Grupo Arpi Aspersul. Disponível em https://grupoarpiaspersul.com.br/como-preparar-o-carro-para-pintura/

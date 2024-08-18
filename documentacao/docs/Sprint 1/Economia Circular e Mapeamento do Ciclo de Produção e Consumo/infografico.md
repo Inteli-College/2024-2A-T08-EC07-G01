@@ -41,6 +41,8 @@ Pela sensibilidade e abundante de peças que devem ser encaixadas, a montagem fi
 Nessa etapa, são realizados diversos testes para ser possível identificar possíveis ruídos, problemas na direção, freios, alinhamento das rodas, sistema de suspensão, entre outros equipamentos. Um dos principais testes é o de rodagem, o qual utiliza de diversos pisos, como asfalto, paralelepípedos e lombadas, trazendo situações de stress e verificando como o carro se porta diante.  
 
 
-# Referências 
-https://motor1.uol.com.br/news/424089/oficina-tonimek-alinhamento-de-pecas/
-https://quatrorodas.abril.com.br/noticias/como-funciona-uma-linha-de-montagem-de-automoveis#:~:text=Na%20montagem%20final%2C%20s%C3%A3o%20inseridos,o%20motor%20e%20o%20escapamento.
+# Referências
+
+1. Motor1. (2020). *Oficina Tonimek: Alinhamento de Peças*. Disponível em https://motor1.uol.com.br/news/424089/oficina-tonimek-alinhamento-de-pecas/
+
+2. Quatro Rodas. (n.d.). *Como funciona uma linha de montagem de automóveis*. Disponível em https://quatrorodas.abril.com.br/noticias/como-funciona-uma-linha-de-montagem-de-automoveis

@@ -9,7 +9,17 @@ Os requisitos descritos a seguir têm como objetivo definir como os dados devem 
 
 2. **Sistema de Pesquisa**: Para facilitar e agilizar a consulta dos dados desejados, é importante integrar à solução um sistema de pesquisa. Este sistema permitirá que o usuário busque pelo identificador do veículo, filtrando os resultados exibidos no dashboard e proporcionando uma busca mais eficiente.
 
-3. **Plataforma Web**: É necessária a construção de uma plataforma web que suporte toda a exibição e coleta de dados, incluindo o sistema de dashboard. A plataforma deve ser desenvolvida, preferencialmente, em um formato Desktop, subdividida em seções de Previsão e Treinamento. 
+3. **Sistema de Filtro**: Para facilitar a busca de informações na visualização, é recomendável incluir um sistema de filtros focado em:
+
+   - **Carros com previsão de falhas positivas**: Esse filtro é útil para os parceiros, permitindo maior agilidade nos testes durante a linha de produção.
+
+   - **Tipo de teste**: Na linha de produção, filtrar pelo tipo de teste a ser realizado ajuda a equipe responsável a priorizar e analisar os testes de forma mais eficiente.
+
+   - **Tipo de falha**: Esse filtro é valioso para a análise posterior do processo, pois permite a extração de informações relevantes e a realização de análises sobre os tipos de falha mais frequentes na linha de produção.
+
+
+
+4. **Plataforma Web**: É necessária a construção de uma plataforma web que suporte toda a exibição e coleta de dados, incluindo o sistema de dashboard. A plataforma deve ser desenvolvida, preferencialmente, em um formato Desktop, subdividida em seções de Previsão e Treinamento. 
 
    - **Seção de Previsão Diária**: A plataforma deve permitir a entrada de dados em formato .xlsx e, a partir disso, exibir o dashboard com as funcionalidades de pesquisa e paginação.
 
