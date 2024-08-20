@@ -2,9 +2,11 @@
 definePageMeta({
   layout: 'empty' 
 });
+
 </script>
 
 <template>
+  
   <div class="flex flex-col justify-center items-center h-screen space-y-12">
     <Logo width="w-80 mb-12" />
     <div class="relative border border-gray-800 rounded-lg bg-gray-200 w-[300px] pt-10">

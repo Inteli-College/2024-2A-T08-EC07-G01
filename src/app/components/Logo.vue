@@ -1,11 +1,10 @@
 <script setup>
 import { defineProps } from 'vue';
 
-// Define the width prop with a default value
 const props = defineProps({
   width: {
     type: String,
-    default: 'w-10', // Default width as a Tailwind CSS class
+    default: 'w-10', 
   },
 });
 </script>

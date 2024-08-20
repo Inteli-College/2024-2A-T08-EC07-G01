@@ -3,6 +3,5 @@ const loading = ref(false)
 </script>
 
 <template>
-    a
+    <BurguerMenuContainer />
 </template>
-
