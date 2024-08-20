@@ -1,25 +1,31 @@
 <script setup>
-const loading = ref(false)
+definePageMeta({
+  layout: 'empty' 
+});
 </script>
 
 <template>
-    <div class="flex flex-col min-h-screen">
-      <!-- Main content -->
-      <div class="flex-grow">
-        <!-- Your content here -->
+  <div class="flex flex-col justify-center items-center h-screen space-y-12">
+    <Logo width="w-80 mb-12" />
+    <div class="relative border border-gray-800 rounded-lg bg-gray-200 w-[300px] pt-10">
+
+      <h1 class="absolute -top-5 left-1/2 transform -translate-x-1/2 px-2 bg-gray-200 text-3xl font-bold">
+        Análise
+      </h1>
+
+
+      <div class="flex flex-col space-y-4 p-8">
+        <Button class="w-full h-20 bg-gray-300">Histórico</Button>
+        <Button class="w-full h-20 bg-gray-300">Dashboard</Button>
       </div>
-  
-      <!-- Footer at the bottom -->
-      <footer class="w-full bg-gray-800 text-white py-4">
-        <div class="flex justify-center space-x-6">
-          <!-- GitHub Icon -->
-          <a href="https://github.com/your-username" target="_blank" aria-label="GitHub">
-            <Icon name="mdi:github" class="text-white text-2xl" />
-          </a>
-        </div>
-      </footer>
+
+
+      <Button class="absolute -left-40 top-1/2 transform -translate-y-1/2 ">
+        Previsão Diária
+      </Button>
+      <Button class="absolute -right-48 top-1/2 transform -translate-y-1/2">
+        Treinamento Mensal
+      </Button>
     </div>
-  </template>
-  
-  
-  
+  </div>
+</template>
