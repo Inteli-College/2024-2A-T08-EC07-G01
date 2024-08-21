@@ -1,17 +1,17 @@
 <template>
   <div class="flex flex-col h-screen">
-    <!-- Header at the top -->
+    <!-- Header com a logo -->
     <header class="w-full flex items-center gap-2 p-4 hover:scale-[101%] transition cursor-pointer">
       <Logo />
       <p class="font-bold">Cross The Line</p>
     </header>
 
-    <!-- Main content area -->
+    <!-- Conteúdo página principal -->
     <div class="flex-grow p-4">
-      <slot /> <!-- Page content goes here -->
+      <slot /> <!-- Conteúdo da página -->
     </div>
 
-    <!-- Footer at the bottom -->
+    <!-- Footer no fim da página -->
     <footer class="relative w-full bg-gray-800 text-white py-4 flex items-center justify-center">
       <p class="absolute left-1/2 transform -translate-x-1/2">&copy; 2024 Cross The Line. Todos direitos reservados.</p>
       <p class="ml-auto mr-2">Github</p>
