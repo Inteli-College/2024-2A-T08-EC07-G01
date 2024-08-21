@@ -49,12 +49,14 @@ const menuClass = computed(() =>
       <span :class="`${lineBaseClass} ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`"></span>
     </button>
 
+    <!-- Ainda falta colocar os links (falta fzr as outras páginas)-->
     <div :class="menuClass" ref="menuRef" @click.stop>
-      <nav class="flex flex-col items-center space-y-4 mt-16">
-        <a href="/test" class="text-2xl hover:text-gray-300 transition duration-300">Test</a>
-        <a href="#" class="text-2xl hover:text-gray-300 transition duration-300">Cleiton</a>
-        <a href="#" class="text-2xl hover:text-gray-300 transition duration-300">Guilhemere</a>
-        <a href="#" class="text-2xl hover:text-gray-300 transition duration-300">AaAAA</a>
+      <nav class="flex flex-col items-center space-y-10 mt-16">
+        <Logo width="w-20" class="mt-6"/>
+        <a href="/test" class="text-xl hover:text-gray-300 transition duration-300">Previsão Diária</a>
+        <a href="#" class="text-xl hover:text-gray-300 transition duration-300">Histórico</a>
+        <a href="#" class="text-xl hover:text-gray-300 transition duration-300">Dashboard</a>
+        <a href="#" class="text-xl hover:text-gray-300 transition duration-300">Treinamento Mensal</a>
       </nav>
     </div>
   </div>
