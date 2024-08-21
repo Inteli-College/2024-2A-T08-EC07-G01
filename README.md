@@ -5,7 +5,7 @@
 </p>
 
 
-## 🧑‍🎓Integrantes:
+## 🧑‍🎓 | Integrantes:
 
 <div align="center">
   <table>
@@ -21,7 +21,7 @@
   </table>
 </div>
 
-## 🧑‍🏫Professores:
+## 🧑‍🏫 | Professores:
 
 ### Orientador(a)
 <a href="#"> Murilo Zanini De Carvalho </a>
@@ -36,7 +36,7 @@
 
 ---
 
-## 📝Descrição 
+## 📝 | Descrição 
 
 📜| Este projeto desenvolvido para a Volkswagen utiliza inteligência artificial (IA) e técnicas avançadas de machine learning para otimizar o processo de inspeção durante os testes de rodagem de veículos. Nossa solução preditiva é capaz de identificar falhas antes da revisão, garantindo maior precisão e eficiência nas inspeções, além de reduzir custos operacionais e melhorar a qualidade final dos produtos.
 
@@ -70,16 +70,20 @@ Para ler toda a documentação do projeto, [clique aqui](https://inteli-college.
 
 ---
 
-## 💻Inicialização
+## 💻 | Inicialização
 
 To-Do
 
 ---
 
-## 📋Histórico de lançamentos
+## 📋 | Histórico de lançamentos
 
+- 0.1.0 - 19/08/2024
+  - Entendimento do negócio
+  - Arquitetura do sistema
+  - Identidade visual do grupo
+  - Modelagem inicial da I.A junto da preparação e análise dos dados
 
-
-# 🗃Licença/License
+# 🗃 | Licença/License
 
 <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/Inteli-College/2024-2A-T08-EC07-G01/tree/artefato4">GRUPO 1</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName">Inteli, - <a href="https://www.linkedin.com/in/antonio-guimar%C3%A3es-2bb961264/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app">Antonio Guimarães</a>, <a href="https://www.linkedin.com/in/ana-clara-madureira-marques/">Ana Marques</a>, <a href="https://www.linkedin.com/in/breno-santos-0843131b8/">Breno Santos</a>, <a href="https://www.linkedin.com/in/eduardosbarreto/">Eduardo Barreto</a>, <a href="https://www.linkedin.com/in/fernando-vasconcellos-/">Fernando Vasconcellos</a>, <a href="https://www.linkedin.com/in/gabriellediascartaxo/">Gabrielle Cartaxo</a>, <a href="https://www.linkedin.com/in/naruto/">Ivan Ferreira</a>, </a> is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Attribution 4.0 International</a>.</p>
