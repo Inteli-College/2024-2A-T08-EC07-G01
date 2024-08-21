@@ -7,13 +7,12 @@ definePageMeta({
 
 <template>
   <div class="relative flex flex-col justify-center items-center h-screen space-y-20">
-    <!-- Burger Menu positioned at the top-left -->
-    <BurguerMenu class="absolute top-4 left-4" />
-    
-    <!-- Logo centered below the burger menu -->
+
+    <BurguerMenu class="absolute top-4 left-4" />    
+
     <Logo width="w-80" />
     
-    <!-- Container for buttons with title -->
+    <!-- Container com botões -->
     <div class="relative border border-gray-800 rounded-lg bg-gray-200 w-[300px] pt-10">
       <h1 class="absolute -top-5 left-1/2 transform -translate-x-1/2 px-2 bg-gray-200 text-3xl font-bold">
         Análise

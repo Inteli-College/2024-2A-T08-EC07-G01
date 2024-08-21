@@ -39,7 +39,6 @@ const menuClass = computed(() =>
 
 <template>
   <div>
-    <!-- Burger Button -->
     <button 
       @click="toggleMenu" 
       class="relative z-50 flex flex-col justify-between w-8 h-8 focus:outline-none"
@@ -50,7 +49,6 @@ const menuClass = computed(() =>
       <span :class="`${lineBaseClass} ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`"></span>
     </button>
 
-    <!-- Menu with 1/6 screen width -->
     <div :class="menuClass" ref="menuRef" @click.stop>
       <nav class="flex flex-col items-center space-y-4 mt-16">
         <a href="/test" class="text-2xl hover:text-gray-300 transition duration-300">Test</a>
