@@ -1,10 +1,21 @@
 <template>
   <div class="flex flex-col min-h-screen">
     <!-- Header with logo -->
-    <header class="w-full flex items-center gap-2 p-4 hover:scale-[101%] transition cursor-pointer">
-      <Logo />
-      <p class="font-bold">Cross The Line</p>
-    </header>
+    <header class="border-b-2 border-customBlue relative flex items-center p-4">
+    <!-- First div on the left -->
+    <div class="hover:scale-[101%] transition cursor-pointer flex items-center mr-12 ">
+      <Logo width="w-12" class="mt-1"/>
+      <p class="font-bold text-base">Cross The Line</p>
+    </div>
+
+    <!-- Second div with buttons centered -->
+    <div class="ml-12 absolute left-1/2 transform -translate-x-1/2 flex items-center gap-28">
+      <HeaderButton iconName="mdi:chart-timeline-variant-shimmer" label="Previsão Diária" />
+      <HeaderButton iconName="mdi:clipboard-text-outline" label="Histórico" />
+      <HeaderButton iconName="mdi:view-dashboard-outline" label="Dashboard" />
+      <HeaderButton iconName="mdi:progress-download" label="Treinamento Mensal" />
+    </div>
+  </header>
 
     <!-- Main content area with added padding or height -->
     <div class="flex-grow p-4 mb-16">
