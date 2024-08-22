@@ -1,4 +1,4 @@
-# (NOME)
+# Cross The Line
 
 <p align="center">
 <a href= "https://www.inteli.edu.br/"> <img src="https://github.com/Inteli-College/2024-T0008-EC05-G03/assets/85657433/afc793e7-2a20-4207-8832-0c998187c537" alt="Inteli - Instituto de Tecnologia e Liderança" border="0"></a>
@@ -10,12 +10,12 @@
 <div align="center">
   <table>
     <tr>
-        <td align="center"><a href="https://www.linkedin.com/in/antonio-guimar%C3%A3es-2bb961264/"><img style="border-radius: 50%;" src="https://media.licdn.com/dms/image/D4D03AQHWhBcP5iT58g/profile-displayphoto-shrink_400_400/0/1703212257337?e=1728518400&v=beta&t=zNjLOjlYu_N2HuTwM-R8kcYLYc38Y9BtaLkBkLU4cWQ" width="100px;" alt=""/><br><sub><b>Antonio Art.</b></sub></a></td>
+        <td align="center"><a href="https://www.linkedin.com/in/antonio-guimar%C3%A3es-2bb961264/"><img style="border-radius: 50%;" src="https://media.licdn.com/dms/image/D4D03AQHWhBcP5iT58g/profile-displayphoto-shrink_400_400/0/1703212257337?e=1728518400&v=beta&t=zNjLOjlYu_N2HuTwM-R8kcYLYc38Y9BtaLkBkLU4cWQ" width="100px;" alt=""/><br><sub><b>Antonio Artimonte</b></sub></a></td>
         <td align="center"><a href="https://www.linkedin.com/in/ana-clara-madureira-marques/"><img style="border-radius: 50%;" src="https://media.licdn.com/dms/image/D4E03AQEdL-0A6KKTYA/profile-displayphoto-shrink_400_400/0/1678717234300?e=1728518400&v=beta&t=dNbNReyoX1eC55YerZXOYkOli_fz2DtbR3N3C7d-2B8" width="100px;" alt=""/><br><sub><b>Ana Marques</b></sub></a></td>
         <td align="center"><a href="https://www.linkedin.com/in/breno-santos-0843131b8/"><img style="border-radius: 50%;" src="https://media.licdn.com/dms/image/D4D03AQGrZG9Tv9JdZg/profile-displayphoto-shrink_400_400/0/1711976052733?e=1728518400&v=beta&t=6pkbB6vsyTozCStmvdJ_qzugLh3916zGlq6BDBcsGjU" width="100px;" alt=""/><br><sub><b>Breno Santos</b></sub></a></td>
         <td align="center"><a href="https://www.linkedin.com/in/eduardosbarreto/"><img width="100px;" style="border-radius: 50%;" src="https://media.licdn.com/dms/image/D4D03AQHcmdXszbRiEA/profile-displayphoto-shrink_400_400/0/1674764017034?e=1728518400&v=beta&t=1_bG-SEIsOAJrmIwR6ECLE99wix7Jm2oTZeDZksE-yY" width="100px;" alt=""/><br><sub><b>Eduardo Barreto</b></sub></a></td>
-        <td align="center"><a href="https://www.linkedin.com/in/fernando-vasconcellos-/"><img style="border-radius: 50%;" src="https://media.licdn.com/dms/image/v2/D4D03AQG_T8Nvtk_lNg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1677155884081?e=1728518400&v=beta&t=mpMpyjBnBfDv3JcQSf3e-2iQZQSpwszzBKI-k1JZzeU" width="100px;" alt=""/><br><sub><b>Fernando Vasc.</b></sub></a></td>
-        <td align="center"><a href="https://www.linkedin.com/in/gabriellediascartaxo/"><img style="border-radius: 50%;" src="https://media.licdn.com/dms/image/v2/D4E03AQF9poCJoo6CYg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1678716288027?e=1728518400&v=beta&t=9VS8b2brR7Aw4wyX5TPUj1xPiGafhoMeMLFEOwTKVZA" width="100px;" alt=""/><br><sub><b>Gabrielle Dias</b></sub></a></td>
+        <td align="center"><a href="https://www.linkedin.com/in/fernando-vasconcellos-/"><img style="border-radius: 50%;" src="https://media.licdn.com/dms/image/v2/D4D03AQG_T8Nvtk_lNg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1677155884081?e=1728518400&v=beta&t=mpMpyjBnBfDv3JcQSf3e-2iQZQSpwszzBKI-k1JZzeU" width="100px;" alt=""/><br><sub><b>Fernando Vasconcellos</b></sub></a></td>
+        <td align="center"><a href="https://www.linkedin.com/in/gabriellediascartaxo/"><img style="border-radius: 50%;" src="https://media.licdn.com/dms/image/v2/D4E03AQF9poCJoo6CYg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1678716288027?e=1728518400&v=beta&t=9VS8b2brR7Aw4wyX5TPUj1xPiGafhoMeMLFEOwTKVZA" width="100px;" alt=""/><br><sub><b>Gabrielle Cartaxo</b></sub></a></td>
         <td align="center"><a href="https://www.linkedin.com/in/naruto/"><img style="border-radius: 50%;" src="https://media.licdn.com/dms/image/D4D03AQFRTfYyNhvmmA/profile-displayphoto-shrink_400_400/0/1681734950128?e=1728518400&v=beta&t=2r2-HcVmKoANrcejRdgn8qHw7RJT9s2TfbnOsMsK5R0" width="100px;" alt=""/><br><sub><b>Ivan Ferreira</b></sub></a></td>
     </tr>
   </table>
