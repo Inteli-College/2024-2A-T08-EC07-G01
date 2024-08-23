@@ -5,31 +5,21 @@ definePageMeta({
 
 </script>
 
+<!-- Tela inicial -->
 <template>
-  <div class="relative flex flex-col justify-center items-center h-screen space-y-20">
+  <div class="flex justify-between w-full h-screen">
 
-    <BurguerMenu class="absolute top-4 left-4" />    
-
-    <Logo width="w-80" />
+    <div class="flex flex-col justify-center w-1/2 bg-customBlue h-full items-center">
+      <Logo width="w-80"/>
+      <h1 class="text-white text-4xl font-bold">Cross The Line</h1>
+    </div>
     
-    <!-- Container com botões -->
-    <div class="relative border border-gray-800 rounded-lg bg-white w-[300px] pt-10">
-      <h1 class="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-white px-2 text-3xl font-bold">
-        Análise
-      </h1>
 
-      <div class="flex flex-col space-y-4 p-8">
-        <Button class="w-full h-20">Histórico</Button>
-        <Button class="w-full h-20">Dashboard</Button>
-      </div>
-
-      <Button class="absolute -left-40 top-1/2 transform -translate-y-1/2">
-        Previsão Diária
-      </Button>
-      <Button class="absolute -right-48 top-1/2 transform -translate-y-1/2">
-        Treinamento Mensal
-      </Button>
+    <div class="flex flex-col justify-center w-1/2 items-center space-y-16">
+      <LandingPageButton iconName="mdi:chart-timeline-variant-shimmer" label="Previsão Diária" bgColor="bg-customGreen"/>
+      <LandingPageButton iconName="mdi:clipboard-text-outline" label="Histórico" />
+      <LandingPageButton iconName="mdi:view-dashboard-outline" label="Dashboard" />
+      <LandingPageButton iconName="mdi:progress-download" label="Treinamento Mensal" />
     </div>
   </div>
 </template>
-

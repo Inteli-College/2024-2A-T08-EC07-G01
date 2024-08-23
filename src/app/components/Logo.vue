@@ -11,6 +11,6 @@ const props = defineProps({
 
 <template>
   <div :class="[props.width, 'overflow-hidden', 'rounded-lg']">
-    <img src="@/assets/static/logopng.png" alt="logo" />
+    <img src="@/assets/static/whitelogo.png" alt="logo" />
   </div>
 </template>
