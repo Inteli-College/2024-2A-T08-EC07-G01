@@ -1,5 +1,13 @@
 <script setup lang="ts" generic="TData, TValue">
-import type { ColumnDef, SortingState, ColumnFiltersState } from '@tanstack/vue-table'
+import type { ColumnDef, SortingState, ColumnFiltersState, VisibilityState } from '@tanstack/vue-table'
+
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+
 import {
   FlexRender,
   getCoreRowModel,
@@ -27,6 +35,7 @@ const props = defineProps<{
 
 const sorting = ref<SortingState>([])
 const columnFilters = ref<ColumnFiltersState>([])
+const columnVisibility = ref<VisibilityState>({})
 
 const table = useVueTable({
   get data() { return props.data },
@@ -35,14 +44,59 @@ const table = useVueTable({
   getPaginationRowModel: getPaginationRowModel(),
   getSortedRowModel: getSortedRowModel(),
   onSortingChange: updaterOrValue => valueUpdater(updaterOrValue, sorting),
+  onColumnSizingChange: updateOrValue => valueUpdater(updateOrValue, columnFilters),
+  getFilteredRowModel: getFilteredRowModel(),
+  onColumnVisibilityChange: updaterOrValue => valueUpdater(updaterOrValue, columnVisibility),
   state: {
     get sorting() { return sorting.value },
+    get columnVisibility() { return columnVisibility.value },
   }
 })
 </script>
 
 <template>
-<div class="">
+<div>
+    <div class="flex items-center py-4">
+    
+        <div class="relative max-w-sm w-full transition-transform duration-300 ease-in-out transform focus-within:scale-105 focus-within:shadow-lg">
+    <!-- Icon inside the input field -->
+    <Icon 
+      :name="'mdi:magnify'"
+      class="absolute left-3 top-1/2 transform -translate-y-1/2 text-xl text-customBlue transition duration-300 ease-in-out"
+    />
+    
+    <!-- Input component with padding to make space for the icon -->
+    <Input
+      class="pl-10 w-full"
+      placeholder="Filtrar..."
+      :model-value="table.getColumn('tipoFalha')?.getFilterValue() as string"
+      @update:model-value="table.getColumn('tipoFalha')?.setFilterValue($event)"
+    />
+  </div>
+    
+    
+    <DropdownMenu class="ml-4">
+      <DropdownMenuTrigger as-child>
+        <Button variant="outline" class="ml-auto transition duration-300 ease-in-out overflow-hidden text-black hover:text-white hover:scale-[103%] hover:bg-customBlue">
+          Colunas
+          <ChevronDown class="w-4 h-4 ml-2" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuCheckboxItem
+          v-for="column in table.getAllColumns().filter((column) => column.getCanHide())" 
+          :key="column.id"
+          class="capitalize"
+          :checked="column.getIsVisible()" 
+          @update:checked="(value) => {
+            column.toggleVisibility(!!value)
+          }"
+        >
+          {{ column.id }}
+        </DropdownMenuCheckboxItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  </div>
   <div class="border rounded-md">
     <Table>
       <TableHeader>
