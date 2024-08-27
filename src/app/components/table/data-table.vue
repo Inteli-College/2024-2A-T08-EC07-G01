@@ -59,13 +59,11 @@ const table = useVueTable({
     <div class="flex items-center py-4">
     
         <div class="relative max-w-sm w-full transition-transform duration-300 ease-in-out transform focus-within:scale-105 focus-within:shadow-lg">
-    <!-- Icon inside the input field -->
     <Icon 
       :name="'mdi:magnify'"
       class="absolute left-3 top-1/2 transform -translate-y-1/2 text-xl text-customBlue transition duration-300 ease-in-out"
     />
     
-    <!-- Input component with padding to make space for the icon -->
     <Input
       class="pl-10 w-full"
       placeholder="Filtrar..."
@@ -78,7 +76,8 @@ const table = useVueTable({
     <DropdownMenu class="ml-4">
       <DropdownMenuTrigger as-child>
         <Button variant="outline" class="ml-auto transition duration-300 ease-in-out overflow-hidden text-black hover:text-white hover:scale-[103%] hover:bg-customBlue">
-          Colunas
+            <Icon :name="'mdi:format-columns'" class="mr-1"/>
+            Colunas
           <ChevronDown class="w-4 h-4 ml-2" />
         </Button>
       </DropdownMenuTrigger>
@@ -131,12 +130,37 @@ const table = useVueTable({
     </Table>
   </div>
   <div class="flex items-center justify-end py-4 space-x-2">
-    <Button variant="outline" size="sm" :disabled="!table.getCanPreviousPage()" @click="table.previousPage()">
-    Anterior
-    </Button>
-    <Button variant="outline" size="sm" :disabled="!table.getCanNextPage()" @click="table.nextPage()">
-    Próxima
-    </Button>
+<Button
+    variant="outline"
+    size="sm"
+    :disabled="!table.getCanPreviousPage()"
+    @click="table.previousPage()"
+    class="relative group bg-transparent overflow-hidden text-black hover:text-white transition-all duration-300"
+>
+    <span class="absolute inset-0 w-full h-full bg-customBlue transform scale-x-0 group-hover:scale-x-100 origin-right transition duration-300 ease-in-out"></span>
+    <span class="relative z-10 flex items-center">
+        <Icon :name="'mdi:navigate-before'" class="mr-1 group-hover:text-white transition duration-300 ease-in-out" />
+        Anterior
+    </span>
+</Button>
+
+<Button
+    variant="outline"
+    size="sm"
+    :disabled="!table.getCanNextPage()"
+    @click="table.nextPage()"
+    class="relative group bg-transparent overflow-hidden text-black hover:text-white transition-all duration-300"
+>
+    <span class="absolute inset-0 w-full h-full bg-customBlue transform scale-x-0 group-hover:scale-x-100 origin-left transition duration-300 ease-in-out"></span>
+    <span class="relative z-10 flex items-center">
+        Próxima
+        <Icon :name="'mdi:navigate-next'" class="ml-1 group-hover:text-white transition duration-300 ease-in-out" />
+    </span>
+</Button>
+
+
+
+
   </div>
 </div>
 </template>
