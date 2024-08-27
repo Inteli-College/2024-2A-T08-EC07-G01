@@ -1,29 +1,34 @@
+<script>
+import normalLogo from '@/assets/static/logo.png';
+</script>
+
 <template>
   <div class="flex flex-col min-h-screen">
-    <header class="border-b-2 border-customBlue relative flex items-center p-4">
-      <!-- Div na esquerda com a Logo e nome do projeto -->
-    <div class="hover:scale-[101%] transition cursor-pointer flex items-center mr-12 ">
-      <Logo width="w-12" class="mt-1"/>
-      <p class="font-bold text-base">Cross The Line</p>
-    </div>
+    <!-- Header with fixed positioning -->
+    <header class="fixed top-0 left-0 right-0 border-b-2 border-customBlue flex items-center p-4 bg-white z-50">
+      <!-- Div on the left with the Logo and project name -->
+      <div class="hover:scale-[101%] transition cursor-pointer flex items-center mr-12 ">
+        <Logo width="w-12" :logo="normalLogo" class="mt-1"/>
+        <p class="font-bold text-base">Cross The Line</p>
+      </div>
 
-    <!-- Div com os botões centralizados do header -->
-    <div class="ml-12 absolute left-1/2 transform -translate-x-1/2 flex items-center gap-28">
-      <HeaderButton iconName="mdi:chart-timeline-variant-shimmer" label="Previsão Diária" />
-      <HeaderButton iconName="mdi:clipboard-text-outline" label="Histórico" />
-      <HeaderButton iconName="mdi:view-dashboard-outline" label="Dashboard" />
-      <HeaderButton iconName="mdi:progress-download" label="Treinamento Mensal" />
-    </div>
-  </header>
+      <!-- Div with the centered header buttons -->
+      <div class="ml-12 absolute left-1/2 transform -translate-x-1/2 flex items-center gap-28">
+        <HeaderButton iconName="mdi:chart-timeline-variant-shimmer" label="Previsão Diária" />
+        <HeaderButton iconName="mdi:clipboard-text-outline" label="Histórico" />
+        <HeaderButton iconName="mdi:view-dashboard-outline" label="Dashboard" />
+        <HeaderButton iconName="mdi:progress-download" label="Treinamento Mensal" />
+      </div>
+    </header>
 
-    <!-- Área com o conteúdo dá pagina -->
-    <div class="flex-grow p-4 mb-16">
+    <!-- Page content area -->
+    <div class="flex-grow p-4 mt-20 mb-16"> <!-- Added margin-top to offset the fixed header -->
       <div class="min-h-[200vh]"> 
-        <slot /> <!-- Conteúdo da página -->
+        <slot /> <!-- Page content -->
       </div>
     </div>
 
-    <!-- Footer da página -->
+    <!-- Page footer -->
     <footer class="relative w-full bg-gray-800 text-white py-4 flex items-center justify-center">
       <p class="absolute left-1/2 transform -translate-x-1/2">&copy; 2024 Cross The Line. Todos direitos reservados.</p>
       <p class="ml-auto mr-2">Github</p>

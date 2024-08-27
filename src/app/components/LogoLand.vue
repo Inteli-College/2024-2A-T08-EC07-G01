@@ -1,6 +1,6 @@
 <script setup>
 import { defineProps } from 'vue';
-import defaultLogo from '@/assets/static/logoreal.png'; // Default logo
+import defaultLogo from '@/assets/static/whitelogo.png'; // Default logo
 
 const props = defineProps({
   width: {
