@@ -1,5 +1,8 @@
 from fastapi import APIRouter, Request
-from app.models.KNR import KNR, KNRCollection, RegisterKNR
+from app.models.KNR import KNRCollection, KNR
+from app.services.model_service import predict
+from app.utils.fail_labeler import label_knr
+from datetime import datetime
 
 router = APIRouter(
     prefix="/api/knr",
@@ -9,44 +12,94 @@ router = APIRouter(
 @router.get(
     "/",
     response_model=KNRCollection,
-    response_description="List of all models",
-    response_model_exclude_unset=True,
-    response_model_exclude_none=True,
+    response_description="List of all knrs",
     tags=["KNR"],
 )
 async def get_all_models(request: Request):
-    knrs = KNRCollection(
-        knrs=await request.app.state.knr_collection.find().to_list(100)
-    )
-    print(knrs)
-    print("00000000000000000000000")
+    knrs = knrs = await request.app.state.knr_collection.find().to_list(100)
+    knrs = KNRCollection(knrs=knrs)
     return knrs
 
 
 @router.get(
     "/{knr}",
-    response_model=KNR,
-    response_description="Get a single model",
-    response_model_exclude_unset=True,
-    response_model_exclude_none=True,
+    response_model=KNR | dict,
+    response_description="Get a single knr info",
     tags=["KNR"],
 )
 async def get_model(request: Request, knr: str):
     knr = await request.app.state.knr_collection.find_one({"knr": knr})
-    print(knr)
-    return KNR(**knr)
+
+    if knr is None:
+        return {"message": "KNR not found"}
+
+    knr = KNR(**knr)
+
+    return knr
 
 
 @router.post(
     "/",
-    response_model=KNRCollection,
-    response_description="Add a new model",
+    response_model=KNR,
+    response_description="Add a new knr to process",
     tags=["KNR"],
 )
-async def add_model(request: Request, knr: RegisterKNR):
+async def add_model(request: Request, knr: KNR):
     await request.app.state.knr_collection.insert_one(knr.model_dump())
 
-    # retorna o model
-    return KNRCollection(
-        knrs=await request.app.state.knr_collection.find().to_list(100)
+    result = predict(knr)
+
+    knr.predicted_fail_code = result
+
+    knr = label_knr(knr)
+
+    knr.timestamp = str(datetime.now())
+
+    await request.app.state.knr_collection.update_one(
+        {"knr": knr.knr}, {"$set": knr.model_dump()}
     )
+
+    return await request.app.state.knr_collection.find_one({"knr": knr.knr})
+
+
+@router.put(
+    "/{knr_id}",
+    response_model=KNR,
+    response_description="Update a knr",
+    tags=["KNR"],
+)
+async def update_model(request: Request, knr_id: str, knr: KNR):
+    stored_knr = await request.app.state.knr_collection.find_one({"knr": knr_id})
+
+    if stored_knr is None:
+        return {"message": "KNR not found"}
+
+    updated_data = knr.model_dump(exclude_unset=True)
+
+    for key, value in stored_knr.items():
+        if key in updated_data:
+            stored_knr[key] = updated_data[key]
+
+    stored_knr = KNR(**stored_knr)
+
+    stored_knr = label_knr(stored_knr)
+
+    await request.app.state.knr_collection.update_one(
+        {"knr": knr_id}, {"$set": stored_knr.model_dump()}
+    )
+
+
+    return await request.app.state.knr_collection.find_one({"knr": knr.knr})
+
+
+@router.delete(
+    "/{knr}",
+    response_model=dict,
+    response_description="Delete a knr",
+    tags=["KNR"],
+)
+async def delete_model(request: Request, knr: str):
+    await request.app.state.knr_collection.delete_one({"knr": knr})
+
+    return {"message": "Model deleted successfully"}
+
