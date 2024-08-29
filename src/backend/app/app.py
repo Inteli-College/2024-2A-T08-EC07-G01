@@ -25,8 +25,7 @@ app = FastAPI(lifespan=app_lifespan)
 
 app.include_router(knr.router)
 
+
 @app.get("/")
 async def read_root():
     return {"message": "crossing the line!"}
-
-
