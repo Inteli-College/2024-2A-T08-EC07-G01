@@ -31,8 +31,8 @@ const knr = useRoute().params.knr;
 const styles = {
     default: {
         border: 'border-gray-300',
-        bg: 'bg-gray-300',
-        text: 'text-white'
+        bg: '',
+        text: 'text-gray-800'
     },
     success: {
         border: 'border-green-500',
@@ -52,12 +52,11 @@ const res = await Axios.get(`http://localhost:8000/api/knr/${knr}`);
 const failType = res.data.predicted_fail_code;
 
 onMounted(() => {
-    console.log(knr);
-    console.log(res);
-    console.log(res.data.predicted_fail_code);
-    console.log(failType);
-
-    updateFailStatuses();
+    failTypes.value.forEach((fail) => {
+        if (fail.failType === failType) {
+            fail.status = 'fail';
+        }
+    });
 });
 
 const result = computed(() => (failType !== 0 ? 'fail' : 'success'));
@@ -108,21 +107,5 @@ const failTypes = ref([
         status: 'default'
     }
 ]);
-
-function delay(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-async function updateFailStatuses() {
-    for (const fail of failTypes.value) {
-        if (fail.failType === failType) {
-            fail.status = 'fail';
-        } else {
-            fail.status = 'success';
-        }
-
-        await delay(50);
-    }
-}
 
 </script>
