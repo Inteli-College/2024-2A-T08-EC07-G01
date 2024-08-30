@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 from app.models.KNR import KNRCollection, KNR
-from app.services.model_service import predict
+from app.services.model_service import mocked_predict_pipeline, predict_pipeline
 from app.utils.fail_labeler import label_knr
 from datetime import datetime
 
@@ -15,7 +15,7 @@ router = APIRouter(
     response_description="List of all knrs",
     tags=["KNR"],
 )
-async def get_all_models(request: Request):
+async def get_all_knrs(request: Request):
     knrs = knrs = await request.app.state.knr_collection.find().to_list(100)
     knrs = KNRCollection(knrs=knrs)
     return knrs
@@ -27,7 +27,7 @@ async def get_all_models(request: Request):
     response_description="Get a single knr info",
     tags=["KNR"],
 )
-async def get_model(request: Request, knr: str):
+async def get_knr(request: Request, knr: str):
     knr = await request.app.state.knr_collection.find_one({"knr": knr})
 
     if knr is None:
@@ -44,10 +44,10 @@ async def get_model(request: Request, knr: str):
     response_description="Add a new knr to process",
     tags=["KNR"],
 )
-async def add_model(request: Request, knr: KNR):
+async def add_knr(request: Request, knr: KNR):
     await request.app.state.knr_collection.insert_one(knr.model_dump())
 
-    result = predict(knr)
+    result = mocked_predict_pipeline(knr)
 
     knr.predicted_fail_code = result
 
@@ -68,7 +68,7 @@ async def add_model(request: Request, knr: KNR):
     response_description="Update a knr",
     tags=["KNR"],
 )
-async def update_model(request: Request, knr_id: str, knr: KNR):
+async def update_knr(request: Request, knr_id: str, knr: KNR):
     stored_knr = await request.app.state.knr_collection.find_one({"knr": knr_id})
 
     if stored_knr is None:
@@ -88,7 +88,6 @@ async def update_model(request: Request, knr_id: str, knr: KNR):
         {"knr": knr_id}, {"$set": stored_knr.model_dump()}
     )
 
-
     return await request.app.state.knr_collection.find_one({"knr": knr.knr})
 
 
@@ -98,8 +97,7 @@ async def update_model(request: Request, knr_id: str, knr: KNR):
     response_description="Delete a knr",
     tags=["KNR"],
 )
-async def delete_model(request: Request, knr: str):
+async def delete_knr(request: Request, knr: str):
     await request.app.state.knr_collection.delete_one({"knr": knr})
 
-    return {"message": "Model deleted successfully"}
-
+    return {"message": "KNR deleted successfully"}
