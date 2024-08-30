@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 from app.models.KNR import KNRCollection, KNR
-from app.services.model_service import mocked_predict_pipeline, predict_pipeline
+from app.services.model_service import mocked_predict_pipeline 
 from app.utils.fail_labeler import label_knr
 from datetime import datetime
 
