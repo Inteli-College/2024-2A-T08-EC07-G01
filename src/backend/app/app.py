@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from dotenv import dotenv_values
 import motor.motor_asyncio
@@ -22,6 +23,18 @@ async def app_lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=app_lifespan)
+
+origins = [
+    '*'
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(knr.router)
 
