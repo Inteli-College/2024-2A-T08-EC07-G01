@@ -4,7 +4,7 @@ import { defineProps } from 'vue';
 interface Props {
     iconName: string;
     label: string;
-    bgColor: string;
+    bgColor: string | undefined;
     redirect: string;
 }
 

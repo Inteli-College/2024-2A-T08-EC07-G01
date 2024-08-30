@@ -14,10 +14,10 @@ import normalLogo from '@/assets/static/logo.png';
 
       <!-- Div with the centered header buttons -->
       <div class="ml-12 absolute left-1/2 transform -translate-x-1/2 flex items-center gap-28">
-        <HeaderButton iconName="mdi:chart-timeline-variant-shimmer" label="Previsão Diária" />
-        <HeaderButton iconName="mdi:clipboard-text-outline" label="Histórico" />
-        <HeaderButton iconName="mdi:view-dashboard-outline" label="Dashboard" />
-        <HeaderButton iconName="mdi:progress-download" label="Treinamento Mensal" />
+        <HeaderButton iconName="mdi:chart-timeline-variant-shimmer" label="Previsão Diária" redirect="/prediction" />
+        <HeaderButton iconName="mdi:clipboard-text-outline" label="Histórico" redirect="/history" />
+        <HeaderButton iconName="mdi:view-dashboard-outline" label="Dashboard" redirect="/" />
+        <HeaderButton iconName="mdi:progress-download" label="Treinamento Mensal" redirect="/" />
       </div>
     </header>
 
