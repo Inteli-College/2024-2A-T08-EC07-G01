@@ -7,12 +7,12 @@ import DataTable from '../components/table/data-table.vue'
 const data = ref<TestData[]>([])
 
 onMounted(() => {
-  data.value = testData // Use the sample data provided
+    data.value = testData // Use the sample data provided
 })
 </script>
 
 <template>
-  <div class="container py-10 mx-auto">
-    <DataTable :columns="columns" :data="data" />
-  </div>
+    <div class="container py-10 mx-auto">
+        <DataTable :columns="columns" :data="data" />
+    </div>
 </template>
