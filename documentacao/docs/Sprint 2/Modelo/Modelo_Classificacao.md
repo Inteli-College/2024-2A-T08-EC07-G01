@@ -8,7 +8,7 @@ Todavia, essa ideia foi descartada após perceber que seria complexo acertar exa
 
 ## Modelo
 
-Para conseguir prever de maneira correta e abranger todos os tipos de falhas possíveis, o grupo optou por agrupar as falhas por KNR e utilizar a técnica do OneHotEncode. Além da criação de um modelo para cada coluna gerada. Dessa maneira, para cada valor único do S_GROUP_ID há uma coluna com valores entre 0 e o número de registros de falha daquele S_Group_ID naquele KNR. Portatno, esse processamento foi feito para poder haver vários modelos, com cada modelo tendo como alvo uma coluna diferente. Assim, possibilitaria prever os diferentes tipos de falha existentes, além de possivelmente garantir mais estabilidade nas previsões.
+Para conseguir prever de maneira correta e abranger todos os tipos de falhas possíveis, o grupo optou por agrupar as falhas por KNR e utilizar a técnica do OneHotEncode. Além da criação de um modelo para cada coluna gerada. Dessa maneira, para cada valor único do S_GROUP_ID há uma coluna com valores entre 0 e o número de registros de falha daquele S_Group_ID naquele KNR. Portanto, esse processamento foi feito para poder haver vários modelos, com cada modelo tendo como alvo uma coluna diferente. Assim, possibilitaria prever os diferentes tipos de falha existentes, além de possivelmente garantir mais estabilidade nas previsões.
 
 ## Pré-processamento 
 
