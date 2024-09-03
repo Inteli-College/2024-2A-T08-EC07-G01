@@ -4,11 +4,11 @@
 
 Após a Sprint 1 a Volkswagen enviou uma tabela de falhas contendo a coluna S_GROUP_ID, a qual representa a classe de um determinado tipo de falha. Com isso, o grupo percebeu a oportunidade de prever tanto se haverá falha, como em que categoria de falha ela se encaixaria. Dessa forma, foram discutidas diferentes abordagens para a realização do problema. A primeira solução que o grupo imaginou foi a criação de dois modelos, um prevendo o acontecimento de falhas e outro que preveria o S_GROUP_ID, caso o resultado do primeiro seja de falha.
 
-Todavia, essa ideia foi descartada após perceber que seria complexo acertar exatamente a classe que a falha pertenceria, além do fato de que permitiria um *KNR* ter somente um único tipo de falha. 
+Todavia, essa ideia foi descartada após perceber que seria complexo acertar exatamente a classe que a falha pertenceria, além disso, um mesmo KNR pode ter mais de um tipo de falha, algo que esse modelo não conseguiria classificar.
 
 ## Modelo
 
-Para conseguir prever de maneira correta e abranger todos os tipos de falhas possíveis, o grupo optou por agrupar as falhas por KNR e utilizar a técnica do OneHotEncode. Além da criação de um modelo para cada coluna gerada. Dessa maneira, para cada valor único do S_GROUP_ID há uma coluna com valores 0 ou 1, dependendo se havia algum registro daquele tipo de falha no dataframe. Esse processamento foi feito para poder haver vários modelos, com cada modelo tendo como alvo uma coluna diferente. Assim, possibilitaria prever os diferentes tipos de falha existentes, além de possivelmente garantir mais estabilidade nas previsões.
+Para conseguir prever de maneira correta e abranger todos os tipos de falhas possíveis, o grupo optou por agrupar as falhas por KNR e utilizar a técnica do OneHotEncode. Além da criação de um modelo para cada coluna gerada. Dessa maneira, para cada valor único do S_GROUP_ID há uma coluna com valores entre 0 e o número de registros de falha daquele S_Group_ID naquele KNR. Portatno, esse processamento foi feito para poder haver vários modelos, com cada modelo tendo como alvo uma coluna diferente. Assim, possibilitaria prever os diferentes tipos de falha existentes, além de possivelmente garantir mais estabilidade nas previsões.
 
 ## Pré-processamento 
 
@@ -20,7 +20,7 @@ Na tabela enviada, a variável S_GROUP_ID possui 19 registros únicos, porém di
 
 ![Valores únicos S_Group_ID](/img/s_group_id.png)
 
-Além disso, pela pouca quantidade e destorar do resto das informações, foram removidas todas as linhas que possuiam "MultiValue" como valor atribuído.
+Além disso, pela pouca quantidade e destoar do resto das informações, foram removidas todas as linhas que possuiam "MultiValue" como valor atribuído.
 
 
 ### Motor 
