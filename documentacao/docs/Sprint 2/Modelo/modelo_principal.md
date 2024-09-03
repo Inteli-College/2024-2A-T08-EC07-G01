@@ -114,7 +114,7 @@ Observa-se que o modelo apresentou um desempenho sólido, com métricas superior
 
 O GRU (Gated Recurrent Unit) é outro tipo de rede neural recorrente (RNN) que, assim como a LSTM, foi projetado para lidar com o problema de "vanishing gradient" e modelar dependências de longo prazo em sequências de dados. No entanto, o GRU é uma versão simplificada do LSTM, com uma estrutura menos complexa.
 
-Estrutura do GRU O GRU combina a célula de estado e a saída em uma única unidade e utiliza duas portas principais:
+A estrutura do GRU combina a célula de estado e a saída em uma única unidade e utiliza duas portas principais:
 
 - **Porta de atualização (Update Gate):** Controla a quantidade de nova informação que deve ser armazenada e decide quanta informação da etapa anterior deve ser esquecida ou mantida.
 
