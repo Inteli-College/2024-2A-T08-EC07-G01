@@ -3,7 +3,14 @@ from pydantic import BaseModel, Field
 
 
 class KNR(BaseModel):
-    knr: str = Field(..., description="Car KNR")
+    KNR: str = Field(..., description="Car KNR")
+    NAME: str = Field(..., description="Car NAME")
+    ID: int = Field(..., description="Car ID")
+    STATUS: int = Field(..., description="Car STATUS")
+    UNIT: Optional[str] = Field(..., description="Car UNIT")
+    VALUE_ID: Optional[str] = Field(..., description="Car VALUE_ID")
+    VALUE: Optional[str] = Field(..., description="Car VALUE")
+    DATA: str = Field(..., description="Car DATA")
 
     timestamp: Optional[str] = Field(
         "", description="Date of the prediction in iso format"
