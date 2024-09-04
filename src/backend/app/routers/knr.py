@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 from app.models.KNR import KNRCollection, KNR
-from app.services.model_service import mocked_predict_pipeline 
+from app.services.model_service import predict_pipeline 
 from app.utils.fail_labeler import label_knr
 from datetime import datetime
 
@@ -47,19 +47,20 @@ async def get_knr(request: Request, knr: str):
 async def add_knr(request: Request, knr: KNR):
     await request.app.state.knr_collection.insert_one(knr.model_dump())
 
-    result = mocked_predict_pipeline(knr)
+    result = predict_pipeline(knr)
+    print(result)
 
-    knr.predicted_fail_code = result
+    knr.predicted_fail_code = int(result)
 
     knr = label_knr(knr)
 
     knr.timestamp = str(datetime.now())
 
     await request.app.state.knr_collection.update_one(
-        {"knr": knr.knr}, {"$set": knr.model_dump()}
+        {"knr": knr.KNR}, {"$set": knr.model_dump()}
     )
 
-    return await request.app.state.knr_collection.find_one({"knr": knr.knr})
+    return await request.app.state.knr_collection.find_one({"knr": knr.KNR})
 
 
 @router.put(
@@ -88,7 +89,7 @@ async def update_knr(request: Request, knr_id: str, knr: KNR):
         {"knr": knr_id}, {"$set": stored_knr.model_dump()}
     )
 
-    return await request.app.state.knr_collection.find_one({"knr": knr.knr})
+    return await request.app.state.knr_collection.find_one({"knr": knr.KNR})
 
 
 @router.delete(
