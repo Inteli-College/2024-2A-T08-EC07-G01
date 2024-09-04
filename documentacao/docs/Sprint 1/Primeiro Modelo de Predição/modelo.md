@@ -68,7 +68,7 @@ Após isso, o parceiro então disponibilizou tabelas com detalhes do status dos 
 
 </div>
 
-Entendendo como os dados estavam organizados e como poderiam ser relacionados, é decidido que as colunas KNR e FALHA da tabela Falhas serão utilizadas, enquanto UNIT, VALUE_ID e VALUE da tabela Resultados serão descartadas. Esses dados são cruciais para a detecção de falhas. Para mais informações, acessar a seção [Viabilidade Técnica](../Requisitos_de_Viabilidade_Técnica/Proposta_Geral_do_Sistema.md)
+Entendendo como os dados estavam organizados e como poderiam ser relacionados, é decidido que as colunas KNR e FALHA da tabela Falhas serão utilizadas, enquanto UNIT, VALUE_ID e VALUE da tabela Resultados serão descartadas. Esses dados são cruciais para a detecção de falhas. Para mais informações, acessar a seção [Viabilidade Técnica](../Requisitos_de_Viabilidade_Tecnica/Proposta_Geral_do_Sistema.md)
 
 ### 2.3 Preparação dos dados
 Nesta fase, os dados foram preparados para garantir que estivessem prontos para a análise e construção do modelo preditivo.
@@ -98,7 +98,7 @@ Por fim, os DataFrames de falhas e resultados foram combinados em um único Data
 merged_df = pd.merge(final_df, df_falhas_unique, on='KNR', how='left')
 ```
 
-Para ler um texto complementar da explicação, acessar seção [Viabilidade Técnica](../Requisitos_de_Viabilidade_Técnica/Proposta_Geral_do_Sistema.md), bem como o notebook python na pasta `src`.
+Para ler um texto complementar da explicação, acessar seção [Viabilidade Técnica](../Requisitos_de_Viabilidade_Tecnica/Proposta_Geral_do_Sistema.md), bem como o notebook python na pasta `src`.
 
 ### 2.4 Modelagem
 Para esta etapa, o modelo preditivo foi construído e treinado utilizando o algoritmo K-Nearest Neighbors (KNN), escolhido por sua eficácia em problemas de classificação.
