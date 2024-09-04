@@ -21,7 +21,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/
@@ -179,4 +178,4 @@ pyrightconfig.json
 # End of https://www.toptal.com/developers/gitignore/api/pythonsrc/data/*.csv
 
 
-src/data
+src/models/data
