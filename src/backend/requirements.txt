@@ -2,3 +2,6 @@ fastapi[standard]
 motor
 python-dotenv
 pytest
+tensorflow
+pandas
+scikit-learn
