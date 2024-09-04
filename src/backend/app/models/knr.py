@@ -3,14 +3,16 @@ from pydantic import BaseModel, Field
 
 
 class KNR(BaseModel):
+    id: Optional[int] = Field(None, description="", alias="_id")
     KNR: str = Field(..., description="Car KNR")
-    NAME: str = Field(..., description="Car NAME")
-    ID: int = Field(..., description="Car ID")
-    STATUS: int = Field(..., description="Car STATUS")
+
+    NAME: Optional[str] = Field(..., description="Car NAME")
+    ID: Optional[int] = Field(..., description="Car ID")
+    STATUS: Optional[int] = Field(..., description="Car STATUS")
     UNIT: Optional[str] = Field(..., description="Car UNIT")
     VALUE_ID: Optional[str] = Field(..., description="Car VALUE_ID")
     VALUE: Optional[str] = Field(..., description="Car VALUE")
-    DATA: str = Field(..., description="Car DATA")
+    DATA: Optional[str] = Field(..., description="Car DATA")
 
     timestamp: Optional[str] = Field(
         "", description="Date of the prediction in iso format"
@@ -21,29 +23,6 @@ class KNR(BaseModel):
     indicated_test: Optional[str] = Field("", description="Indicated test")
     real_fail: Optional[str] = Field("", description="Real fail")
     real_fail_code: Optional[int] = Field(-1, description="Real fail code")
-
-    class Config:
-        schema_extra = {
-            "example": {
-                "knr": "KNR123",
-                "date": "2021-01-01T00:00:00",
-                "predicted_fail": "Assoalho Externo",
-                "indicated_test": "Teste de pintura",
-                "real_fail": "Assoalho Externo",
-            }
-        }
-
-
-class UpdateKNR(BaseModel):
-    knr: Optional[str] = Field(None, description="Car KNR")
-
-    timestamp: Optional[str] = Field(
-        None, description="Date of the prediction in iso format"
-    )
-
-    predicted_fail: Optional[int] = Field(None, description="Predicted fail")
-    indicated_test: Optional[int] = Field(None, description="Indicated test")
-    real_fail: Optional[int] = Field(None, description="Real fail")
 
     class Config:
         schema_extra = {

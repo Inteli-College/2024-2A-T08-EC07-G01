@@ -1,6 +1,5 @@
 # TODO: Refactor all
-
-from app.models.KNR import KNR
+from app.models.knr import KNR
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler

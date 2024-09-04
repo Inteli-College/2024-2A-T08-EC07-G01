@@ -1,4 +1,4 @@
-from app.models.KNR import KNR
+from app.models.knr import KNR
 
 fails = {
     0: "Sem falha",
