@@ -1,3 +1,11 @@
+export interface TestData {
+    knr: string;
+    dataPrevisao: string;
+    falha: string;
+    tipoFalha: string;
+    testeIndicado: string;
+}
+
 export const testData: TestData[] = [
     {
         knr: '12345',
