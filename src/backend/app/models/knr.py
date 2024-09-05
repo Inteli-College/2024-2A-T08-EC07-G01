@@ -25,31 +25,12 @@ class KNR(BaseModel):
     real_fail_code: Optional[int] = Field(-1, description="Real fail code")
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "knr": "KNR123",
                 "date": "2021-01-01T00:00:00",
                 "predicted_fail": "Assoalho Externo",
                 "indicated_test": "Teste de pintura",
                 "real_fail": "Assoalho Externo",
-            }
-        }
-
-
-class KNRCollection(BaseModel):
-    knrs: List[KNR]
-
-    class Config:
-        schema_extra = {
-            "example": {
-                "knrs": [
-                    {
-                        "knr": "KNR123",
-                        "date": "2021-01-01T00:00:00",
-                        "predicted_fail": "Assoalho Externo",
-                        "indicated_test": "Teste de pintura",
-                        "real_fail": "Assoalho Externo",
-                    }
-                ]
             }
         }
