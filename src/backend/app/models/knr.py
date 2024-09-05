@@ -3,7 +3,6 @@ from pydantic import BaseModel, Field
 
 
 class KNR(BaseModel):
-    id: Optional[int] = Field(None, description="", alias="_id")
     KNR: str = Field(..., description="Car KNR")
 
     NAME: Optional[str] = Field(..., description="Car NAME")

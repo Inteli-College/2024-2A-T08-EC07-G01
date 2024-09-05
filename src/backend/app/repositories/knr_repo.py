@@ -13,21 +13,21 @@ class KNRRepository:
         documents = self.collection.find()
         return [KNR(**document) for document in documents]
 
-    def create_knr(self, knr: KNR):
+    def create_knr(self, knr: KNR) -> str:
         result = self.collection.insert_one(knr.model_dump(by_alias=True))
-        return str(result.inserted_id)
+        return str(knr.KNR)
 
     def get_knr(self, knr_id: str) -> Optional[KNR]:
-        document = self.collection.find_one({"_id": ObjectId(knr_id)})
+        document = self.collection.find_one({"KNR": knr_id})
         return KNR(**document) if document else None
 
     def update_knr(self, knr_id: str, knr: KNR) -> bool:
         result = self.collection.update_one(
-            {"_id": ObjectId(knr_id)},
+            {"KNR": knr_id},
             {"$set": knr.model_dump(exclude_unset=True, by_alias=True)},
         )
         return result.modified_count > 0
 
     def delete_knr(self, knr_id: str) -> bool:
-        result = self.collection.delete_one({"_id": ObjectId(knr_id)})
+        result = self.collection.delete_one({"KNR": knr_id})
         return result.deleted_count > 0
