@@ -13,7 +13,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v4a1 1 0 001 1h3m10 0h3a1 1 0 001-1V7m-4 10l-4 4m0 0l-4-4m4 4V4" />
         </svg>
         <h2 class="text-2xl font-semibold text-gray-700">Arraste & jogue arquivos aqui</h2>
-        <p class="mt-1 text-gray-500 ">Ou clique para upload</p>
+        <p class="mt-1 text-gray-500">Ou clique para upload</p>
       </div>
   
       <input ref="fileInput" type="file" class="file-input" @change="handleFileUpload" />
@@ -31,20 +31,24 @@
           <Button class="w-3/4 relative group bg-black transition duration-300 ease-in-out overflow-hidden text-white hover:scale-[107%]" @click="handleContinue" :disabled="uploadProgress < 100">
             <span class="absolute inset-0 w-full h-full bg-customBlue transform scale-y-0 group-hover:scale-y-100 origin-bottom transition duration-300 ease-in-out"></span>
             <span class="relative z-10 flex items-center">
-            <Icon :name="'mdi-arrow-down-bold-circle'" class="mr-2 text-xl text-white group-hover:text-white transition duration-300 ease-in-out" />
-            {{ "xablau" }}
+              <Icon :name="'mdi-arrow-down-bold-circle'" class="mr-2 text-xl text-white group-hover:text-white transition duration-300 ease-in-out" />
+              {{ "xablau" }}
             </span>
           </Button>
         </div>
-      </div>
     </div>
+</div>
+<TrainingModal :show="showModal" @close="closeModal" @revert="handleRevert"/>
 </template>
   
 <script setup lang="ts">
 import { ref } from 'vue'
+import TrainingModal from '@/components/Modal/TrainingModal.vue';
 
 const file = ref<File | null>(null)
 const uploadProgress = ref<number>(0)
+
+const showModal = ref(false)
 
 const isDragging = ref(false)
 const handleDragOver = () => (isDragging.value = true)
@@ -87,10 +91,20 @@ const formatFileSize = (size: number) => {
   return kb > 1024 ? `${(kb / 1024).toFixed(2)} MB` : `${kb.toFixed(2)} KB`
 }
 
-const handleContinue = () => {
+const handleContinue = (event: Event) => {
+  event.stopPropagation() // Prevent click event from bubbling up to parent
   if (uploadProgress.value === 100) {
-    alert('Upload complete! Continue clicked.')
+    showModal.value = true
   }
+}
+
+const closeModal = () => {
+  showModal.value = false
+}
+
+const handleRevert = () => {
+    alert("Mudanças revertidas")
+    closeModal()
 }
 </script>
   
