@@ -1,10 +1,17 @@
+// Arrumar a tipagem referente aos dados reais
+
 export interface TestLineChart {
   'year': number;
   'Export Growth Rate': number;
   'Import Growth Rate': number;
 }
 
-export const testLineChart: TestLineChart[] = [
+// TODO: Arrumar com os dados reais, importando de um fetch no back
+
+export function getTestLineChart(): TestLineChart[]  {
+
+return [
+
     {
       'year': 1970,
       'Export Growth Rate': 2.04,
@@ -267,3 +274,4 @@ export const testLineChart: TestLineChart[] = [
     },
   ];
 
+}

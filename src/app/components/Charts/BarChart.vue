@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { AreaChart } from '@/components/ui/chart-area'
 import ChartTooltip from '../ChartTooltip.vue';
-import { testBarChart, type TestBarChart } from './barData';
+import { getTestBarChart, type TestBarChart } from './barData';
 
 const data = ref<TestBarChart[]>([])
 
-data.value = testBarChart
+data.value = getTestBarChart()
 </script>
 
 <template>

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { LineChart } from '@/components/ui/chart-line'
-import { testLineChart, type TestLineChart } from './lineData';
+import { getTestLineChart, type TestLineChart } from './lineData';
 
 
 const data = ref<TestLineChart[]>([])
 
-data.value = testLineChart
+data.value = getTestLineChart()
 </script>
 
 <template>
