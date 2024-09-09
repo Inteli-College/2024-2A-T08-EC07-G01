@@ -9,7 +9,7 @@
         </div>
         <h2 class=" text-xl mt-12"> Adicione o arquivo para treinamento abaxio</h2>
     </div>
-    <div>
+    <div class="mt-12">
         <DragAndDrop />
     </div>
 </template>
