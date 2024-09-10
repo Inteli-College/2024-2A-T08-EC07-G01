@@ -6,7 +6,7 @@ export interface TestData {
     testeIndicado: string;
 }
 
-export const testData: TestData[] = [
+export const TestData: TestData[] = [
     {
         knr: '12345',
         dataPrevisao: '2024-08-30',
