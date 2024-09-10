@@ -2,40 +2,34 @@
     <transition name="modal">
       <div v-if="show" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
         <div class="bg-white rounded-lg p-6 w-full max-w-4xl shadow-lg">
-        <div class="flex justify-end">
-          <button class="top-4  hover:scale-[110%]" @click="close">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-
+          <div class="flex justify-end">
+            <button class="top-4  hover:scale-[110%]" @click="close">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+  
           <h2 class="text-center text-2xl font-semibold mb-10">Arquivo adicionado com sucesso</h2>
   
-
           <div class="grid grid-cols-2 gap-6">
-
             <div>
               <h3 class="text-center font-medium mb-4">Métricas do Modelo Anterior</h3>
               <div class="space-y-2">
-
-                <!-- Dados exemplo -->
-                <div class="bg-gray-200 p-4 rounded-md text-center">Acurácia: 0.8752</div>
-                <div class="bg-gray-200 p-4 rounded-md text-center">Precisão: 0.9212</div>
-                <div class="bg-gray-300 p-4 rounded-md text-center">Recall: 0.9056</div>
-                <div class="bg-gray-200 p-4 rounded-md text-center">F1-score: 0.9056</div>
+                <div class="bg-gray-200 p-4 rounded-md text-center">Acurácia: {{ previousMetrics.accuracy }}</div>
+                <div class="bg-gray-200 p-4 rounded-md text-center">Precisão: {{ previousMetrics.precision }}</div>
+                <div class="bg-gray-300 p-4 rounded-md text-center">Recall: {{ previousMetrics.recall }}</div>
+                <div class="bg-gray-200 p-4 rounded-md text-center">F1-score: {{ previousMetrics.f1Score }}</div>
               </div>
             </div>
   
-
             <div>
-                <!-- Dados exemplo -->
               <h3 class="text-center font-medium mb-4">Métricas do Modelo Atualmente</h3>
               <div class="space-y-2">
-                <div class="bg-green-200 p-4 rounded-md text-center flex items-center justify-center">Acurácia: 0.8921 <span class="ml-2 text-green-500">⬆</span></div>
-                <div class="bg-red-200 p-4 rounded-md text-center flex items-center justify-center">Precisão: 0.9017 <span class="ml-2 text-red-500">⬇</span></div>
-                <div class="bg-red-200 p-4 rounded-md text-center flex items-center justify-center">Recall: 0.8811 <span class="ml-2 text-red-500">⬇</span></div>
-                <div class="bg-green-200 p-4 rounded-md text-center flex items-center justify-center">F1-score: 0.9256 <span class="ml-2 text-green-500">⬆</span></div>
+                <div class="bg-green-200 p-4 rounded-md text-center">Acurácia: {{ currentMetrics.accuracy }}</div>
+                <div class="bg-red-200 p-4 rounded-md text-center">Precisão: {{ currentMetrics.precision }}</div>
+                <div class="bg-red-200 p-4 rounded-md text-center">Recall: {{ currentMetrics.recall }}</div>
+                <div class="bg-green-200 p-4 rounded-md text-center">F1-score: {{ currentMetrics.f1Score }}</div>
               </div>
             </div>
           </div>
@@ -64,27 +58,17 @@
   <script setup>
   import { defineProps, defineEmits } from 'vue'
   
-
   const props = defineProps({
-    show: {
-      type: Boolean,
-      required: true
-    }
+    show: Boolean,
+    previousMetrics: Object,
+    currentMetrics: Object,
   })
   
-  const emit = defineEmits(['close', 'revert'])
+  const emit = defineEmits(['close', 'revert', 'aproved'])
   
-  const close = () => {
-    emit('close')
-  }
-  
-  const revert = () => {
-    emit('revert')
-  }
-
-  const aproved = () => {
-    emit('aproved')
-  }
+  const close = () => emit('close')
+  const revert = () => emit('revert')
+  const aproved = () => emit('aproved')
   </script>
   
   <style scoped>

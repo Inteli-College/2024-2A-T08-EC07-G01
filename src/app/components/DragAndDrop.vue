@@ -38,7 +38,14 @@
         </div>
     </div>
 </div>
-<TrainingModal :show="showModal" @close="closeModal" @revert="handleRevert" @aproved="handleAproved"/>
+<TrainingModal 
+      :show="showModal"
+      :previousMetrics="previousMetrics"
+      :currentMetrics="currentMetrics"
+      @close="closeModal"
+      @revert="handleRevert"
+      @aproved="handleAproved"
+    />
 </template>
   
 <script setup lang="ts">
@@ -111,6 +118,22 @@ const handleAproved = () => {
     alert("Mudanças aprovadas")
     closeModal()
 }
+
+// Dados teste:
+
+const previousMetrics = ref({
+  accuracy: '0.8752',
+  precision: '0.9212',
+  recall: '0.9056',
+  f1Score: '0.9056',
+})
+
+const currentMetrics = ref({
+  accuracy: '0.8921',
+  precision: '0.9017',
+  recall: '0.8811',
+  f1Score: '0.9256',
+})
 </script>
   
 <style scoped>
