@@ -1,14 +1,12 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, HTTPException
 from typing import List
-from app.models.knr import KNR
+from app.models.knr import KNR, KNRUpdate
 from app.services.knr_service import KNRServiceSingleton
 from app.utils.fail_labeler import label_knr
-from app.services.model_service import predict_pipeline
+from app.services.predict_service import predict_pipeline
 from datetime import datetime
 
 router = APIRouter(prefix="/api/knr", tags=["KNR"])
-
-# TODO: Refactor to use depends
 
 
 @router.get(
@@ -39,16 +37,13 @@ async def get_knr(knr_id: str):
     response_description="Add a new KNR to process",
 )
 async def add_knr(knr: KNR):
-    # Adiciona KNR ao banco
     knr_id = KNRServiceSingleton.get_instance().create_knr(knr)
 
-    # Realiza predição e rotulação
     result = predict_pipeline(knr)
     knr.predicted_fail_code = int(result)
     knr = label_knr(knr)
     knr.timestamp = str(datetime.now())
 
-    # Atualiza KNR com predições e timestamp
     KNRServiceSingleton.get_instance().update_knr(knr_id, knr)
 
     return KNRServiceSingleton.get_instance().get_knr(knr_id)
@@ -59,12 +54,11 @@ async def add_knr(knr: KNR):
     response_model=KNR,
     response_description="Update a KNR",
 )
-async def update_knr(knr_id: str, knr: KNR):
+async def update_knr(knr_id: str, knr: KNRUpdate):
     existing_knr = KNRServiceSingleton.get_instance().get_knr(knr_id)
     if not existing_knr:
         raise HTTPException(status_code=404, detail="KNR not found")
 
-    # Atualiza KNR com dados fornecidos
     KNRServiceSingleton.get_instance().update_knr(knr_id, knr)
 
     updated_knr = KNRServiceSingleton.get_instance().get_knr(knr_id)

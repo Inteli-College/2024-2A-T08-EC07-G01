@@ -1,7 +1,7 @@
 from typing import Optional
 
 from app.repositories.knr_repo import KNRRepository
-from app.models.knr import KNR
+from app.models.knr import KNR, KNRUpdate
 
 
 class KNRService:
@@ -17,7 +17,7 @@ class KNRService:
     def get_knr(self, knr_id: str) -> Optional[KNR]:
         return self.knr_repo.get_knr(knr_id)
 
-    def update_knr(self, knr_id: str, knr: KNR) -> bool:
+    def update_knr(self, knr_id: str, knr: KNRUpdate) -> bool:
         return self.knr_repo.update_knr(knr_id, knr)
 
     def delete_knr(self, knr_id: str) -> bool:
@@ -34,7 +34,7 @@ class KNRServiceSingleton:
         raise RuntimeError("Call get_instance() instead")
 
     @staticmethod
-    def initiate(knr_repo: KNRRepository):
+    def initialize(knr_repo: KNRRepository):
         KNRServiceSingleton.__instance = KNRService(knr_repo)
 
     @staticmethod
