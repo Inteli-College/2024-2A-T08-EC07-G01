@@ -2,15 +2,15 @@
     <transition name="modal">
       <div v-if="show" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50">
         <div class="bg-white rounded-lg p-6 w-full max-w-4xl shadow-lg">
-
-          <button class="top-4 right-4 hover:scale-[110%]" @click="close">
+        <div class="flex justify-end">
+          <button class="top-4  hover:scale-[110%]" @click="close">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
-  
+        </div>
 
-          <h2 class="text-center text-2xl font-semibold mb-6">Arquivo adicionado com sucesso</h2>
+          <h2 class="text-center text-2xl font-semibold mb-10">Arquivo adicionado com sucesso</h2>
   
 
           <div class="grid grid-cols-2 gap-6">
@@ -18,6 +18,8 @@
             <div>
               <h3 class="text-center font-medium mb-4">Métricas do Modelo Anterior</h3>
               <div class="space-y-2">
+
+                <!-- Dados exemplo -->
                 <div class="bg-gray-200 p-4 rounded-md text-center">Acurácia: 0.8752</div>
                 <div class="bg-gray-200 p-4 rounded-md text-center">Precisão: 0.9212</div>
                 <div class="bg-gray-300 p-4 rounded-md text-center">Recall: 0.9056</div>
@@ -27,6 +29,7 @@
   
 
             <div>
+                <!-- Dados exemplo -->
               <h3 class="text-center font-medium mb-4">Métricas do Modelo Atualmente</h3>
               <div class="space-y-2">
                 <div class="bg-green-200 p-4 rounded-md text-center flex items-center justify-center">Acurácia: 0.8921 <span class="ml-2 text-green-500">⬆</span></div>
@@ -38,12 +41,20 @@
           </div>
   
           <div class="flex justify-center mt-6">
-            <button class="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-6 rounded-md flex items-center" @click="revert">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v6h6M20 20v-6h-6M16 8h2a2 2 0 012 2v10a2 2 0 01-2 2H8a2 2 0 01-2-2v-2M8 4h2M5 9l-5-5m0 0L5 9M15 15l5 5m0 0-5-5" />
-              </svg>
-              Reverter
-            </button>
+            <Button class="w-1/6 mr-3 relative group bg-red-600 transition duration-300 ease-in-out overflow-hidden text-white hover:scale-[107%]" @click="revert" :disabled="uploadProgress < 100">
+            <span class="absolute inset-0 w-full h-full bg-red-950 transform scale-y-0 group-hover:scale-y-100 origin-bottom transition duration-300 ease-in-out"></span>
+            <span class="relative z-10 flex items-center">
+              <Icon :name="'mdi-file-revert'" class="mr-2 text-xl text-white group-hover:text-white transition duration-300 ease-in-out" />
+              {{ "Reverter" }}
+            </span>
+          </Button>
+          <Button class="w-1/6 ml-3 relative group bg-teal-500 transition duration-300 ease-in-out overflow-hidden text-white hover:scale-[107%]" @click="aproved" :disabled="uploadProgress < 100">
+            <span class="absolute inset-0 w-full h-full bg-customBlue transform scale-y-0 group-hover:scale-y-100 origin-bottom transition duration-300 ease-in-out"></span>
+            <span class="relative z-10 flex items-center">
+              <Icon :name="'mdi-approval'" class="mr-2 text-xl text-white group-hover:text-white transition duration-300 ease-in-out" />
+              {{ "Aprovar" }}
+            </span>
+          </Button>
           </div>
         </div>
       </div>
@@ -69,6 +80,10 @@
   
   const revert = () => {
     emit('revert')
+  }
+
+  const aproved = () => {
+    emit('aproved')
   }
   </script>
   

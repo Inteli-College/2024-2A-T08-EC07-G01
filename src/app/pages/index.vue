@@ -16,10 +16,10 @@ definePageMeta({
     
 
     <div class="flex flex-col justify-center w-1/2 items-center space-y-16">
-      <LandingPageButton iconName="mdi:chart-timeline-variant-shimmer" label="Previsão Diária" bgColor="bg-customGreen"/>
-      <LandingPageButton iconName="mdi:clipboard-text-outline" label="Histórico" />
-      <LandingPageButton iconName="mdi:view-dashboard-outline" label="Dashboard" />
-      <LandingPageButton iconName="mdi:progress-download" label="Treinamento Mensal" />
+      <LandingPageButton iconName="mdi:chart-timeline-variant-shimmer" label="Previsão Diária" bgColor="bg-customGreen" redirect=""/>
+      <LandingPageButton iconName="mdi:clipboard-text-outline" label="Histórico" redirect="/table"/>
+      <LandingPageButton iconName="mdi:view-dashboard-outline" label="Dashboard" redirect="/dashboard"/>
+      <LandingPageButton iconName="mdi:progress-download" label="Treinamento Mensal" redirect="/monthly"/>
     </div>
   </div>
 </template>

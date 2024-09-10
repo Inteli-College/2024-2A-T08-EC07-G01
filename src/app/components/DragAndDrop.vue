@@ -32,13 +32,13 @@
             <span class="absolute inset-0 w-full h-full bg-customBlue transform scale-y-0 group-hover:scale-y-100 origin-bottom transition duration-300 ease-in-out"></span>
             <span class="relative z-10 flex items-center">
               <Icon :name="'mdi-arrow-down-bold-circle'" class="mr-2 text-xl text-white group-hover:text-white transition duration-300 ease-in-out" />
-              {{ "xablau" }}
+              {{ "Upload" }}
             </span>
           </Button>
         </div>
     </div>
 </div>
-<TrainingModal :show="showModal" @close="closeModal" @revert="handleRevert"/>
+<TrainingModal :show="showModal" @close="closeModal" @revert="handleRevert" @aproved="handleAproved"/>
 </template>
   
 <script setup lang="ts">
@@ -92,7 +92,7 @@ const formatFileSize = (size: number) => {
 }
 
 const handleContinue = (event: Event) => {
-  event.stopPropagation() // Prevent click event from bubbling up to parent
+  event.stopPropagation() 
   if (uploadProgress.value === 100) {
     showModal.value = true
   }
@@ -104,6 +104,11 @@ const closeModal = () => {
 
 const handleRevert = () => {
     alert("Mudanças revertidas")
+    closeModal()
+}
+
+const handleAproved = () => {
+    alert("Mudanças aprovadas")
     closeModal()
 }
 </script>
