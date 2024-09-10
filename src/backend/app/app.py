@@ -3,23 +3,31 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
 from app.db.mongodb import MongoDB
+
 from app.repositories.knr_repo import KNRRepository
-from app.routers.knr_router import router as knr_router
 from app.services.knr_service import KNRServiceSingleton
+from app.routers.knr_router import router as knr_router
+
+from app.repositories.models_repo import ModelRepository
+from app.services.models_service import ModelServiceSingleton
+from app.routers.models_router import router as models_router
 
 from dotenv import dotenv_values
+
 
 config = dotenv_values(".env")
 
 DATABASE_URI = config.get("DATABASE_URI", "mongodb://localhost:27017")
 DATABASE_NAME = config.get("DATABASE_NAME", "cross_the_line")
-KNR_COLLECTION_NAME = config.get("COLLECTION_NAME", "knrs")
-MODELS_COLLECTION_NAME = config.get("MODELS_COLLECTION_NAME", "models")
 
 
 @asynccontextmanager
 async def app_lifespan(app: FastAPI):
-    KNRServiceSingleton.initiate(KNRRepository(MongoDB(DATABASE_URI, DATABASE_NAME)))
+    app.state.db = MongoDB(DATABASE_URI, DATABASE_NAME)
+
+    KNRServiceSingleton.initialize(KNRRepository(app.state.db))
+    ModelServiceSingleton.initialize(ModelRepository(app.state.db))
+
     print("Connected to the MongoDB database!")
 
     yield
@@ -41,6 +49,7 @@ app.add_middleware(
 )
 
 app.include_router(knr_router)
+app.include_router(models_router)
 
 
 @app.get("/")
