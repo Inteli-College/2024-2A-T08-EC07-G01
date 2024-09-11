@@ -17,7 +17,7 @@ class KNRService:
     def get_knr(self, knr_id: str) -> Optional[KNR]:
         return self.knr_repo.get_knr(knr_id)
 
-    def update_knr(self, knr_id: str, knr: KNRUpdate) -> bool:
+    def update_knr(self, knr_id: str, knr: KNRUpdate | KNR) -> bool:
         return self.knr_repo.update_knr(knr_id, knr)
 
     def delete_knr(self, knr_id: str) -> bool:

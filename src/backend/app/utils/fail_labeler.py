@@ -14,11 +14,26 @@ fails = {
 }
 
 
-def label_knr(knr: KNR) -> KNR:
-    if knr.real_fail == '':
-        knr.real_fail = fails.get(knr.real_fail_code, "")
+def label_fail(fail_code: int) -> str:
+    if fail_code == "":
+        return ""
 
-    if knr.predicted_fail == '':
-        knr.predicted_fail = fails.get(knr.predicted_fail_code, "")
+    return fails.get(fail_code, "")
+
+
+def label_knr(knr: KNR) -> KNR:
+    if knr.predicted_fail_codes == [-1] or knr.predicted_fail_codes is None:
+        return knr
+
+    knr.predicted_fails = []
+    for fail in knr.predicted_fail_codes:
+        knr.predicted_fails.append(label_fail(fail))
+
+    if knr.real_fail_codes == [-1] or knr.real_fail_codes is None:
+        return knr
+
+    knr.real_fails = []
+    for fail in knr.real_fail_codes:
+        knr.real_fails.append(label_fail(fail))
 
     return knr

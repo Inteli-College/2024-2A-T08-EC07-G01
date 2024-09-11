@@ -94,14 +94,13 @@ def predict(x_test):
     x_test = np.asarray(x_test).astype(np.float32)
     y_pred = model.predict(x_test)
     y_pred_classes = (y_pred > 0.5).astype(int)
-    predicted_class = y_pred_classes[0][0]
-    return predicted_class
+    predicted_classes = y_pred_classes[0].tolist()
+    return predicted_classes 
 
 
-def predict_pipeline(data: KNR):
+def predict_pipeline(data: KNR) -> list:
     x_test = preprocess_data(data)
-    Y_pred = predict(x_test)
-    return Y_pred
+    return predict(x_test)
 
 
 def mocked_predict_pipeline(data):

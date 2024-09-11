@@ -21,7 +21,7 @@ class KNRRepository:
         document = self.collection.find_one({"KNR": knr_id})
         return KNR(**document) if document else None
 
-    def update_knr(self, knr_id: str, knr: KNRUpdate) -> bool:
+    def update_knr(self, knr_id: str, knr: KNRUpdate | KNR) -> bool:
         result = self.collection.update_one(
             {"KNR": knr_id},
             {"$set": knr.model_dump(exclude_unset=True, by_alias=True)},

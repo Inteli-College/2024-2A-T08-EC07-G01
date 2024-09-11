@@ -40,7 +40,7 @@ async def add_knr(knr: KNR):
     knr_id = KNRServiceSingleton.get_instance().create_knr(knr)
 
     result = predict_pipeline(knr)
-    knr.predicted_fail_code = int(result)
+    knr.predicted_fail_codes = result
     knr = label_knr(knr)
     knr.timestamp = str(datetime.now())
 
@@ -56,6 +56,7 @@ async def add_knr(knr: KNR):
 )
 async def update_knr(knr_id: str, knr: KNRUpdate):
     existing_knr = KNRServiceSingleton.get_instance().get_knr(knr_id)
+
     if not existing_knr:
         raise HTTPException(status_code=404, detail="KNR not found")
 
