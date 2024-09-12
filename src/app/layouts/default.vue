@@ -22,8 +22,8 @@ import normalLogo from '@/assets/static/logo.png';
     </header>
 
     <!-- Page content area -->
-    <div class="flex-grow p-4 mt-20 mb-16"> <!-- Added margin-top to offset the fixed header -->
-      <div class="min-h-[200vh]"> 
+    <div class="flex-grow p-4 mt-16 "> <!-- Added margin-top to offset the fixed header -->
+      <div class="min-h-[70vh]"> 
         <slot /> <!-- Page content -->
       </div>
     </div>
