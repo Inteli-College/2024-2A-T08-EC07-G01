@@ -107,6 +107,8 @@ const handleContinue = (event: Event) => {
 
 const closeModal = () => {
   showModal.value = false
+  file.value = null
+  uploadProgress.value = 0
 }
 
 const handleRevert = () => {
