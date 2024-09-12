@@ -1,5 +1,5 @@
 fastapi[standard]
-motor
+pymongo
 python-dotenv
 pytest
 tensorflow

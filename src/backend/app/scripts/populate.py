@@ -1,5 +1,4 @@
 from contextlib import asynccontextmanager
-from os import close
 from dotenv import dotenv_values
 import motor.motor_asyncio
 
