@@ -1,6 +1,6 @@
 ---
 title: "Dockerização do Frontend"
-sidebar_position: 3
+sidebar_position: 1
 ---
 
 # **0.1** Introdução
