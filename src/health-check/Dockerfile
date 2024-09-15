@@ -31,7 +31,8 @@ RUN yarn build
 FROM base
 
 # Expondo a porta para o contêiner
-EXPOSE $PORT
+ENV PORT=$PORT
 
-# Comando para rodar o Nuxt no modo dev
-CMD ["yarn", "dev"]
+COPY --from=build /src/health-check/.output /src/health-check/.output
+
+CMD [ "node", ".output/server/index.mjs" ]
