@@ -1,39 +1,80 @@
 ---
+title: "Guia de Execução"
 sidebar_position: 1
-custom_edit_url: null
 ---
 
-# Execução com o Docker
+## Execução com o Docker
 
 
-## Preparação do ambiente 
+### Preparação do ambiente 
 
 Para ter um ambiente que interaja com docker, é necessário realizar a instalação do mesmo. Esse tutorial a seguir estava funcionando para linux quando o projeto foi desenvolvido. Caso tenha algum problema, consulte a [documentação do docker](https://docs.docker.com/compose/install/) 
 
 1. Instale o Docker e o Docker compose: 
 
-```bashrc
+```bash
 sudo apt install docker docker-compose-v2
 ```
 
 Após a execução, deve ser utilizado o comando:
 
-```bashrc
+```bash
 sudo apt-get update
 ```
 
-## Executando o projeto
+### Executando o projeto
 
 Agora, para a execução do projeto é necessário abrir um terminal na pasta do projeto e executar os seguintes comandos:
 
-```bashrc
-$ cd src
-$ docker compose up
+```bash
+cd src
+docker compose up
 ```
 
 Depois da execução do comando, o projeto estará funcionando. 
 Os serviços estão localizados nas seguintes portas:
 
-**FrontEnd**: (http://localhost:3000)[http://localhost:3000]
-**BackEnd**: (http://localhost:8000)[http://localhost:8000]
-**Docs do Backend**: (http://localhost:8000/docs)[http://localhost:8000/docs]
+**FrontEnd**: (http://localhost:3000)
+
+**BackEnd**: (http://localhost:8000)
+
+**Docs do Backend**: (http://localhost:8000/docs)
+
+**MongoDB**: (http://localhost:27017)
+
+## Execução dos serviços individualmente
+
+### Frontend 
+
+Para rodar o FrontEnd, é necessário ter npm e node^[18.14.2]. Dessa forma, siga as instruções:
+
+1. Entrar na pasta do projeto e instalar as depêndencias:
+```bash
+cd app
+npm i
+```
+
+2. Rodar o projeto:
+```bash
+npm run dev
+```
+### Backend
+
+O backend foi contruído na versão 3.10 do python, sendo assim é a versão recomendada para não ter problemas de biblioteca. Para sua execução, siga as seguintes instruções:
+
+1. Entrar na pasta do projeto e instalar as depêndencias:
+```bash
+cd app
+```
+
+2. Crie uma venv e instale as bibliotecas necessárias:
+```bash
+python3 -m venv venv 
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+3. Rode o backend com o seguinte comando:
+```bash
+fastapi dev
+```
