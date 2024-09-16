@@ -45,7 +45,3 @@ Os `Services` realizam a implementação dos métodos do repositório em uma cla
 
 Os `routers` são responsáveis pela implementação das rotas da API, ou seja, utilizam uma instância do Service para realizar operações no banco de dados. Eles são responsáveis por receber as requisições HTTP e direcioná-las para as funções adequadas no Service, que irão manipular os dados no banco de dados conforme necessário. Eles recebem as requisições, extraem os parâmetros necessários e chamam as funções apropriadas no "Service" para manipular os dados no banco de dados conforme necessário. Além disso, eles lidam com a validação dos dados de entrada, garantindo que não haverá exceções no resto do código.
 
-
-## Rotas
-
-Para maior detalhe de como funciona cada rota, basta importar a collections que está localizada em `src/backend/collections` no [`bruno`](https://docs.usebruno.com/get-started/import-export-data/export-collections). Todavia, as rotas também podem ser visualizadas através da documentação do `fastapi`, que fica localizada na rota: http://localhost:8000/docs quando o [projeto](/documentacao/docs/Sprint%203/guia-de-execucao.md) é inicializado. 
