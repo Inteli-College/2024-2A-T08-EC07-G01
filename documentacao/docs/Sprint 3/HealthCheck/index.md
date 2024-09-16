@@ -37,7 +37,7 @@ Para executar o frontend é necessário executar os seguintes comandos:
 cd src
 ```
 
-2. Rodar o comando para "construir" (build) o contêiner (caso não tenha instalado o Docker ainda, verifique o [tutorial de execução](/documentacao/docs/Sprint%203/guia-de-execucao.md)):
+2. Rodar o comando para "construir" (build) o contêiner (caso não tenha instalado o Docker ainda, verifique o [tutorial de execução](/docs/Sprint%203/guia-de-execucao.md)):
 
 ```bash
 docker compose -f docker-compose-monitor.yml build
