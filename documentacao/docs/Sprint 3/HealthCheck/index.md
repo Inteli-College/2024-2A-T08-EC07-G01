@@ -49,4 +49,10 @@ docker compose -f docker-compose-monitor.yml build
 docker compose -f docker-compose-monitor.yml up
 ```
 
-4. Por fim, é necessário inicializar o restante do projeto, como pode ser visto no [guia de execução.](/documentacao/docs/Sprint%203/guia-de-execucao.md)
+4. Por fim, é necessário inicializar o restante do projeto, como pode ser visto no [guia de execução.](/docs/Sprint%203/guia-de-execucao.md)
+
+5. Para visualizar os status, é necessário utilizar um navegodor sem o cors: 
+
+```bash
+google-chrome --disable-web-security --user-data-dir="[some directory here]"
+```
