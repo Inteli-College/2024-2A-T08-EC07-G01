@@ -103,18 +103,6 @@ Após a busca, a tela exibe uma indicação visual sobre a condição do veícul
 
 Caso o KNR inserido seja inválido ou não retorne dados, a tela deverá exibir uma mensagem de erro ou de ausência de informações, solicitando um novo input.
 
-### **1.7** Healthcheck de Todos os Componentes
-
-A tela de Healthcheck fornece um status em tempo real dos componentes essenciais do sistema: frontend, backend e base de dados.
-
-**Funcionalidades:**
-
-- **Indicadores de Status**: Exibição visual do status atual de cada componente (operacional, degradado, offline).
-- **Detalhes Técnicos**: Informações adicionais como tempo de resposta, última verificação e logs de erro.
-- **Notificações**: Alertas para o usuário em caso de falhas críticas ou necessidade de intervenção.
-
-Esta funcionalidade é crucial para monitorar a saúde do sistema e garantir a disponibilidade contínua dos serviços.
-
 ## **2.1** Considerações Finais
 
 Neste projeto, desenvolvemos uma aplicação frontend completa utilizando Nuxt.js, Vue.js, Tailwind CSS e shadcn/vue, resultando em uma plataforma moderna, performática e centrada no usuário. As principais telas e funcionalidades implementadas foram:
@@ -126,8 +114,6 @@ Neste projeto, desenvolvemos uma aplicação frontend completa utilizando Nuxt.j
 - **Dashboard com Gráficos:** Fornece visualizações gráficas interativas das falhas detectadas, tendências e outras métricas importantes. Com atualização em tempo real e opções de personalização, os usuários podem monitorar o desempenho e identificar padrões relevantes.
 
 - **Tela de Previsão de KNR:** Permite que o usuário insira um KNR (Número de Registro de Veículo) e visualize as previsões de falhas associadas ao veículo. A interface oferece feedback visual claro sobre a condição do veículo e inclui mensagens de erro amigáveis em caso de inputs inválidos.
-
-- **Healthcheck de Todos os Componentes:** Uma tela crucial que fornece o status em tempo real dos componentes essenciais do sistema, incluindo frontend, backend e base de dados. Com indicadores de status e detalhes técnicos, os usuários podem monitorar a saúde do sistema e garantir a disponibilidade contínua dos serviços.
 
 :::info 
 Continuar investindo em testes automatizados e monitoramento para manter a qualidade e confiabilidade da aplicação ao longo do tempo.
