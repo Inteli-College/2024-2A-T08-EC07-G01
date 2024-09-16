@@ -1,0 +1,44 @@
+---
+title: "Arquitetura"
+sidebar_position: 1
+---
+
+## Arquitetura da Solução
+
+Ao iniciar a Sprint, o grupo chegou a conclusão de que seria mais eficiente o uso de um backend único em **fastapi** do que o uso de dois backends, um em **typescript** e outro em **fastapi**. Isso se deve pela necessidade de se utilizar **python** para interagir com o modelo de predição, visto que é uma das ferramentas mais eficientes no mercado. Além disso, a utilização de um único framework torna mais fácil lidar com versionamento de bibliotecas, além da interação com o banco de dados se torna mais ágil.
+
+<div align="center">
+  
+**Diagrama de Solução**
+
+### Arquitetura antiga
+
+![Arquitetura Antiga](/img/arquitetura_antiga.png)
+
+### Arquitetura atual
+
+![Arquitetura](/img/arquitetura.png)
+
+**Fonte:** Próprios autores
+
+</div>
+
+Como é possível ver no diagrama, a nova arquitetura consiste de um **frontend** em **nuxt** , **backend** em **fastapi** e um **database** em **mongodb**. Para complementar a explicação da arquitetura, é importante destacar as vantagens trazidas por essa unificação do backend. A escolha por FastAPI, é mais eficiente na integração com o modelo de predição em Python. Além disso, a arquitetura anterior, que separava o backend em duas linguagens distintas (TypeScript e Python), gerava uma maior complexidade, especialmente no que diz respeito à manutenção do código, integração entre diferentes stacks tecnológicas e a necessidade de gerenciar dependências em ambientes separados. Além disso, o overhead de comunicação entre dois servidores distintos poderia resultar em latência adicional, o que poderia impactar diretamente a experiência do usuário.
+
+Essa abordagem mais enxuta também reflete em uma menor complexidade na infraestrutura, visto que há uma diminuição na quantidade de serviços a serem monitorados e gerenciados, o que impacta positivamente na confiabilidade do sistema como um todo.
+
+## Estrutura do Backend
+
+###  Models 
+
+A pasta models representa uma abstração das classes que lidaremos dentro do backend, assim como seus atributos. Há 2 arquivos nessa pasta, o `knr.py` e o `models.py`, ambos contendo duas classes dentro deles. O knr representa um veículo que está percorrendo a linha de produção, tendo as classes `KNR` e `KNRUpdate`. Já o models, representa um modelo de predição, juntamente com sua localização dentro do banco de dados. Assim como o KNR, o models possui uma classe padrão e uma classe de atualização, para permite com que uma instância seja atualizada com novas informações.
+
+### Repositories 
+
+### Router 
+
+
+
+## Rotas
+
+Para maior detalhe de como funciona cada rota, é recomendado iniciar o [projeto](/documentacao/docs/Sprint%203/guia-de-execucao.md) e acessar http://localhost:8000/docs, no qual tem a documentação do fastapi.

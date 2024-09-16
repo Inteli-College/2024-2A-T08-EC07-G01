@@ -24,7 +24,7 @@ sudo apt-get update
 
 ### Executando o projeto
 
-Agora, para a execução do projeto é necessário abrir um terminal na pasta do projeto e executar os seguintes comandos:
+Agora, para a execução do projeto, é necessário abrir um terminal na pasta do projeto e executar os seguintes comandos:
 
 ```bash
 cd src
@@ -42,13 +42,13 @@ Os serviços estão localizados nas seguintes portas:
 
 **MongoDB**: (http://localhost:27017)
 
-## Execução dos serviços individualmente
+## Execução dos serviços de forma individual
 
 ### Frontend 
 
 Para rodar o FrontEnd, é necessário ter npm e node^[18.14.2]. Dessa forma, siga as instruções:
 
-1. Entrar na pasta do projeto e instalar as depêndencias:
+1. Entrar na pasta do projeto e instalar as dependências:
 ```bash
 cd app
 npm i
@@ -60,9 +60,9 @@ npm run dev
 ```
 ### Backend
 
-O backend foi contruído na versão 3.10 do python, sendo assim é a versão recomendada para não ter problemas de biblioteca. Para sua execução, siga as seguintes instruções:
+O backend foi construído na versão 3.10 do Python, sendo assim é a versão recomendada para não ter problemas de biblioteca. Para sua execução, siga as seguintes instruções:
 
-1. Entrar na pasta do projeto e instalar as depêndencias:
+1. Entrar na pasta do projeto e instalar as dependências:
 ```bash
 cd app
 ```
