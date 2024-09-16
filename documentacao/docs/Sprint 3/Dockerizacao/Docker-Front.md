@@ -1,51 +1,14 @@
 ---
 title: "Dockerização do Frontend"
-sidebar_position: 1
+sidebar_position: 2
 ---
-
-# **0.1** Introdução
-
-
-O frontend do projeto foi dockerizado utilizando o próprio Docker com o objetivo de garantir um ambiente padronizado e isolado para o desenvolvimento e produção. A dockerização foi realizada para eliminar problemas comuns de inconsistência entre os ambientes, que podem surgir devido a diferenças nas configurações das máquinas de desenvolvimento e servidores.
-
-Através do uso de containers, foi possível isolar todas as dependências e configurações necessárias para rodar o frontend, proporcionando um ambiente controlado e replicável. Isso simplificou o processo de desenvolvimento, permitindo que a equipe se concentrasse nas melhorias da aplicação sem se preocupar com discrepâncias de ambientes ou dependências.
-
-Além disso, a dockerização facilita a implantação, já que todo o ambiente necessário para a aplicação é definido no Dockerfile. Isso garante que o processo de deploy seja mais rápido e confiável, reduzindo a necessidade de configuração manual e permitindo uma entrega contínua e eficiente.
-
-:::tip Vantagens da Dockerização do Frontend
-- Ambiente padronizado e isolado
-- Eliminação de problemas de inconsistência entre ambientes
-- Simplificação do processo de desenvolvimento
-- Facilita a implantação e o deploy
-- Garante entrega contínua e eficiente
-:::
-
-# **1.0** Tipos de arquivo
-
-Na hora de dockerizar alguma aplicação, normalmente são utilizados os arquivos abaixos, afim de facilitar a criação e execução do container.
-
-- Dockerfile
-- docker-compose.yml
-
-Abaixo será comentado a respeito de ambos e quais são suas funções e importâncias.
-
-:::tip Informação
-Normalmente, se tem um Dockerfile para **cada** "parte" do projeto, exemplo: **um** para o frontend, **um** para o backend e **um** para o banco de dados.
-
-Enquanto isso, se tem apenas **um** docker-compose.yml no projeto.
-:::
-
-## **1.1** Dockerfile
-
-O Dockerfile é um arquivo de script que contém uma sequência de instruções para construir uma imagem Docker. Nele, você define a base do sistema operacional, as dependências necessárias e o comportamento do aplicativo, como copiar arquivos, instalar pacotes e configurar variáveis de ambiente. Quando o Dockerfile é processado, ele gera uma imagem pronta para ser utilizada, o que simplifica a criação de ambientes de desenvolvimento e produção, garantindo que tudo funcione de maneira padronizada.
-
-O mesmo funciona basicamente como um script de instalação, onde você define o que precisa ser feito para que a aplicação rode corretamente, definindo a ordem das operações. É como se estivesse realizando as operações em uma máquina com o Sistema Operacional recém instalada e sem nenhuma dependência instalada.
 
 Segue abaixo um exemplo de como o Dockerfile funciona, o mesmo é o que será utilizado para dockerizar o frontend do projeto.
 
 :::warning ATENÇÃO
 
 O mesmo afim de melhorar a leitura e entendimento, foi **dividido** em partes, todavia no fim, deve ser apenas um Dockerfile com todo o conteúdo. No **final** desta etapa do documento, será apresentado o Dockerfile **completo**.
+:::
 
 ### **1.1.1** Etapa 1
 
@@ -106,6 +69,7 @@ O comando de build da aplicação, é o comando que irá compilar o código para
 :::tip Informação
 
 Como estamos usando Nuxt, o comando padrão para buildar o mesmo utilizando o NPM é `npm run build`. Todavia dependendo do framework que você está utilizando, o comando pode ser diferente.
+:::
 
 ### **1.1.3** Etapa 3
 
@@ -234,8 +198,42 @@ O comando cria e executa um contêiner a partir da imagem front, mapeando a port
 docker run -p 5001:5000 front
 ```
 
-# **3.0** Conclusão
+### **2.1.3** Parar o container
+
+Para parar a execução do contêiner, basta executar o comando abaixo. Isso irá interromper a execução da aplicação e encerrar o contêiner, liberando os recursos utilizados.
+
+```bash
+docker stop front
+```
+
+### **2.1.4** Remover o container
+
+Para remover o contêiner após pará-lo, execute o comando abaixo. Isso irá excluir o contêiner e liberar o espaço ocupado no sistema.
+
+```bash
+docker rm front
+```
+
+### **2.1.5** Remover a imagem
+
+Para remover a imagem Docker após parar e remover o contêiner, execute o comando abaixo. Isso irá excluir a imagem do sistema, liberando o espaço ocupado no disco.
+
+```bash
+docker rmi front
+```
+
+## **3.0** Conclusão
 
 A dockerização do frontend do projeto foi uma etapa fundamental para garantir um ambiente de desenvolvimento e produção consistente, isolado e replicável. Atravavés do uso de containers, foi possível padronizar as dependências e configurações necessárias para rodar a aplicação, eliminando problemas de inconsistência entre ambientes e facilitando o processo de desenvolvimento e implantação.
 
 Através do Dockerfile, foi possível definir as etapas necessárias para construir a imagem Docker, incluindo a instalação de dependências, o build da aplicação e a configuração para rodar a aplicação. Com o docker-compose.yml, foi possível orquestrar a execução de múltiplos contêineres de forma eficiente, simplificando a criação e gerenciamento de ambientes complexos.
+
+A dockerização do frontend proporcionou um ambiente padronizado e isolado para o desenvolvimento e produção da aplicação, garantindo que a equipe possa trabalhar de forma consistente e eficiente em qualquer ambiente. Além disso, facilitou a implantação da aplicação, permitindo que a equipe entregue novas versões de forma rápida e confiável, garantindo a qualidade e estabilidade do sistema.'
+
+:::tip Vantagens da Dockerização do Frontend
+- Ambiente padronizado e isolado
+- Eliminação de problemas de inconsistência entre ambientes
+- Simplificação do processo de desenvolvimento
+- Facilita a implantação e o deploy
+- Garante entrega contínua e eficiente
+:::

@@ -3,60 +3,17 @@ title: "Principais Telas do Frontend"
 sidebar_position: 1
 ---
 
-# **0.1** Introdução
+## **0.0** Introdução
 
 O frontend deste projeto foi desenvolvido utilizando uma stack tecnológica moderna e eficiente, composta por **Nuxt.js**, **Vue.js**, **Tailwind CSS** e a biblioteca de componentes **shadcn/vue**.
 
-## **1.1** Nuxt.JS com Vue.js
+O por que da escolha destas tecnologias pode ser visto na seguinte página: [Tecnologias Utilizadas](/Sprint%202/Interface).
 
-**Nuxt.js** é um framework progressivo baseado em Vue.js que simplifica o desenvolvimento de aplicações web poderosas e escaláveis. Ele oferece uma estrutura robusta para construir aplicações com renderização no lado do servidor (SSR), geração de sites estáticos (SSG) e suporte a Single Page Applications (SPA).
-
-:::info Info
-A escolha do Nuxt.js permite melhorar significativamente o desempenho e a otimização para mecanismos de busca `(SEO)` da aplicação.
-:::
-
-### **1.2** Benefícios do Nuxt.js
-
-- **Renderização no Lado do Servidor (SSR)**: Melhora a performance e o SEO, entregando páginas pré-renderizadas aos usuários.
-- **Geração de Sites Estáticos (SSG)**: Possibilita a exportação de todo o site em arquivos estáticos, aumentando a velocidade de carregamento.
-- **Roteamento Automático**: Facilita a gestão de rotas através da estrutura de arquivos e pastas.
-- **Modularidade e Extensibilidade**: Suporte a uma ampla gama de módulos que adicionam funcionalidades extras sem complicações.
-
-Para projetos que exigem alta performance e escalabilidade, o Nuxt.js é uma excelente opção devido à sua flexibilidade e recursos avançados.
-
-## **2.1** Tailwind CSS
-
-Tailwind CSS é um framework CSS utilitário que permite criar interfaces de usuário customizadas de forma rápida e eficiente. Em vez de componentes pré-estilizados, o Tailwind fornece classes utilitárias de baixo nível que podem ser combinadas para construir qualquer design diretamente no seu HTML.
-
-**Vantagens do Tailwind CSS**
-
-- **Alta Produtividade**: Elimina a necessidade de escrever CSS personalizado para cada componente.
-- **Customização Total**: Fácil de personalizar para atender às necessidades específicas do projeto, sem restrições de estilos pré-definidos.
-- **Consistência Visual**: Garante uma aparência uniforme em toda a aplicação, facilitando a manutenção e escalabilidade.
-
-:::tip Info
-Foi utilizado o `Tailwind` em vez do `Bootstrap` pelo fato do mesmo ter um maior leque de opções, aumentando e melhorando a customização do projeto.
-:::
-
-## **3.1** Biblioteca de Componentes shadcn/vue
-
-A **shadcn/vue** é uma biblioteca de componentes para Vue.js que oferece uma coleção de componentes acessíveis e personalizáveis, seguindo as melhores práticas de design e usabilidade. Inspirada na biblioteca shadcn/ui para React, ela traz para o ecossistema Vue uma série de componentes prontos para uso.
-
-**Características da shadcn/vue**
-
-- **Componentes Pré-Construídos**: Inclui botões, formulários, modais, menus e muito mais, agilizando o desenvolvimento.
-- **Acessibilidade Incorporada**: Todos os componentes são desenvolvidos seguindo os padrões ARIA, garantindo que sejam utilizáveis por todos os usuários.
-- **Estilização Flexível**: Integração perfeita com Tailwind CSS para customizar os estilos de acordo com o branding do projeto.
-
-:::info
-O foco em acessibilidade da shadcn/vue assegura que sua aplicação esteja em conformidade com as diretrizes de acessibilidade, melhorando a experiência para todos os usuários.
-:::
-
-## **4.1** Telas Principais do Frontend
+## **1.1** Telas Principais do Frontend
 
 A seguir, serão detalhadas as principais telas desenvolvidas no frontend, destacando suas funcionalidades e componentes utilizados.
 
-### **4.2** Landing Page
+### **1.2** Landing Page
 
 A Landing Page é a porta de entrada do aplicativo, projetada para atrair e informar os usuários sobre as funcionalidades oferecidas.
 
@@ -68,7 +25,11 @@ A Landing Page é a porta de entrada do aplicativo, projetada para atrair e info
 
 Utilizamos componentes de layout e tipografia da shadcn/vue, estilizados com Tailwind CSS, para criar uma interface atraente e moderna.
 
-### **4.3** Histórico
+Segue abaixo uma imagem da Landing Page:
+
+![Landing Page](../../../../static/img/LP.png)
+
+### **1.3** Histórico
 
 Esta tela exibe um registro detalhado das falhas identificadas pelo sistema de inteligência artificial.
 
@@ -80,7 +41,17 @@ Esta tela exibe um registro detalhado das falhas identificadas pelo sistema de i
 
 A implementação desta tela aproveita componentes de tabela e modais da shadcn/vue para uma experiência de usuário intuitiva.
 
-### **4.4** Dashboard com Gráficos
+Segue abaixo uma imagem do Histórico:
+
+Parte 1,
+
+![Histórico 1](../../../../static/img/HistoryReal.png)
+
+Parte 2,
+
+![Histórico 2](../../../../static/img/History2.png)
+
+### **1.4** Dashboard com Gráficos
 
 O dashboard fornece visualizações gráficas das falhas detectadas, tendências e outras métricas importantes.
 
@@ -96,31 +67,43 @@ A integração dos gráficos do ShadCN com o Tailwind CSS permite criar visualiz
 Garantir que os gráficos sejam acessíveis, fornecendo alternativas textuais e garantindo contraste adequado de cores.
 :::
 
-### **4.5** Adicionar Arquivo para Treino
+Segue abaixo uma imagem do Dashboard:
 
-Esta tela permite que o usuário faça upload de arquivos para treinar o modelo de inteligência artificial.
+![Dashboard](../../../../static/img/DashboardReal.png)
 
-**Funcionalidades:**
+### **1.5** Adicionar Arquivo para Treino
 
-- **Upload Seguro de Arquivos**: Suporte a formatos específicos e validação no lado do cliente.
-- **Feedback Imediato**: Indicação do progresso do upload e confirmação de melhoria ou piora no próximo modelo.
-- **Instruções Claras**: Orientações sobre os requisitos do arquivo e passos para concluir o processo.
+### **1.6** Tela de Previsão de KNR
 
-Está tela tem por objetivo ser simples e interativa para o usuário final, com feedbacks claros e instruções fáceis de seguir.
+![Tela de Previsão de KNR](/img/previsaoKNR.jpg)
 
-### **4.6** Adicionar Arquivo para Predição
+Esta tela permite que o usuário insira um KNR (Número de Registro de Veículo) e visualize as previsões de falhas associadas ao carro, indicando se há ou não uma falha prevista para aquele veículo. O resultado exibe um gráfico categorizando os tipos de falhas potenciais e seus status.
 
-Nesta tela, o usuário pode enviar arquivos para que o sistema realize predições com base no modelo treinado.
 
-**Características:**
+#### Campo de Busca  
 
-- **Interface Simples**: Processo de upload direto, com minimização de etapas para facilitar o uso.
-- **Resultados Rápidos**: Exibição dos resultados da predição logo após o processamento.
-- **Histórico de Predições**: Registro dos arquivos enviados e resultados obtidos para referência futura.
+O usuário digita o número de KNR desejado para realizar a busca das falhas previstas.  
+- **Funcionalidade**: Após inserir o KNR e clicar no ícone de lupa, a tela busca o status do veículo relacionado ao KNR.
 
-Utilizamos componentes de upload e notificações da shadcn/vue para melhorar a experiência do usuário.
+#### Indicação de Falha ou Não Falha  
 
-### **4.7** Healthcheck de Todos os Componentes
+Após a busca, a tela exibe uma indicação visual sobre a condição do veículo:
+- **Carro sem falha prevista**: Caso um KNR válido seja inserido e o veículo não tenha falhas previstas, o usuário será redirecionado para a tela "Sem Falha Indicada".
+- **Carro com falha prevista**: Se o KNR possuir uma falha associada, o usuário será redirecionado para a tela "Teste de Rodagem Indicado", que exibe os detalhes da falha.
+
+**Modal de Previsão dos KNRs (sem Erros)**
+
+![Modal de Previsão dos KNRs (sem Erros)](/img/previsaoModal1.jpeg)
+
+**Modal de Previsão dos KNRs (com Erros)**
+
+![Modal de Previsão dos KNRs (com Erros)](/img/previsaoModal2.jpg)
+
+#### Mensagens de Erro 
+
+Caso o KNR inserido seja inválido ou não retorne dados, a tela deverá exibir uma mensagem de erro ou de ausência de informações, solicitando um novo input.
+
+### **1.7** Healthcheck de Todos os Componentes
 
 A tela de Healthcheck fornece um status em tempo real dos componentes essenciais do sistema: frontend, backend e base de dados.
 
@@ -132,19 +115,20 @@ A tela de Healthcheck fornece um status em tempo real dos componentes essenciais
 
 Esta funcionalidade é crucial para monitorar a saúde do sistema e garantir a disponibilidade contínua dos serviços.
 
-## **5.1** Considerações Finais
+## **2.1** Considerações Finais
 
-A escolha das tecnologias **Nuxt.js**, **Vue.js**, **Tailwind CSS** e **shadcn/vue** proporcionou uma base sólida para o desenvolvimento de uma aplicação frontend moderna, performática e acessível.
+Neste projeto, desenvolvemos uma aplicação frontend completa utilizando Nuxt.js, Vue.js, Tailwind CSS e shadcn/vue, resultando em uma plataforma moderna, performática e centrada no usuário. As principais telas e funcionalidades implementadas foram:
 
-O Vue.js, com sua sintaxe intuitiva e abordagem reativa, permitiu a criação de interfaces de usuário dinâmicas e escaláveis. Sua componentização facilitou a reutilização de código e a manutenção do projeto a longo prazo.
+- **Landing Page:** Servindo como a porta de entrada do aplicativo, projetada para apresentar o produto de forma clara e atraente. Com chamadas para ação estratégicas e um design responsivo, incentivamos os usuários a explorarem mais profundamente a aplicação.
 
-Integrando o Nuxt.js, aproveitamos os benefícios da renderização no lado do servidor (SSR) e da geração de sites estáticos. Isso não apenas melhorou o desempenho da aplicação, mas também otimizou para mecanismos de busca (SEO), garantindo que o conteúdo fosse facilmente indexado e acessível para um público mais amplo.
+- **Histórico:** Uma tela dedicada que exibe um registro detalhado das falhas identificadas pelo sistema de inteligência artificial. Implementamos funcionalidades de listagem, filtros avançados e pesquisa por palavras-chave, permitindo que os usuários visualizem e analisem as falhas de maneira eficiente.
 
-O Tailwind CSS acelerou o processo de estilização com sua abordagem utilitária. Com classes pré-definidas, pudemos criar designs consistentes e responsivos sem escrever CSS personalizado extensivo. Isso aumentou a eficiência do desenvolvimento e garantiu uma experiência visual coesa em todas as páginas.
+- **Dashboard com Gráficos:** Fornece visualizações gráficas interativas das falhas detectadas, tendências e outras métricas importantes. Com atualização em tempo real e opções de personalização, os usuários podem monitorar o desempenho e identificar padrões relevantes.
 
-Adicionando o shadcn/vue, incorporamos um conjunto de componentes de UI acessíveis e personalizáveis. Baseado em padrões de design modernos, este recurso permitiu que construíssemos interfaces de usuário ricas enquanto mantínhamos a acessibilidade e a usabilidade no centro do processo de design.
+- **Tela de Previsão de KNR:** Permite que o usuário insira um KNR (Número de Registro de Veículo) e visualize as previsões de falhas associadas ao veículo. A interface oferece feedback visual claro sobre a condição do veículo e inclui mensagens de erro amigáveis em caso de inputs inválidos.
 
-Em conjunto, essas tecnologias permitiram desenvolver uma aplicação que não é apenas moderna e performática, mas também centrada no usuário. A combinação dessas ferramentas garantiu que pudéssemos entregar uma experiência de alta qualidade, atendendo às necessidades de um público diversificado e alinhando-nos com as melhores práticas atuais do desenvolvimento web.
+- **Healthcheck de Todos os Componentes:** Uma tela crucial que fornece o status em tempo real dos componentes essenciais do sistema, incluindo frontend, backend e base de dados. Com indicadores de status e detalhes técnicos, os usuários podem monitorar a saúde do sistema e garantir a disponibilidade contínua dos serviços.
 
-:::info Continuar investindo em testes automatizados e monitoramento para manter a qualidade e confiabilidade da aplicação ao longo do tempo.
+:::info 
+Continuar investindo em testes automatizados e monitoramento para manter a qualidade e confiabilidade da aplicação ao longo do tempo.
 :::
