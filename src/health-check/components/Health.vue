@@ -39,7 +39,7 @@ export default {
   mounted() {
     // Verifica os serviços imediatamente e depois a cada 1 segundo
     this.fetchAllServices();
-    this.intervalId = setInterval(() => this.fetchAllServices(), 10000);
+    this.intervalId = setInterval(() => this.fetchAllServices(), 60000);
   },
   beforeUnmount() {
     // Limpa o intervalo quando o componente é destruído
@@ -48,15 +48,7 @@ export default {
   methods: {
     async fetchBackendStatus() {
       try {
-        const response = await fetch('http://localhost:8000/', {
-          mode: 'cors', // This tells the browser to make a CORS request.
-          headers: {
-            'Content-Type': 'application/json', // Specify the content type, if needed
-            // Add any other custom headers you might need
-          },
-          // Include credentials if necessary (e.g., cookies)
-          credentials: 'include' // or 'same-origin' depending on your setup
-        });
+        const response = await fetch('http://0.0.0.0:8000/');
         this.backendStatus = `Status: ${response.status}`;
       } catch (error) {
         console.error('Error fetching backend data:', error);
@@ -65,7 +57,7 @@ export default {
     },
     async fetchDatabaseStatus() {
       try {
-        const response = await fetch('http://[::]:27017/', {
+        const response = await fetch('http://0.0.0.0:27017/', {
           mode: 'cors', // This tells the browser to make a CORS request.
           headers: {
             'Content-Type': 'application/json', // Specify the content type, if needed
@@ -85,14 +77,14 @@ export default {
     },
     async fetchFrontendStatus() {
       try {
-        const response = await fetch('http://[::]:3000/',{
+        const response = await fetch('http://0.0.0.0:3000/', {
           mode: 'cors', // This tells the browser to make a CORS request.
-          headers: {
+            headers: {
             'Content-Type': 'application/json', // Specify the content type, if needed
+            'Access-Control-Allow-Origin': '*' // Set the Access-Control-Allow-Origin header
             // Add any other custom headers you might need
-          },
+            },
           // Include credentials if necessary (e.g., cookies)
-          credentials: 'include' // or 'same-origin' depending on your setup
         });
         console.log(response)
         this.frontendStatus = `Status: ${response.status}`;
