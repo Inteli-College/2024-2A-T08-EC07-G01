@@ -35,10 +35,17 @@ A pasta models representa uma abstração das classes que lidaremos dentro do ba
 
 ### Repositories 
 
+Os `repositories` são responsáveis por implementar as funções que os modelos devem possuir. Ou seja, eles são uma classe que realizam manipulações em objetos dos modelos. Há repositories tanto para o `KNR`, quanto para `Model`. Neles são implementados métodos de maneira idêntica a um `crud` de um site, ou seja, Create, Read one, Read All, Update e Delete.
+
+### Services 
+
+Os `Services` realizam a implementação dos métodos do repositório em uma classe, através da instanciação do primeiro em seu construtor. Para que seja possível acessar as classes criadas dentro da pasta service em qualquer lugar, cada service possui um singleton, ou seja, uma implementação da classe que terá uma única instância. Assim, garantindo sempre que o Router, o qual é a abstração de nível mais alto, estará lidando com o mesmo service.
+
 ### Router 
 
+Os `routers` são responsáveis pela implementação das rotas da API, ou seja, utilizam uma instância do Service para realizar operações no banco de dados. Eles são responsáveis por receber as requisições HTTP e direcioná-las para as funções adequadas no Service, que irão manipular os dados no banco de dados conforme necessário. Eles recebem as requisições, extraem os parâmetros necessários e chamam as funções apropriadas no "Service" para manipular os dados no banco de dados conforme necessário. Além disso, eles lidam com a validação dos dados de entrada, garantindo que não haverá exceções no resto do código.
 
 
 ## Rotas
 
-Para maior detalhe de como funciona cada rota, é recomendado iniciar o [projeto](/documentacao/docs/Sprint%203/guia-de-execucao.md) e acessar http://localhost:8000/docs, no qual tem a documentação do fastapi.
+Para maior detalhe de como funciona cada rota, basta importar a collections que está localizada em `src/backend/collections` no [`bruno`](https://docs.usebruno.com/get-started/import-export-data/export-collections). Todavia, as rotas também podem ser visualizadas através da documentação do `fastapi`, que fica localizada na rota: http://localhost:8000/docs quando o [projeto](/documentacao/docs/Sprint%203/guia-de-execucao.md) é inicializado. 
