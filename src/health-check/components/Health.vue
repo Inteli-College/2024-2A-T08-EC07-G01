@@ -58,13 +58,11 @@ export default {
     async fetchDatabaseStatus() {
       try {
         const response = await fetch('http://0.0.0.0:27017/', {
-          mode: 'cors', // This tells the browser to make a CORS request.
+          mode: 'cors', 
           headers: {
-            'Content-Type': 'application/json', // Specify the content type, if needed
-            // Add any other custom headers you might need
+            'Content-Type': 'application/json',
           },
-          // Include credentials if necessary (e.g., cookies)
-          credentials: 'include' // or 'same-origin' depending on your setup
+          credentials: 'include'
         });
         const statusCode = response.status;
         console.log(`Database status: ${statusCode}`);
@@ -78,13 +76,12 @@ export default {
     async fetchFrontendStatus() {
       try {
         const response = await fetch('http://0.0.0.0:3000/', {
-          mode: 'cors', // This tells the browser to make a CORS request.
-            headers: {
-            'Content-Type': 'application/json', // Specify the content type, if needed
-            'Access-Control-Allow-Origin': '*' // Set the Access-Control-Allow-Origin header
-            // Add any other custom headers you might need
-            },
-          // Include credentials if necessary (e.g., cookies)
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          },
+          credentials: 'include'
         });
         console.log(response)
         this.frontendStatus = `Status: ${response.status}`;
