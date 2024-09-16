@@ -7,7 +7,7 @@ sidebar_position: 2
 Bruno é um cliente de API open-source rápido e amigável com Git, destinado a revolucionar o status quo representado por ferramentas como Postman, Insomnia e outras similares.
 :::
 
-Para maior detalhe de como funciona cada rota, basta importar a collections que está localizada em `src/backend/collections` no [`bruno`](https://docs.usebruno.com/get-started/import-export-data/export-collections). Todavia, as rotas também podem ser visualizadas através da documentação do `fastapi`, que fica localizada na rota: http://localhost:8000/docs quando o [projeto](/documentacao/docs/Sprint%203/guia-de-execucao.md) é inicializado.
+Para maior detalhe de como funciona cada rota, basta importar a collections que está localizada em `src/backend/collections` no [`bruno`](https://docs.usebruno.com/get-started/import-export-data/export-collections). Todavia, as rotas também podem ser visualizadas através da documentação do `fastapi`, que fica localizada na rota: http://localhost:8000/docs quando o [projeto](/docs/Sprint%203/guia-de-execucao.md) é inicializado.
 
 ## Tabela das Rotas:
 
