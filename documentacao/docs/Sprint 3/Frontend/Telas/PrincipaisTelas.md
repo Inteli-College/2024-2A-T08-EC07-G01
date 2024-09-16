@@ -134,7 +134,7 @@ Esta funcionalidade é crucial para monitorar a saúde do sistema e garantir a d
 
 ## **5.1** Considerações Finais
 
-A escolha das tecnologias Nuxt.js, Vue.js, Tailwind CSS e shadcn/vue proporcionou uma base sólida para o desenvolvimento de uma aplicação frontend moderna, performática e acessível.
+A escolha das tecnologias **Nuxt.js**, **Vue.js**, **Tailwind CSS** e **shadcn/vue** proporcionou uma base sólida para o desenvolvimento de uma aplicação frontend moderna, performática e acessível.
 
 O Vue.js, com sua sintaxe intuitiva e abordagem reativa, permitiu a criação de interfaces de usuário dinâmicas e escaláveis. Sua componentização facilitou a reutilização de código e a manutenção do projeto a longo prazo.
 
