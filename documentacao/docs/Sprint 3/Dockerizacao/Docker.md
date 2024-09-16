@@ -6,13 +6,13 @@ sidebar_position: 1
 # **0.1** Introdução
 
 
-O frontend do projeto foi dockerizado utilizando o próprio Docker com o objetivo de garantir um ambiente padronizado e isolado para o desenvolvimento e produção. A dockerização foi realizada para eliminar problemas comuns de inconsistência entre os ambientes, que podem surgir devido a diferenças nas configurações das máquinas de desenvolvimento e servidores.
+O projeto foi dockerizado utilizando o próprio Docker com o objetivo de garantir um ambiente padronizado e isolado para o desenvolvimento e produção. A dockerização foi realizada para eliminar problemas comuns de inconsistência entre os ambientes, que podem surgir devido a diferenças nas configurações das máquinas de desenvolvimento e servidores.
 
-Através do uso de containers, foi possível isolar todas as dependências e configurações necessárias para rodar o frontend, proporcionando um ambiente controlado e replicável. Isso simplificou o processo de desenvolvimento, permitindo que a equipe se concentrasse nas melhorias da aplicação sem se preocupar com discrepâncias de ambientes ou dependências.
+Através do uso de containers, foi possível isolar todas as dependências e configurações necessárias para rodar o projeto, proporcionando um ambiente controlado e replicável. Isso simplificou o processo de desenvolvimento, permitindo que a equipe se concentrasse nas melhorias da aplicação sem se preocupar com discrepâncias de ambientes ou dependências.
 
 Além disso, a dockerização facilita a implantação, já que todo o ambiente necessário para a aplicação é definido no Dockerfile. Isso garante que o processo de deploy seja mais rápido e confiável, reduzindo a necessidade de configuração manual e permitindo uma entrega contínua e eficiente.
 
-:::tip Vantagens da Dockerização do Frontend
+:::tip Vantagens da Dockerização do Projeto
 - Ambiente padronizado e isolado
 - Eliminação de problemas de inconsistência entre ambientes
 - Simplificação do processo de desenvolvimento
@@ -43,6 +43,6 @@ O mesmo funciona basicamente como um script de instalação, onde você define o
 
 # **2.0** Conclusão
 
-A dockerização do frontend do projeto foi uma etapa fundamental para garantir um ambiente de desenvolvimento e produção consistente, isolado e replicável. Atravavés do uso de containers, foi possível padronizar as dependências e configurações necessárias para rodar a aplicação, eliminando problemas de inconsistência entre ambientes e facilitando o processo de desenvolvimento e implantação.
+A dockerização do projeto foi uma etapa fundamental para garantir um ambiente de desenvolvimento e produção consistente e confiável, eliminando problemas comuns de inconsistência entre ambientes e facilitando o processo de deploy.
 
 Através do Dockerfile, foi possível definir as etapas necessárias para construir a imagem Docker, incluindo a instalação de dependências, o build da aplicação e a configuração para rodar a aplicação. Com o docker-compose.yml, foi possível orquestrar a execução de múltiplos contêineres de forma eficiente, simplificando a criação e gerenciamento de ambientes complexos.
