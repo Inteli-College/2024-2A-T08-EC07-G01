@@ -8,7 +8,7 @@ sidebar_position: 1
 
 ### Preparação do ambiente 
 
-Para ter um ambiente que interaja com docker, é necessário realizar a instalação do mesmo. Esse tutorial a seguir estava funcionando para linux quando o projeto foi desenvolvido. Caso tenha algum problema, consulte a [documentação do docker](https://docs.docker.com/compose/install/) 
+Para ter um ambiente que interaja com docker, é necessário realizar a instalação do mesmo. Para esse projeto foi utilizada a Versão 26.1.4 do docker, em 16/09/2024. Caso tenha algum problema, consulte a [documentação do docker](https://docs.docker.com/compose/install/) 
 
 1. Instale o Docker e o Docker compose: 
 
@@ -51,12 +51,16 @@ Para rodar o FrontEnd, é necessário ter npm e node^[18.14.2]. Dessa forma, sig
 1. Entrar na pasta do projeto e instalar as dependências:
 ```bash
 cd src/app
-npm i
 ```
 
-2. Rodar o projeto:
+2. "Buildar" o Contêiner:
 ```bash
-npm run dev
+docker build -t frontend
+```
+
+3. Inicializar o Contêiner:
+```bash
+docker up -t frontend
 ```
 
 ### Backend
@@ -68,14 +72,14 @@ O backend foi construído na versão 3.10 do Python, sendo assim é a versão re
 cd src/backend
 ```
 
-2. Crie uma venv e instale as bibliotecas necessárias:
+2. "Buildar" o Contêiner:
 ```bash
-python3 -m venv venv 
-source venv/bin/activate
-pip install -r requirements.txt
+docker build -t backend
 ```
 
-3. Rode o backend com o seguinte comando:
+3. Inicializar o Contêiner:
 ```bash
-fastapi dev
+docker up -t backend
 ```
+
+### Database
