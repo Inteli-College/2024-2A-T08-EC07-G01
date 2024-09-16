@@ -50,7 +50,7 @@ Para rodar o FrontEnd, é necessário ter npm e node^[18.14.2]. Dessa forma, sig
 
 1. Entrar na pasta do projeto e instalar as dependências:
 ```bash
-cd app
+cd src/app
 npm i
 ```
 
@@ -58,13 +58,14 @@ npm i
 ```bash
 npm run dev
 ```
+
 ### Backend
 
 O backend foi construído na versão 3.10 do Python, sendo assim é a versão recomendada para não ter problemas de biblioteca. Para sua execução, siga as seguintes instruções:
 
 1. Entrar na pasta do projeto e instalar as dependências:
 ```bash
-cd app
+cd src/backend
 ```
 
 2. Crie uma venv e instale as bibliotecas necessárias:
