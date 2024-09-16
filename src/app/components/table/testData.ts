@@ -1,4 +1,12 @@
-export const testData: TestData[] = [
+export interface TestData {
+    knr: string;
+    dataPrevisao: string;
+    falha: string;
+    tipoFalha: string;
+    testeIndicado: string;
+}
+
+export const TestData: TestData[] = [
     {
         knr: '12345',
         dataPrevisao: '2024-08-30',
