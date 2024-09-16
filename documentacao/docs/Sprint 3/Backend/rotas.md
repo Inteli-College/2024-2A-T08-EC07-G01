@@ -15,8 +15,8 @@ O knr representa um veículo que está percorrendo a linha de produção. Um Exe
 | ---------------- | ------ | -------------------------------------------------------------------------------------- | --------- | ------------------------------------------- |
 | `/api/knr/`      | GET    | Retorna a lista de todos os knr armazenados.                                           | N/A       | Lista com todos os knrs armazenados         |
 | `/api/knr/{knr}` | GET    | Recupera um knr específico a partir de seu identificador.                              | N/A       | Objeto de um knr requisitado                |
-| `/api/knr/`      | POST   | Adiciona um novo knr ao banco de dados, assim como realiza a previsão de falhas nele . | knr       | String com o id do KNR                      |
-| `/api/knr/{knr}` | PUT    | Atualiza um knr específico a partir de seu identificador.                              | knr       | Booleano dependendo do sucesso da operação. |
+| `/api/knr/`      | POST   | Adiciona um novo knr ao banco de dados, assim como realiza a previsão de falhas nele . | KNR       | String com o id do KNR                      |
+| `/api/knr/{knr}` | PUT    | Atualiza um knr específico a partir de seu identificador.                              | KNR       | Booleano dependendo do sucesso da operação. |
 | `/api/knr/{knr}` | DELETE | Remove um knr específico a partir de seu identificador.                                | N/A       | Booleano dependendo do sucesso da operação. |
 
 ### Models

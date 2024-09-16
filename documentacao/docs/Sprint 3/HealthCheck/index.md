@@ -3,7 +3,7 @@ title: "HealthCheck"
 sidebar_position: 1
 ---
 
-Durante a sprint, foi desenvolvido um sistema de verificação de saúde das instâncias do docker da aplicação. Dessa forma, o grupo criou um frontend em `Nuxt`, o qual realiza solicitações a cada 10 segundos para todos os serviços existentes, sendo eles: 
+Durante a Sprint, foi desenvolvido um sistema de verificação de saúde das instâncias do Docker da aplicação. Dessa forma, o grupo criou um frontend em `Nuxt`, o qual realiza solicitações a cada 10 segundos para todos os serviços existentes, sendo eles: 
 
 **Backend**: `localhost:8000/` 
 
@@ -31,22 +31,22 @@ Caso haja algum erro em algum serviço, será exibido:
 
 Para executar o frontend é necessário executar os seguintes comandos:
 
-1. Entrar na pasta src do projeto
+1. Entrar na pasta src do projeto.
 
 ```bash
 cd src
 ```
 
-2. Rodar o comando para "construir" (build) o container (caso não tenha instalado o docker ainda, verifique o [tutorial de execução](/documentacao/docs/Sprint%203/guia-de-execucao.md)):
+2. Rodar o comando para "construir" (build) o contêiner (caso não tenha instalado o Docker ainda, verifique o [tutorial de execução](/documentacao/docs/Sprint%203/guia-de-execucao.md)):
 
 ```bash
 docker compose -f docker-compose-monitor.yml build
 ```
 
-3. Inicializar o docker compose 
+3. Inicializar o Docker compose 
 
 ```bash
 docker compose -f docker-compose-monitor.yml up
 ```
 
-4. Por fim, é necessário inicializar o restante do projeto, como pode ser visto no [guia de execução](/documentacao/docs/Sprint%203/guia-de-execucao.md)
+4. Por fim, é necessário inicializar o restante do projeto, como pode ser visto no [guia de execução.](/documentacao/docs/Sprint%203/guia-de-execucao.md)
