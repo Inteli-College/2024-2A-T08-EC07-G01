@@ -39,7 +39,7 @@ export default {
   mounted() {
     // Verifica os serviços imediatamente e depois a cada 1 segundo
     this.fetchAllServices();
-    this.intervalId = setInterval(() => this.fetchAllServices(), 60000);
+    this.intervalId = setInterval(() => this.fetchAllServices(), 30000);
   },
   beforeUnmount() {
     // Limpa o intervalo quando o componente é destruído
