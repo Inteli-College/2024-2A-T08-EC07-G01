@@ -27,6 +27,8 @@ Como é possível ver no diagrama, a nova arquitetura consiste em um **frontend*
 
 Essa abordagem mais enxuta também reflete em uma menor complexidade na infraestrutura, visto que há uma diminuição na quantidade de serviços a serem monitorados e gerenciados, o que impacta positivamente na confiabilidade do sistema como um todo.
 
+Com o MongoDB como nosso DataLake, temos acesso a um banco de dados não relacional e a um File System chamado GridFS. Conseguimos salvar todos os dados e logs da aplicação em coleções do banco de dados NoSQL e os modelos gerados no GridFS.
+
 ## Estrutura do Backend
 
 ### Models
