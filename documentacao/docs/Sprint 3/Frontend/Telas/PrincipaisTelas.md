@@ -73,6 +73,18 @@ Segue abaixo uma imagem do Dashboard:
 
 ### **1.5** Adicionar Arquivo para Treino
 
+Está tela permite que o usuário faça o upload de arquivos para treinar o modelo de inteligência artificial, resultando em um modal de confirmação de envio. Mostrando o progresso do envio e um modal de confirmação de sucesso.
+
+O modal de confirmação de sucesso exibe uma mensagem de sucesso, um botão para aceitar o novo modelo e um botão para reverter ao modelo antigo.
+
+Segue abaixo uma imagem da tela de adicionar arquivo para treino:
+
+![Adicionar Arquivo para Treino](/img/Train.png)
+
+Segue abaixo uma imagem do modal de confirmação de envio:
+
+![Modal de Confirmação de Envio](/img/TrainModal.png)
+
 ### **1.6** Tela de Previsão de KNR
 
 ![Tela de Previsão de KNR](/img/previsaoKNR.jpg)
