@@ -179,4 +179,4 @@ pyrightconfig.json
 # End of https://www.toptal.com/developers/gitignore/api/pythonsrc/data/*.csv
 
 
-src/models/data
+src/data
