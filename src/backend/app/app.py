@@ -12,6 +12,10 @@ from app.repositories.models_repo import ModelRepository
 from app.services.models_service import ModelServiceSingleton
 from app.routers.models_router import router as models_router
 
+from app.routers.healthcheck_router import router as healthcheck_router
+#from pymongo import MongoClient
+#from pymongo.errors import ConnectionFailure
+
 from dotenv import dotenv_values
 
 
@@ -38,7 +42,9 @@ async def app_lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=app_lifespan)
 
-origins = ["*"]
+origins = [
+        "http://localhost:3001"
+]
 
 app.add_middleware(
     CORSMiddleware,
@@ -50,8 +56,23 @@ app.add_middleware(
 
 app.include_router(knr_router)
 app.include_router(models_router)
+app.include_router(healthcheck_router)
 
+
+#mongo_url = "mongodb://localhost:27017"
+#timeout_ms = 1000
 
 @app.get("/")
 async def read_root():
     return {"message": "crossing the line!"}
+
+'''
+@app.get("/healthcheck/mongodb")
+async def healthcheck_mongodb():
+    try:
+        client = MongoClient(mongo_url, serverSelectionTimeoutMS=timeout_ms)
+        client.server_info()  # Apenas verifica a conectividade
+        return {"status": "MongoDB is reachable", "status_code": 200}
+    except ConnectionFailure as e:
+        return {"status": "MongoDB is unreachable", "status_code": 500, "error": str(e)}
+'''
