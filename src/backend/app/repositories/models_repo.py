@@ -13,6 +13,10 @@ class ModelRepository:
         documents = self.collection.find()
         return [Model(**document) for document in documents]
 
+    def get_models_by_type(self, model_type: str) -> list[Model]:
+        documents = self.collection.find({"model_type": model_type})
+        return [Model(**document) for document in documents]
+                
     def create_model(self, model_info: Model) -> str:
         self.collection.insert_one(model_info.model_dump(by_alias=True))
         return str(model_info.model_name)
