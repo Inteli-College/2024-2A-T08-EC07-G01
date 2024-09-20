@@ -17,6 +17,6 @@ class Prediction(BaseModel):
                 "KNR": "top10knrsdavolkswagen",
                 "predicted_fail_codes": [1, 2, 3],
                 "real_fail_codes": [1, 2, 3],
-                "indicated_test": ["test1", "test2", "test3"]
+                "indicated_tests": ["test1", "test2", "test3"]
             }
         }
