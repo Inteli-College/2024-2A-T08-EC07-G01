@@ -9,7 +9,7 @@ class Prediction(BaseModel):
         [-1], description="Predicted fail code"
     )
     real_fail_codes: Optional[List[int]] = Field([-1], description="Real fail code")
-    indicated_test: Optional[List[str]] = Field([""], description="Indicated test")
+    indicated_tests: Optional[List[str]] = Field([""], description="Indicated tests for predicted fails")
 
     class Config:
         json_schema_extra = {
