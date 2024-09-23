@@ -1,93 +1,100 @@
+import gridfs
+from pymongo import MongoClient
+import importlib.util
+import sys
+import os
+import tempfile
 import datetime as datetime
 
 class Orquestrator:
-    def __init__(self, pipeline):
-        self.pipeline = pipeline
+    def __init__(self, pipeline_config, mongo_uri, db_name):
+        self.pipeline_config = pipeline_config
         self.logs = []
+        self.client = MongoClient(mongo_uri)
+        self.db = self.client[db_name]
+        self.fs = gridfs.GridFS(self.db)
 
-    def log(self, message: str, error: bool = False):
-        '''
-        Loga uma mensagem.
-
-        Parameters:
-        message (str): Mensagem a ser logada.
-        error (bool): Indica se a mensagem é um erro, default é False.
-        '''
+    def log(self, message, error=False):
         log_type = "ERROR" if error else "INFO"
         self.logs.append(f"[{log_type}] {message}")
         if error:
             self.save_logs()
 
-    def execute_step(self, step_name: str, step_func: function):
-        '''
-        Executa um passo do pipeline e loga o resultado.
-
-        Parameters:
-        step_name (str): Nome do passo a ser executado.
-        step_func (function): Função a ser executada.
-        '''
+    def fetch_script_from_gridfs(self, file_id):
         try:
-            self.log(f"{step_name}...")
-            step_func()
-            self.log(f"{step_name} concluído com sucesso.")
+            grid_out = self.fs.get(file_id)
+            script_content = grid_out.read()
+            self.log(f"Script with ID {file_id} successfully fetched from GridFS.")
+            return script_content
         except Exception as e:
-            self.log(f"Erro ao {step_name}: {e}", error=True)
+            self.log(f"Error fetching script from GridFS: {e}", error=True)
             raise
 
-    def run_etl(self):
-        '''
-        Roda apenas o etl do pipeline.
-        '''
-        self.execute_step("Extraindo dados", self.pipeline.extract)
-        self.execute_step("Transformando dados", self.pipeline.transform)
-        self.execute_step("Carregando dados", self.pipeline.load)
+    def load_module_from_file(self, module_name, script_content):
+        # Write script content to a temporary file
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".py")
+        temp_file.write(script_content)
+        temp_file.close()
 
-    def run_model_training(self, model_type: str = 'Main'):
-        '''
-        Realiza o treinamento do modelo principal ou de classificação.
+        try:
+            # Load the module from the temporary file path
+            spec = importlib.util.spec_from_file_location(module_name, temp_file.name)
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
 
-        Parameters:
-        model_type (str): Tipo de modelo a ser utilizado. Pode ser 'Main' ou 'Class', default é 'Main'.
-        '''
-        if model_type == 'Main':
-            self.execute_step("Treinando modelo principal", self.pipeline.trainMain)
-        elif model_type == 'Class':
-            self.execute_step("Treinando modelo de classificação", self.pipeline.trainClass)
+            self.log(f"Module {module_name} successfully loaded from {temp_file.name}.")
+            return module
+        except Exception as e:
+            self.log(f"Error loading module {module_name} from file: {e}", error=True)
+            raise
+        finally:
+            # Clean up the temporary file after loading the module
+            os.remove(temp_file.name)
 
-    def run_predictions(self, model_type: str = 'Main'):
-        '''
-        Retorna as previsões do modelo principal ou de classificação.
+    def execute_step(self, step_name, module, func_name, **kwargs):
+        try:
+            func = getattr(module, func_name)
+            self.log(f"Executing {step_name}...")
+            result = func(**kwargs)  # Pass any needed arguments
+            self.log(f"{step_name} completed successfully.")
+            return result
+        except AttributeError as e:
+            self.log(f"Function {func_name} not found in {module.__name__}: {e}", error=True)
+            raise
+        except Exception as e:
+            self.log(f"Error during {step_name}: {e}", error=True)
+            raise
 
-        Parameters:
-        model_type (str): Tipo de modelo a ser utilizado. Pode ser 'Main' ou 'Class', default é 'Main'.
-        '''
-        if model_type == 'Main':
-            self.execute_step("Fazendo previsões principais", self.pipeline.predictMain)
-        elif model_type == 'Class':
-            self.execute_step("Fazendo previsões de classificação", self.pipeline.predictClass)
+    def run_dynamic_pipeline(self):
+        for step in self.pipeline_config:
+            module_name = step["module_name"]
+            file_id = step["file_id"]  # Fetch the file ID from GridFS
+            func_name = step["function"]
+            kwargs = step.get("kwargs", {})
+
+            # Fetch the script from GridFS
+            script_content = self.fetch_script_from_gridfs(file_id)
+
+            # Load the module from the script content
+            module = self.load_module_from_file(module_name, script_content)
+
+            # Execute the function from the loaded module
+            self.execute_step(step["name"], module, func_name, **kwargs)
 
     def save_logs(self):
-        '''
-        Salva os logs em um arquivo de texto com o timestamp atual.
-        '''
         timestamp = datetime.today().strftime('%Y-%m-%d_%H-%M-%S')
-        with open(f"logs_{timestamp}.txt", "a") as f: 
+        with open(f"logs_{timestamp}.txt", "a") as f:
             for log in self.logs:
                 f.write(log + "\n")
-        self.logs.clear() 
+        self.logs.clear()
 
+# Example pipeline configuration
+pipeline_config = [
+    {"name": "Extracting Data", "module_name": "extract_module", "file_id": "some_gridfs_id_1", "function": "extract_data"},
+    {"name": "Transforming Data", "module_name": "transform_module", "file_id": "some_gridfs_id_2", "function": "transform_data"},
+    {"name": "Loading Data", "module_name": "load_module", "file_id": "some_gridfs_id_3", "function": "load_data", "kwargs": {"param1": "value"}}
+]
 
-    def execute_full_pipeline(self):
-        '''
-        Executa o pipeline completo, incluindo ETL, treinamento e previsões com ambos os modelos de classificação e se tem ou não falha.
-
-        '''
-        try:
-
-            self.run_etl()  # ETL
-            self.run_model_training(model_type='Main') 
-            self.run_predictions(model_type='Main')  
-            self.run_model_training(model_type='Class') 
-            self.run_predictions(model_type='Class') 
-        except Exception as e:
-            self.log(f"Erro durante execução do pipeline completo: {e}", error=True)
+# Create orchestrator with MongoDB connection and run the pipeline
+orchestrator = Orquestrator(pipeline_config, mongo_uri="mongodb://localhost:27017", db_name="your_database")
+orchestrator.run_dynamic_pipeline()
