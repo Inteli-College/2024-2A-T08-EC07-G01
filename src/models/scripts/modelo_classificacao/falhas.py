@@ -1,11 +1,10 @@
 import pandas as pd
 import numpy as np
-from funcoes import excluir_NaN, exclude_columns
 
 
 def preprocess_failures(df):
-    # utiliza função excluir NaN que está em funcoes.py 
-    df_brute = excluir_NaN(df)
+    # excluir registros com valores nulos
+    df_brute = df.dropna()
 
     #Retira os valores MULTIVALUE
     df = df_brute.drop(df_brute[df_brute['S_GROUP_ID'] == '#MULTIVALUE'].index)
@@ -14,7 +13,7 @@ def preprocess_failures(df):
     df['S_GROUP_ID'] = df['S_GROUP_ID'].astype(int)
 
     #Retira as colunas que não serão utilizadas
-    df = exclude_columns(df, ['USUARIO', 'FALHA', 'MODELO', 'ESTACAO', 'HALLE'])
+    df = df.drop(['USUARIO', 'FALHA', 'MODELO', 'ESTACAO', 'HALLE'], axis=1)
 
     #Retira os registros que possuem MOTOR vazio
     df = df.drop(df[df['MOTOR'] == '   '].index)
