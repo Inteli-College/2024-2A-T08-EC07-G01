@@ -56,6 +56,9 @@ def preprocess_failures(df):
     # Converter as colunas de booleano para 0 e 1
     df_final[columns_to_convert] = df_final[columns_to_convert].astype(int)   
 
+    # Convertendo os dados das colunas S_GROUP_ID para booleano
+    df_final['S_GROUP_ID_-2', 'S_GROUP_ID_1', 'S_GROUP_ID_2', 'S_GROUP_ID_4', 'S_GROUP_ID_5', 'S_GROUP_ID_133', 'S_GROUP_ID_137', 'S_GROUP_ID_140', 'S_GROUP_ID_9830946'] = df_final['S_GROUP_ID_-2', 'S_GROUP_ID_1', 'S_GROUP_ID_2', 'S_GROUP_ID_4', 'S_GROUP_ID_5', 'S_GROUP_ID_133', 'S_GROUP_ID_137', 'S_GROUP_ID_140', 'S_GROUP_ID_9830946'].astype(bool)
+
     return df_final  
 
     
