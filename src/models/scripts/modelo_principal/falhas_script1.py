@@ -1,5 +1,5 @@
 import pandas as pd
-import funcoes
+import models.scripts.funcoes as funcoes
 
 def script1 (file_path):
     df = funcoes.ler_arquivo(file_path)

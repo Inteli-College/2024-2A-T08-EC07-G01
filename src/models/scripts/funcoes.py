@@ -9,3 +9,7 @@ def ler_arquivo(file_path):
 def excluir_NaN(df):
     df = df.dropna()  # Tratamento de remoção de valores nulos
     return df
+
+def exclude_columns(df, columns):
+    df = df.drop(columns, axis=1)
+    return df
