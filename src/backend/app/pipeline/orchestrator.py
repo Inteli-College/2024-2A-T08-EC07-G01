@@ -1,10 +1,10 @@
 import gridfs
 from pymongo import MongoClient
 import importlib.util
-import sys
 import os
 import tempfile
 import datetime as datetime
+
 
 class Orquestrator:
     def __init__(self, pipeline_config, mongo_uri, db_name):
@@ -20,11 +20,12 @@ class Orquestrator:
         if error:
             self.save_logs()
 
-    def fetch_script_from_gridfs(self, file_id):
+    def fetch_script_from_gridfs(self, file_path):
         try:
-            grid_out = self.fs.get(file_id)
+            # grid_out = self.fs.get(file_path)
+            grid_out = open(file_path, "rb")
             script_content = grid_out.read()
-            self.log(f"Script with ID {file_id} successfully fetched from GridFS.")
+            self.log(f"Script with ID {file_path} successfully fetched from GridFS.")
             return script_content
         except Exception as e:
             self.log(f"Error fetching script from GridFS: {e}", error=True)
@@ -51,50 +52,75 @@ class Orquestrator:
             # Clean up the temporary file after loading the module
             os.remove(temp_file.name)
 
-    def execute_step(self, step_name, module, func_name, **kwargs):
+    def execute_step(self, step_name, module, **kwargs):
         try:
+            func_name = "execute"
             func = getattr(module, func_name)
-            self.log(f"Executing {step_name}...")
+            self.log(f"Executing '{step_name}'...")
             result = func(**kwargs)  # Pass any needed arguments
-            self.log(f"{step_name} completed successfully.")
+            self.log(f"'{step_name}' completed successfully.")
             return result
         except AttributeError as e:
-            self.log(f"Function {func_name} not found in {module.__name__}: {e}", error=True)
+            self.log(
+                f"Function {func_name} not found in {module.__name__}: {e}", error=True
+            )
             raise
         except Exception as e:
-            self.log(f"Error during {step_name}: {e}", error=True)
+            self.log(f"Error during '{step_name}': {e}", error=True)
             raise
 
     def run_dynamic_pipeline(self):
+        last_result = "start"
         for step in self.pipeline_config:
             module_name = step["module_name"]
-            file_id = step["file_id"]  # Fetch the file ID from GridFS
-            func_name = step["function"]
+            file_path = step["file_path"]  # Fetch the file path from GridFS
             kwargs = step.get("kwargs", {})
 
             # Fetch the script from GridFS
-            script_content = self.fetch_script_from_gridfs(file_id)
+            script_content = self.fetch_script_from_gridfs(file_path)
 
             # Load the module from the script content
             module = self.load_module_from_file(module_name, script_content)
 
+            kwargs.update({"test_param": last_result})
+
             # Execute the function from the loaded module
-            self.execute_step(step["name"], module, func_name, **kwargs)
+            last_result = self.execute_step(step["name"], module, **kwargs)
+
+        print(f"Pipeline completed successfully. Last result: {last_result}")
 
     def save_logs(self):
-        timestamp = datetime.today().strftime('%Y-%m-%d_%H-%M-%S')
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         with open(f"logs_{timestamp}.txt", "a") as f:
             for log in self.logs:
                 f.write(log + "\n")
+
+        self.db.logs.insert_one({"timestamp": timestamp, "logs": self.logs})
         self.logs.clear()
 
-# Example pipeline configuration
-pipeline_config = [
-    {"name": "Extracting Data", "module_name": "extract_module", "file_id": "some_gridfs_id_1", "function": "extract_data"},
-    {"name": "Transforming Data", "module_name": "transform_module", "file_id": "some_gridfs_id_2", "function": "transform_data"},
-    {"name": "Loading Data", "module_name": "load_module", "file_id": "some_gridfs_id_3", "function": "load_data", "kwargs": {"param1": "value"}}
-]
 
-# Create orchestrator with MongoDB connection and run the pipeline
-orchestrator = Orquestrator(pipeline_config, mongo_uri="mongodb://localhost:27017", db_name="your_database")
-orchestrator.run_dynamic_pipeline()
+if __name__ == "__main__":
+    pipeline_config = [
+        {
+            "name": "Test Step 1",
+            "module_name": "test",
+            "file_path": "./pipeline/steps/test.py",
+            "kwargs": {"test_param": "Hello"},
+        },
+        {
+            "name": "Test Step 2",
+            "module_name": "test2",
+            "file_path": "./pipeline/steps/test2.py",
+        },
+        # {
+        #     "name": "Failing Test Step",
+        #     "module_name": "failing_test",
+        #     "file_path": "./pipeline/steps/failing_test.py",
+        # }
+    ]
+
+    # Create orchestrator with MongoDB connection and run the pipeline
+    orchestrator = Orquestrator(
+        pipeline_config, mongo_uri="mongodb://localhost:27017", db_name="cross_the_line"
+    )
+    orchestrator.run_dynamic_pipeline()
