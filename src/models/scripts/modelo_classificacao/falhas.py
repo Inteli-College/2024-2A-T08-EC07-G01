@@ -1,8 +1,7 @@
 import pandas as pd
-import numpy as np
 
 
-def preprocess_failures(df):
+def executable(df):
     # excluir registros com valores nulos
     df_brute = df.dropna()
 
