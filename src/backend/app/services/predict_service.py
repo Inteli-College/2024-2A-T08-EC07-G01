@@ -105,3 +105,6 @@ def predict_pipeline(data: KNR) -> list:
 
 def mocked_predict_pipeline(data):
     return 1
+
+def predict_orquestrator(knr: str) -> list:
+    return orquestrator.predict(knr)

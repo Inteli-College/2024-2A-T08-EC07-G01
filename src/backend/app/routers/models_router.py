@@ -64,3 +64,13 @@ async def delete_model(model_name: str):
     if not ModelServiceSingleton.get_instance().delete_model(model_name):
         raise HTTPException(status_code=404, detail="Model not found")
     return {"message": "Model deleted successfully"}
+
+# Roteadores referentes ao orquestrador
+
+@router.post(
+    "/predict",
+    response_description="Predict the failure codes for a given KNR",
+)
+async def predict_fail_codes(knr: str):
+    predictions = ModelServiceSingleton.get_instance().predict_orquestrator(knr)
+    return predictions
