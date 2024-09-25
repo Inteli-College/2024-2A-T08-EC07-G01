@@ -17,7 +17,7 @@ from dotenv import dotenv_values
 
 config = dotenv_values(".env")
 
-DATABASE_URI = config.get("DATABASE_URI", "mongodb://localhost:27017")
+DATABASE_URI = config.get("DATABASE_URI", "mongodb://db:27017")
 DATABASE_NAME = config.get("DATABASE_NAME", "cross_the_line")
 
 

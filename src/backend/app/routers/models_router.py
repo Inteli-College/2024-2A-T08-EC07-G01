@@ -3,6 +3,7 @@ from typing import List
 from app.models.model import Model, ModelUpdate
 from app.models.metrics import Metrics, MetricsWeights
 from app.services.models_service import ModelServiceSingleton
+from app.utils.metrics import calculate_weight
 import pandas as pd
 
 router = APIRouter(prefix="/api/models", tags=["Models"])
@@ -73,9 +74,8 @@ async def compare_models(model_type: str, metrics_weights: MetricsWeights):
     # Create a DataFrame from the models
     df = pd.DataFrame([{
         "model_name": model.model_name,
-        "metrics": Metrics.calculate_score(metrics_weights)
+        **calculate_weight(metrics_weights, model)
     } for model in models])
-
     # Convert DataFrame to a list of dictionaries
     result = df.to_dict(orient='records')
-    return models
+    return result
