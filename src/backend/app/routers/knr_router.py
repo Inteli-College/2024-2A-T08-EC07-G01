@@ -3,7 +3,6 @@ from typing import List
 from app.models.knr import KNR, KNRUpdate
 from app.services.knr_service import KNRServiceSingleton
 from app.utils.fail_labeler import label_knr
-from app.services.predict_service import predict_pipeline
 from datetime import datetime
 
 router = APIRouter(prefix="/api/knr", tags=["KNR"])
@@ -29,24 +28,6 @@ async def get_knr(knr_id: str):
     if knr is None:
         raise HTTPException(status_code=404, detail="KNR not found")
     return knr
-
-
-@router.post(
-    "/",
-    response_model=KNR,
-    response_description="Add a new KNR to process",
-)
-async def add_knr(knr: KNR):
-    knr_id = KNRServiceSingleton.get_instance().create_knr(knr)
-
-    result = predict_pipeline(knr)
-    knr.predicted_fail_codes = result
-    knr = label_knr(knr)
-    knr.timestamp = str(datetime.now())
-
-    KNRServiceSingleton.get_instance().update_knr(knr_id, knr)
-
-    return KNRServiceSingleton.get_instance().get_knr(knr_id)
 
 
 @router.put(
