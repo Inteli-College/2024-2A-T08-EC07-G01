@@ -1,4 +1,5 @@
-from app.models.predictions import Prediction, PredictionUpdate 
+from app.models.predictions import Prediction, PredictionUpdate
+from app.models.knr import KNR
 from app.repositories.predictions_repo import PredictionsRepository
 from typing import Optional, List
 
@@ -13,9 +14,10 @@ class PredictService:
     def get_prediction(self, knr: str) -> Optional[Prediction]:
         return self.predict_repo.get_prediction(knr)
     
-    def make_prediction(self, knr: str) -> Prediction:
-        return self.predict_repo.make_prediction(knr)
-    
+    def make_prediction(self, knr: KNR) -> Prediction:
+        # TODO: call the predictions function
+        return Prediction()
+
     def update_prediction(self, knr: str, prediction: PredictionUpdate) -> bool:
         return self.predict_repo.update_prediction(knr, prediction)
     
