@@ -6,7 +6,7 @@ from app.models.predictions import Prediction, PredictionUpdate
 class PredictionsRepository:
     def __init__(self, db: MongoDB):
         self.db = db
-        self.collection = db.get_collection("Predictions")
+        self.collection = db.get_collection("predictions")
 
     def get_all_models(self) -> list[Prediction]:
         documents = self.collection.find()
