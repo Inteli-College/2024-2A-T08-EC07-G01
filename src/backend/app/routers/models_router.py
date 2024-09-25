@@ -79,12 +79,3 @@ async def compare_models(model_type: str, metrics_weights: MetricsWeights):
     # Convert DataFrame to a list of dictionaries
     result = df.to_dict(orient='records')
     return result
-# Roteadores referentes ao orquestrador
-
-@router.post(
-    "/predict",
-    response_description="Predict the failure codes for a given KNR",
-)
-async def predict_fail_codes(knr: str):
-    predictions = ModelServiceSingleton.get_instance().predict_orquestrator(knr)
-    return predictions
