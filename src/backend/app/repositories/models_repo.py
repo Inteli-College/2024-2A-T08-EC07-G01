@@ -14,7 +14,7 @@ class ModelRepository:
         return [Model(**document) for document in documents]
 
     def get_models_by_type(self, model_type: str) -> list[Model]:
-        documents = self.collection.find({"model_type": model_type})
+        documents = self.collection.find({"type_model": model_type})
         return [Model(**document) for document in documents]
                 
     def create_model(self, model_info: Model) -> str:
