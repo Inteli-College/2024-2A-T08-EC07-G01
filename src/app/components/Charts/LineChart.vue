@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { LineChart } from '@/components/ui/chart-line';
-import { getLineChart, type DataSets } from './lineData'; // Altere para o caminho correto do arquivo LineData.ts
+import { getLineChart, type DataSets } from './lineData';
 
 // Estado para o conjunto de dados
 const dataSets: DataSets = getLineChart();
-const selectedSet = ref<keyof DataSets>('set1');
+const selectedSet = ref<keyof DataSets>('TodasFalhas'); // Ensure this matches the key for "Todas as Falhas"
 const data = ref(dataSets[selectedSet.value]);
 
 // Função para atualizar os dados com base na seleção
@@ -19,13 +19,18 @@ const updateData = (event: Event) => {
 watch(selectedSet, (newSet) => {
   data.value = dataSets[newSet];
 });
+
+// Exibe o gráfico assim que a página carrega
+onMounted(() => {
+  data.value = dataSets[selectedSet.value];
+});
 </script>
 
 <template>
-  <div class="flex flex-col items-start w-full">
-    <!-- Dropdown para selecionar o conjunto de dados -->
-    <div class="mb-4">
-      <label for="dataSelect" class="block mb-1 font-medium text-gray-700">Selecione o Conjunto de Dados</label>
+  <div class="flex flex-col items-center w-full">
+    <!-- Dropdown para selecionar o conjunto de dados, centered horizontally -->
+    <div class="mb-4 w-2/3">
+      <label for="dataSelect" class="block mb-1 font-medium text-gray-700 text-center">Selecione o Conjunto de Dados</label>
       <select
         id="dataSelect"
         @change="updateData"
@@ -44,16 +49,18 @@ watch(selectedSet, (newSet) => {
       </select>
     </div>
 
-    <!-- Gráfico de Linha -->
-    <LineChart
-      :data="data"
-      index="year"
-      :categories="['Export Growth Rate', 'Import Growth Rate']"
-      :y-formatter="(tick, i) => {
-        return typeof tick === 'number'
-          ? `$ ${new Intl.NumberFormat('us').format(tick).toString()}`
-          : ''
-      }"
-    />
+    <!-- Gráfico de Linha, centered horizontally -->
+    <div class="w-2/3 mb-5 mt-5">
+      <LineChart
+        :data="data"
+        index="year"
+        :categories="['Export Growth Rate', 'Import Growth Rate']"
+        :y-formatter="(tick, i) => {
+          return typeof tick === 'number'
+            ? `$ ${new Intl.NumberFormat('us').format(tick).toString()}`
+            : ''
+        }"
+      />
+    </div>
   </div>
 </template>
