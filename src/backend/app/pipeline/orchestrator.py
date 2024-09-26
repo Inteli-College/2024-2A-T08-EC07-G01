@@ -4,11 +4,14 @@ import importlib.util
 import os
 import tempfile
 import datetime as datetime
+import json
+import pandas as pd
 
 
-class Orquestrator:
-    def __init__(self, pipeline_config, mongo_uri, db_name):
-        self.pipeline_config = pipeline_config
+class Orchestrator:
+    def __init__(self, pipeline_steps, initial_df, mongo_uri, db_name):
+        self.pipeline_steps = pipeline_steps
+        self.initial_df = initial_df
         self.logs = []
         self.client = MongoClient(mongo_uri)
         self.db = self.client[db_name]
@@ -71,7 +74,7 @@ class Orquestrator:
 
     def run_dynamic_pipeline(self):
         last_result = "start"
-        for step in self.pipeline_config:
+        for step in self.pipeline_steps:
             module_name = step["module_name"]
             file_path = step["file_path"]  # Fetch the file path from GridFS
             kwargs = step.get("kwargs", {})
@@ -100,27 +103,16 @@ class Orquestrator:
 
 
 if __name__ == "__main__":
-    pipeline_config = [
-        {
-            "name": "Test Step 1",
-            "module_name": "test",
-            "file_path": "./pipeline/steps/test.py",
-            "kwargs": {"test_param": "Hello"},
-        },
-        {
-            "name": "Test Step 2",
-            "module_name": "test2",
-            "file_path": "./pipeline/steps/test2.py",
-        },
-        # {
-        #     "name": "Failing Test Step",
-        #     "module_name": "failing_test",
-        #     "file_path": "./pipeline/steps/failing_test.py",
-        # }
-    ]
+    pipeline_config = json.loads("./pipeline/pipeline_classificacao.json")
+    steps = pipeline_config["steps"]
+    initial_df = pd.read_csv("./pipelines/initial.csv")
+    print("Pipeline steps:", steps)
+    print("Initial DataFrame shape:", initial_df.shape)
 
-    # Create orchestrator with MongoDB connection and run the pipeline
-    orchestrator = Orquestrator(
-        pipeline_config, mongo_uri="mongodb://localhost:27017", db_name="cross_the_line"
+    orchestrator = Orchestrator(
+        steps,
+        initial_df,
+        mongo_uri="mongodb://localhost:27017",
+        db_name="cross_the_line",
     )
     orchestrator.run_dynamic_pipeline()
