@@ -1,0 +1,20 @@
+meta {
+  name: Get Model by Metrics
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{base-url}}/api/models/best-metrics/Tipo-1
+  body: json
+  auth: none
+}
+
+body:json {
+   {
+      "accuracy": 0.10,
+      "precision": 0.20,
+      "recall": 0.30,
+      "f1_score": 0.40
+  }
+}

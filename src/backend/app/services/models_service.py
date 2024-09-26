@@ -1,5 +1,5 @@
 from typing import Optional, List
-from app.models.model import Model, ModelUpdate 
+from app.models.model import Model, ModelUpdate
 from app.repositories.models_repo import ModelRepository
 
 
@@ -21,6 +21,12 @@ class ModelService:
 
     def delete_model(self, model_name: str) -> bool:
         return self.model_repo.delete_model(model_name)
+
+    def get_models_by_type(self, model_type: str) -> List[Model]:
+        return self.model_repo.get_models_by_type(model_type)
+
+    def get_current_models(self) -> List[Model]:
+        return self.model_repo.get_current_models()
 
 
 class ModelServiceSingleton:

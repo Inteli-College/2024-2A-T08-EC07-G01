@@ -31,3 +31,11 @@ class ModelRepository:
     def delete_model(self, model_name: str) -> bool:
         result = self.collection.delete_one({"model_name": model_name})
         return result.deleted_count > 0
+
+    def get_models_by_type(self, model_type: str) -> list[Model]:
+        documents = self.collection.find({"type_model": model_type})
+        return [Model(**document) for document in documents]
+
+    def get_current_models(self) -> list[Model]:
+        documents = self.collection.find({"using": True})
+        return [Model(**document) for document in documents]
