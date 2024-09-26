@@ -18,7 +18,6 @@ from app.routers.predictions_router import router as predictions_router
 
 from dotenv import dotenv_values
 
-
 config = dotenv_values(".env")
 
 DATABASE_URI = config.get("DATABASE_URI", "mongodb://db:27017")
