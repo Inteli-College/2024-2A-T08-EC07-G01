@@ -1,8 +1,9 @@
 <script setup>
 import { ref } from 'vue';  // ref para criar uma variável reativa
 import LineChart from '@/components/Charts/LineChart.vue';
-import BarChart from '@/components/Charts/BarChart.vue';
+import FullLineChart from '~/components/Charts/AreaChart.vue';
 import PieChart from '@/components/Charts/PieChart.vue';
+import BarChart from '~/components/Charts/BarChart.vue';
 import Button from '~/components/ui/button/Button.vue';
 
 // Variável reativa para controlar a visualização (falhas ou modelos)
@@ -43,11 +44,6 @@ const handleViewChange = (view) => {
         </Button>
       </div>
 
-
-
-    <!-- Barra de progresso e título -->
-    <h2 class="font-semibold text-l">Porcentagem de falhas</h2>
-
     <!-- Gráficos -->
     <div class="flex mt-12 px-8">
       <!-- Exibe os gráficos com base no valor de currentView -->
@@ -57,7 +53,7 @@ const handleViewChange = (view) => {
 
             <div class="flex flex-col gap-3">
               <h2>Quantidade de Falhas por Carros analisados</h2>
-              <PieChart />
+              <PieChart :show-center="true"/>
             </div>
 
             <div class="flex flex-col gap-3">
@@ -76,25 +72,18 @@ const handleViewChange = (view) => {
 
       
       <template v-if="currentView === 'modelos'">
-        <div class="flex items-center">
-          <div class="flex gap-6 w-full">
+        <div class="flex flex-col items-center w-full gap-8">
 
-            <div class="flex flex-col gap-3">
-              <h2>Quantidade de Falhas por Carros analisados</h2>
-              <BarChart/>
-            </div>
-
-            <div class="flex flex-col gap-3">
-              <h2>Classes de Falhas por Total de falhas</h2>
-              <PieChart />
-            </div>
-            
             <div class="flex flex-col gap-3 w-full">
-              <h2>Quantidade de Falhas por tempo</h2>
-              <LineChart class=" w-full"/>
+              <div>
+                <h1 class=" text-2xl font-bold text-customGreen">Metricas do Modelo</h1>
+                <h2 class=" text-xl font-bold">Modelo X</h2>
+              </div>
+              <BarChart class="flex w-full"/>
             </div>
 
-          </div>
+            <Button class="bg-customGreen text-white transition-all duration-300 w-full">Trocar Modelos</Button>
+
         </div>
       </template>
     </div>
