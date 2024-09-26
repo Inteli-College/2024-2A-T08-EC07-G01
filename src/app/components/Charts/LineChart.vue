@@ -31,8 +31,16 @@ watch(selectedSet, (newSet) => {
         @change="updateData"
         class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
       >
-        <option value="set1">Conjunto de Dados 1</option>
-        <option value="set2">Conjunto de Dados 2</option>
+        <option value="TodasFalhas"> Todas as Falhas </option>
+        <option value="Classe_1"> Falhas Classe 1</option>
+        <option value="Classe_2"> Falhas Classe 2</option>
+        <option value="Classe_3"> Falhas Classe 3</option>
+        <option value="Classe_4"> Falhas Classe 4</option>
+        <option value="Classe_5"> Falhas Classe 5</option>
+        <option value="Classe_6"> Falhas Classe 6</option>
+        <option value="Classe_7"> Falhas Classe 7</option>
+        <option value="Classe_8"> Falhas Classe 8</option>
+        <option value="Classe_9"> Falhas Classe 9</option>
       </select>
     </div>
 
