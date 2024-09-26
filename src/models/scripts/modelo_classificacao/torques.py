@@ -24,7 +24,7 @@ def normalize_columns(df, exclude_columns):
     df[numeric_columns] = scaler.fit_transform(df[numeric_columns])
     return df
 
-def preprocess_data(df):
+def executable(df):
     """Pipeline de pré-processamento completo dos dados."""
     # Remover colunas indesejadas e espaços
     df = df[df["UNIT"] != '          ']  # Remove onde UNIT tem espaços

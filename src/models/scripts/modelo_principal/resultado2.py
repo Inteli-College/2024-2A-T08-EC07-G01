@@ -1,3 +1,5 @@
+from sklearn.preprocessing import MinMaxScaler
+
 def drop_colunas(df):
     colunas = ['UNIT', 'VALUE_ID', 'VALUE']
     df = df.drop(columns=colunas, axis=1)
@@ -16,7 +18,19 @@ def agregar_por_id(df,id_value):
         'DATA': f'ID{id_value}DATA'
     })
 
-def script2(df):
+def normalizacao(df):
+        # Selecionando apenas as colunas específicas para normalização
+    colunas_normalizacao = ['ID1NAME','ID1SOK', 'ID1SNOK', 'ID1DATA', 'ID2NAME', 'ID2SOK', 'ID2SNOK', 'ID2DATA', 'ID718NAME', 'ID718SOK', 'ID718SNOK', 'ID718DATA']
+
+    # Inicializando o MinMaxScaler
+    scaler = MinMaxScaler()
+
+    # Aplicando a normalização
+    df[colunas_normalizacao] = scaler.fit_transform(df[colunas_normalizacao])
+    return df
+    
+
+def executable(df):
     drop_colunas(df)
     
     id1 = agregar_por_id(df, 1)
@@ -29,6 +43,8 @@ def script2(df):
     # Reordenando as colunas para o formato desejado
     df = df[['KNR','ID1NAME', 'ID1SOK', 'ID1SNOK', 'ID1DATA', 'ID2NAME', 'ID2SOK', 'ID2SNOK', 'ID2DATA', 'ID718NAME', 'ID718SOK', 'ID718SNOK', 'ID718DATA']]
 
+    df = normalizacao(df)
+
     df = df.fillna(0)
 
     return df
@@ -36,7 +52,7 @@ def script2(df):
 # Exemplo de chamada da função
 if __name__ == "__main__":
     df = 'df_resultados_trat1.csv'  # Caminho do arquivo de entrada
-    df_resultados_trat2 = script2(df)
+    df_resultados_trat2 = executable(df)
     df_resultados_trat2.to_csv("df_resultado_trat2", index=False)
 
 

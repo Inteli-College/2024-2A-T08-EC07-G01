@@ -1,11 +1,9 @@
 import pandas as pd
-import numpy as np
-from funcoes import excluir_NaN, exclude_columns
 
 
-def preprocess_failures(df):
-    # utiliza função excluir NaN que está em funcoes.py 
-    df_brute = excluir_NaN(df)
+def executable(df):
+    # excluir registros com valores nulos
+    df_brute = df.dropna()
 
     #Retira os valores MULTIVALUE
     df = df_brute.drop(df_brute[df_brute['S_GROUP_ID'] == '#MULTIVALUE'].index)
@@ -14,7 +12,7 @@ def preprocess_failures(df):
     df['S_GROUP_ID'] = df['S_GROUP_ID'].astype(int)
 
     #Retira as colunas que não serão utilizadas
-    df = exclude_columns(df, ['USUARIO', 'FALHA', 'MODELO', 'ESTACAO', 'HALLE'])
+    df = df.drop(['USUARIO', 'FALHA', 'MODELO', 'ESTACAO', 'HALLE'], axis=1)
 
     #Retira os registros que possuem MOTOR vazio
     df = df.drop(df[df['MOTOR'] == '   '].index)
@@ -55,6 +53,9 @@ def preprocess_failures(df):
 
     # Converter as colunas de booleano para 0 e 1
     df_final[columns_to_convert] = df_final[columns_to_convert].astype(int)   
+
+    # Convertendo os dados das colunas S_GROUP_ID para booleano
+    df_final['S_GROUP_ID_-2', 'S_GROUP_ID_1', 'S_GROUP_ID_2', 'S_GROUP_ID_4', 'S_GROUP_ID_5', 'S_GROUP_ID_133', 'S_GROUP_ID_137', 'S_GROUP_ID_140', 'S_GROUP_ID_9830946'] = df_final['S_GROUP_ID_-2', 'S_GROUP_ID_1', 'S_GROUP_ID_2', 'S_GROUP_ID_4', 'S_GROUP_ID_5', 'S_GROUP_ID_133', 'S_GROUP_ID_137', 'S_GROUP_ID_140', 'S_GROUP_ID_9830946'].astype(bool)
 
     return df_final  
 
