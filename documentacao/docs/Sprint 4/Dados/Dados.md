@@ -91,6 +91,8 @@ A coleção Model é utilizada para armazenar metadados e o desempenho dos model
 
 - **model_name (str):** Nome único que identifica o modelo de machine learning.
 
+- **type_model(str):** Tipo do modelo treinado, se é modelo de classificação ou falha. ( Ex: 1,2,3 )
+
 - **gridfs_path (str):** Caminho onde o modelo está armazenado no `GridFS` (sistema de armazenamento de arquivos do MongoDB).
 
 - **recipe_path (str):** Caminho para a receita ou configuração usada para treinar o modelo.
