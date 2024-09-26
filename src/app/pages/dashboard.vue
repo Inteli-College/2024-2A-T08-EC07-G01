@@ -20,70 +20,65 @@ const handleViewChange = (view) => {
     <h1 class="text-center mt-10 mb-12 font-semibold text-4xl">Dashboard</h1>
 
     <!-- Botões para alternar entre Falhas e Modelos -->
-      <div class="flex justify-center gap-3">
-        <Button
-          class="bg-customGreen text-white transition-all duration-300" 
-          :class="{
-            'bg-transparent border-2 border-customGreen text-customGreen': currentView === 'falhas',
-            'hover:bg-transparent hover:border-2 hover:border-customGreen hover:text-customGreen': currentView !== 'falhas'
-          }" 
-          @click="handleViewChange('falhas')"
-        >
-          Falhas
-        </Button>
+    <div class="flex justify-center gap-3">
+      <Button
+        class="bg-customGreen text-white transition-all duration-300" 
+        :class="{
+          'bg-transparent border-2 border-customGreen text-customGreen': currentView === 'falhas',
+          'hover:bg-transparent hover:border-2 hover:border-customGreen hover:text-customGreen': currentView !== 'falhas'
+        }" 
+        @click="handleViewChange('falhas')"
+      >
+        Falhas
+      </Button>
 
-        <Button
-          class="bg-customGreen text-white transition-all duration-300"
-          :class="{
-            'bg-transparent border-2 border-customGreen text-customGreen': currentView === 'modelos',
-            'hover:bg-transparent hover:border-2 hover:border-customGreen hover:text-customGreen': currentView !== 'modelos'
-          }" 
-          @click="handleViewChange('modelos')"
-        >
-          Modelos
-        </Button>
-      </div>
+      <Button
+        class="bg-customGreen text-white transition-all duration-300"
+        :class="{
+          'bg-transparent border-2 border-customGreen text-customGreen': currentView === 'modelos',
+          'hover:bg-transparent hover:border-2 hover:border-customGreen hover:text-customGreen': currentView !== 'modelos'
+        }" 
+        @click="handleViewChange('modelos')"
+      >
+        Modelos
+      </Button>
+    </div>
 
     <!-- Gráficos -->
-    <div class="flex mt-12 px-8">
+    <div class="flex mt-12 px-8 flex-col items-center">
       <!-- Exibe os gráficos com base no valor de currentView -->
       <template v-if="currentView === 'falhas'">
-        <div class="flex items-center">
-          <div class="flex gap-6 w-full">
-
-            <div class="flex flex-col gap-3">
-              <h2>Quantidade de Falhas por Carros analisados</h2>
-              <PieChart :show-center="true"/>
-            </div>
-
-            <div class="flex flex-col gap-3">
-              <h2>Classes de Falhas por Total de falhas</h2>
-              <PieChart />
-            </div>
-            
-            <div class="flex flex-col gap-3 w-full">
-              <h2>Quantidade de Falhas por tempo</h2>
-              <LineChart class=" w-full"/>
-            </div>
-
+        <!-- Container for pie charts side by side -->
+        <div class="flex gap-6 w-full justify-center mb-8">
+          <div class="flex flex-col gap-3 items-center">
+            <h2>Quantidade de Falhas por Carros analisados</h2>
+            <PieChart :show-center="true" class="w-80 h-80"/> <!-- Adjust size as needed -->
           </div>
+
+          <div class="flex flex-col gap-3 items-center">
+            <h2>Classes de Falhas por Total de falhas</h2>
+            <PieChart class="w-80 h-80"/> <!-- Adjust size as needed -->
+          </div>
+        </div>
+
+        <!-- Line chart below the pie charts, centered -->
+        <div class="flex flex-col gap-3 items-center w-full mt-12 mb-6">
+          <h2 class="mb-4">Quantidade de Falhas por tempo</h2>
+          <LineChart class="w-2/3"/> <!-- Adjust width if necessary -->
         </div>
       </template>
 
-      
       <template v-if="currentView === 'modelos'">
         <div class="flex flex-col items-center w-full gap-8">
-
-            <div class="flex flex-col gap-3 w-full">
-              <div>
-                <h1 class=" text-2xl font-bold text-customGreen">Metricas do Modelo</h1>
-                <h2 class=" text-xl font-bold">Modelo X</h2>
-              </div>
-              <BarChart class="flex w-full"/>
+          <div class="flex flex-col gap-3 w-full">
+            <div>
+              <h1 class=" text-2xl font-bold text-customGreen">Metricas do Modelo</h1>
+              <h2 class=" text-xl font-bold">Modelo X</h2>
             </div>
+            <BarChart class="flex w-full"/>
+          </div>
 
-            <Button class="bg-customGreen text-white transition-all duration-300 w-full">Trocar Modelos</Button>
-
+          <Button class="bg-customGreen text-white transition-all duration-300 w-full">Trocar Modelos</Button>
         </div>
       </template>
     </div>
