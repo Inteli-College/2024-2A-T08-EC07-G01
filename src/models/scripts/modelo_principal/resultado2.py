@@ -30,7 +30,7 @@ def normalizacao(df):
     return df
     
 
-def executable(df):
+def execute(df):
     drop_colunas(df)
     
     id1 = agregar_por_id(df, 1)
@@ -52,7 +52,7 @@ def executable(df):
 # Exemplo de chamada da função
 if __name__ == "__main__":
     df = 'df_resultados_trat1.csv'  # Caminho do arquivo de entrada
-    df_resultados_trat2 = executable(df)
+    df_resultados_trat2 = execute(df)
     df_resultados_trat2.to_csv("df_resultado_trat2", index=False)
 
 

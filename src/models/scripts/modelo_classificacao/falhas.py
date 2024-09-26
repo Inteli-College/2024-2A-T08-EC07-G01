@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def executable(df):
+def execute(df):
     # excluir registros com valores nulos
     df_brute = df.dropna()
 

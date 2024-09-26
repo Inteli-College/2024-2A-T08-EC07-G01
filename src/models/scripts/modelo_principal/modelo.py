@@ -3,7 +3,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import GRU, Dense
 
 
-def executable(df ):
+def execute(df ):
     X_train, X_test, y_train, y_test = preparacao.preparacao_dados(df)
     # Construção do modelo com GRU
     model = Sequential()
