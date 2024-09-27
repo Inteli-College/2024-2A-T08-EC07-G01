@@ -2,6 +2,7 @@ from app.models.predictions import Prediction, PredictionUpdate
 from app.models.knr import KNR
 from app.repositories.predictions_repo import PredictionsRepository
 from typing import Optional, List
+from app.utils.predict import mock_prediction
 
 
 # TODO: Completar predict Service
@@ -16,8 +17,8 @@ class PredictionService:
         return self.predict_repo.get_prediction(knr)
 
     def predict(self, knr: KNR) -> Prediction:
-        # TODO: call the predictions function
-        return Prediction(knr.KNR)
+        prediction = mock_prediction()
+        return self.predict_repo.create_prediction(prediction)
 
     def update_prediction(self, knr: str, prediction: PredictionUpdate) -> bool:
         return self.predict_repo.update_prediction(knr, prediction)
