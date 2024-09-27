@@ -1,30 +1,33 @@
 <!--TODO: Type component-->
 
 <template>
-    <div class="flex items-center flex-col content-center justify-center mt-10">
-        <p class="font-bold text-5xl text-center mx-5 mt-10">Teste de rodagem indicado</p>
-        <div class="border-2 border-gray-30 rounded-[16px] py-0 mx-auto my-10" :class="resultStyle.border">
-            <div :class="resultStyle.bg" class="w-full rounded-t-[12px]">
-                <p class="font-bold text-4xl text-center mx-5" :class="resultStyle.text">{{ resultText }}</p>
+    <div class="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+        <!-- Tela de resultado com falha -->
+        <div class="w-full max-w-4xl p-8 bg-white border-2 rounded-lg shadow-lg" :class="resultStyle.border">
+            <div class="flex items-center gap-4 mb-6">
+                <span class="text-xl font-semibold " :class="resultStyle.title">Carro com falha prevista</span>
             </div>
-            <p class="font-bold text-4xl text-center mx-5 my-10">KNR: {{ knr }}</p>
-            <p class="bold text-2xl text-center mx-5 mt-10 mb-5">Falha prevista: </p>
-
-            <div class="grid grid-cols-7 grid-flow-col my-5 mx-5">
+            <p class="text-center text-gray-700 text-xl font-medium mb-6">KNR: {{ knr }}</p>
+            <div class="grid grid-cols-9 gap-4 mt-2">
                 <template v-for="(failType, _index) in failTypes" :key="_index">
                     <div class="border-2 border-gray-30 rounded-lg px-10 py-10 mx-1"
                         :class="[styles[failType.status].bg, styles[failType.status].border]">
                         <p class="font-bold" :class="styles[failType.status].text">{{ failType.title }}</p>
                     </div>
                 </template>
-
             </div>
+            <!-- Botão de Voltar -->
+            <button @click="voltar" class="mt-4 px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600">
+                Voltar
+            </button>
         </div>
     </div>
 </template>
 
 <script setup>
+
 import Axios from 'axios';
+
 
 const knr = useRoute().params.knr;
 
@@ -32,16 +35,19 @@ const styles = {
     default: {
         border: 'border-gray-300',
         bg: '',
+        title: 'text-gray-800',
         text: 'text-gray-800'
     },
     success: {
-        border: 'border-green-500',
+        border: 'border-green-400',
         bg: 'bg-green-500',
+        title: 'text-green-600',
         text: 'text-white'
     },
     fail: {
-        border: 'border-rose-500',
+        border: 'border-red-400',
         bg: 'bg-rose-500',
+        title: 'text-red-600',
         text: 'text-white'
     }
 };
@@ -49,19 +55,24 @@ const styles = {
 
 const res = await Axios.get(`http://localhost:8000/api/predictions/details/${knr}`);
 
-console.log(res.data);
 const failType = res.data.predicted_fail_codes;
-console.log(failType);
-
+console.log("Teste")
+console.log(failType)
 onMounted(() => {
     failTypes.value.forEach((fail) => {
         console.log(fail);
         failType.forEach((type) => {
             if (fail.failType === type) {
                 fail.status = 'fail';
+                if (result.value === 'success' || result.value === 'default') {
+                    result.value = 'fail';
+                }
             }
         });
     });
+    if (result.value === 'default') {
+        result.value = 'success';
+    }
 });
 
 const result = computed(() => (failType !== 0 ? 'fail' : 'success'));
@@ -112,5 +123,11 @@ const failTypes = ref([
         status: 'default'
     }
 ]);
+
+const voltar = () => {
+    if (knr.value.trim()) {
+        navigateTo(`/prediction`);
+    }
+};
 
 </script>
