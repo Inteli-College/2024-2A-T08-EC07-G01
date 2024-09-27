@@ -1,5 +1,6 @@
 {
-    "name": "classificacao",
+    "model_name": "classificacao",
+    "model_path": "./pipeline/models/classificacao",
     "prediction_steps": [
         {
             "name": "processa_falhas",
@@ -16,7 +17,7 @@
     ],
     "training_steps": [
         {
-            "name": "treina_modelo",
+            "module_name": "treina_modelo",
             "file_path": "./pipeline/steps/modelo_classificacao/treina_modelo.py"
         }
     ]

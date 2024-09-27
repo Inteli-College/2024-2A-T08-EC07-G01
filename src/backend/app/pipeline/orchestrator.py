@@ -73,9 +73,9 @@ class Orchestrator:
             raise
 
     def run_dynamic_pipeline(self):
-        last_result = "start"
+        last_result = self.initial_df
         for step in self.pipeline_steps:
-            module_name = step["module_name"]
+            module_name = step["name"]
             file_path = step["file_path"]  # Fetch the file path from GridFS
             kwargs = step.get("kwargs", {})
 
@@ -85,7 +85,7 @@ class Orchestrator:
             # Load the module from the script content
             module = self.load_module_from_file(module_name, script_content)
 
-            kwargs.update({"test_param": last_result})
+            kwargs.update({"df": last_result})
 
             # Execute the function from the loaded module
             last_result = self.execute_step(step["name"], module, **kwargs)
@@ -94,7 +94,7 @@ class Orchestrator:
 
     def save_logs(self):
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        with open(f"logs_{timestamp}.txt", "a") as f:
+        with open(f"./pipeline/logs/logs_{timestamp}.txt", "a") as f:
             for log in self.logs:
                 f.write(log + "\n")
 
@@ -103,15 +103,29 @@ class Orchestrator:
 
 
 if __name__ == "__main__":
-    pipeline_config = json.loads("./pipeline/pipeline_classificacao.json")
-    steps = pipeline_config["steps"]
-    initial_df = pd.read_csv("./pipelines/initial.csv")
+    # Correctly load JSON configuration
+    with open("./pipeline/pipeline_classificacao.json", "r") as file:
+        pipeline_config = json.load(file)
+    
+    # Access the appropriate key based on your JSON structure
+    # Assuming you want to access "prediction_steps" and "training_steps"
+    prediction_steps = pipeline_config.get("prediction_steps", [])
+    training_steps = pipeline_config.get("training_steps", [])
+    
+    # Combine steps if necessary, or handle them separately
+    # For example, if Orchestrator expects a single list of steps:
+    steps = prediction_steps + training_steps
+    
+    # Load the initial DataFrame
+    initial_df = pd.read_csv("./pipeline/initial.csv")  # Corrected path if needed
+    
     print("Pipeline steps:", steps)
     print("Initial DataFrame shape:", initial_df.shape)
-
+    
+    # Initialize and run the orchestrator
     orchestrator = Orchestrator(
-        steps,
-        initial_df,
+        pipeline_steps=steps,
+        initial_df=initial_df,
         mongo_uri="mongodb://localhost:27017",
         db_name="cross_the_line",
     )

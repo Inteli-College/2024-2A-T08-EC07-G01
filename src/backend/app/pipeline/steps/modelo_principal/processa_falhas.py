@@ -20,5 +20,5 @@ def execute(file_path):
 # Exemplo de chamada da função
 if __name__ == "__main__":
     file_path = "nome_do_arquivo.csv"  # Caminho do arquivo de entrada
-    df_falhas_trat1 = executable(file_path)
+    df_falhas_trat1 = execute(file_path)
     df_falhas_trat1.to_csv("df_falhas_trat1", index=False)
