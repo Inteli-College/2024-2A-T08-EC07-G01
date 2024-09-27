@@ -18,7 +18,7 @@ async def get_all_predictions():
 
 
 @router.get(
-    "/{knr}",
+    "/details/{knr}",
     response_model=Prediction,
     response_description="Get information about a specific prediction",
 )
