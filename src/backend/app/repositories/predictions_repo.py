@@ -14,7 +14,7 @@ class PredictionsRepository:
 
     def create_prediction(self, prediction_info: Prediction) -> str:
         self.collection.insert_one(prediction_info.model_dump(by_alias=True))
-        return str(prediction_info.KNR)
+        return prediction_info
 
     def get_prediction(self, knr_id: str) -> Optional[Prediction]:
         document = self.collection.find_one({"KNR": knr_id})
