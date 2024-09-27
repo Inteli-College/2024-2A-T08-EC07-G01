@@ -27,6 +27,12 @@ def preparacao_dados(df):
 
 
 def execute(df):
+    '''
+    Script to build the GRU model for classification and train it.
+    
+    Parameters:
+    df: pandas DataFrame
+    '''
     X_train, X_test, y_train, y_test = preparacao_dados(df)
     # Construção do modelo com GRU
     model = Sequential()

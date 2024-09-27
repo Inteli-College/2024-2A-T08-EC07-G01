@@ -1,4 +1,10 @@
 def execute(df):
+    '''
+    Remove columns from the DataFrame that are not present in vehicles that don't have failures.
+    
+    Parameters:
+    df: pandas DataFrame
+    '''
     colunas = ["MODELO", "COR", "MOTOR", "ESTACAO", "USUARIO", "HALLE", "DATA"]
     df = df.drop(columns=colunas, axis=1)
     return df

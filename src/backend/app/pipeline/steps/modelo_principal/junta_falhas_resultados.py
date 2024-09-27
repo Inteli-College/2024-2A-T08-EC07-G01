@@ -2,6 +2,14 @@ import pandas as pd
 
 
 def merge(df_resultados, df_falhas):
+
+    '''
+    Script to merge the results and failures DataFrames.
+    
+    Parameters:
+    df_resultados: str
+    df_falhas: str
+    '''
     resultados = pd.read_csv(df_resultados)
     falhas = pd.read_csv(df_falhas)
     merged_df = pd.merge(resultados, falhas, on="KNR", how="left")

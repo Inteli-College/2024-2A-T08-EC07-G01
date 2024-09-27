@@ -2,11 +2,24 @@ from sklearn.preprocessing import MinMaxScaler
 
 
 def drop_colunas(df):
+    '''
+    Function to drop unused columns from the DF.
+
+    Parameters:
+    df: pandas DataFrame
+    '''
     colunas = ["UNIT", "VALUE_ID", "VALUE"]
     df = df.drop(columns=colunas, axis=1)
 
 
 def agregar_por_id(df, id_value):
+    '''
+    Function to aggregate the data by ID.
+
+    Parameters:
+    df: pandas DataFrame
+    id_value: int
+    '''
     subset = df[df["ID"] == id_value]
     return (
         subset.groupby("KNR")
@@ -28,6 +41,12 @@ def agregar_por_id(df, id_value):
 
 
 def normalizacao(df):
+    '''
+    Function to normalize the selected columns
+
+    Parameters:
+    df: pandas DataFrame
+    '''
     # Selecionando apenas as colunas específicas para normalização
     colunas_normalizacao = [
         "ID1NAME",
@@ -53,6 +72,12 @@ def normalizacao(df):
 
 
 def execute(df):
+    '''
+    Script to preprocess the whole DataFrame.
+    
+    Parameters:
+    df: pandas DataFrame
+    '''
     drop_colunas(df)
 
     id1 = agregar_por_id(df, 1)
