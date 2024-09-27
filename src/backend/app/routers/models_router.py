@@ -87,7 +87,7 @@ async def compare_models(model_type: str, metrics_weights: MetricsWeights):
 
 
 @router.get(
-    "/current_models",
+    "/current-models",
     response_model=List[Model],
     response_description="Get all models currently in use",
 )

@@ -25,6 +25,9 @@ class PredictionService:
     def delete_prediction(self, knr: str) -> bool:
         return self.predict_repo.delete_prediction(knr)
 
+    def fail_codes_prediction(self) -> dict:
+        return self.predict_repo.fail_codes_prediction()
+
 
 class PredictionsServiceSingleton:
     _instance: Optional[PredictionService] = None

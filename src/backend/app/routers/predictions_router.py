@@ -18,7 +18,7 @@ async def get_all_predictions():
 
 
 @router.get(
-    "/{knr}",
+    "/details/{knr}",
     response_model=Prediction,
     response_description="Get information about a specific prediction",
 )
@@ -61,3 +61,15 @@ async def update_fail_codes(knr_id: str, prediction: PredictionUpdate):
     )
 
     return updated_prediction
+
+
+@router.get(
+    "/fail-codes-predicted",
+    response_model=dict,
+    response_description="List of the quantity of each possible failure codes was predicted",
+)
+async def get_fail_codes_predicted():
+    fail_codes_predicted = (
+        PredictionsServiceSingleton.get_instance().fail_codes_prediction()
+    )
+    return fail_codes_predicted

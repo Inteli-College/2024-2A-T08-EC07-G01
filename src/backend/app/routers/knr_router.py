@@ -19,7 +19,7 @@ async def get_all_knr():
 
 
 @router.get(
-    "/{knr_id}",
+    "/details/{knr_id}",
     response_model=KNR,
     response_description="Get a single KNR info",
 )
