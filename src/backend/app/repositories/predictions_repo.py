@@ -30,3 +30,12 @@ class PredictionsRepository:
     def delete_prediction(self, knr_id: str) -> bool:
         result = self.collection.delete_one({"KNR": knr_id})
         return result.deleted_count > 0
+
+    def fail_codes_prediction(self) -> dict:
+        pipeline = [
+            {"$unwind": "$predicted_fail_codes"},
+            {"$group": {"_id": "$predicted_fail_codes", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}},
+        ]
+        result = self.collection.aggregate(pipeline)
+        return {doc["_id"]: doc["count"] for doc in result}
