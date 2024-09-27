@@ -1,0 +1,23 @@
+{
+    "name": "classificacao",
+    "prediction_steps": [
+        {
+            "name": "processa_falhas",
+            "file_path": "./pipeline/steps/modelo_classificacao/processa_falhas.py"
+        },
+        {
+            "name": "processa_torques",
+            "file_path": "./pipeline/steps/modelo_classificacao/processa_torques.py"
+        },
+        {
+            "name": "junta_torques_falhas",
+            "file_path": "./pipeline/steps/modelo_classificacao/merge_torques_falhas.py"
+        }
+    ],
+    "training_steps": [
+        {
+            "name": "treina_modelo",
+            "file_path": "./pipeline/steps/modelo_classificacao/treina_modelo.py"
+        }
+    ]
+}

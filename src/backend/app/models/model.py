@@ -21,6 +21,7 @@ class Model(BaseModel):
     last_used: Optional[datetime] = Field(
         None, description="Date when the model was last used"
     )
+    using: bool = Field(..., description="If the model is being used")
 
     class Config:
         json_schema_extra = {
@@ -34,6 +35,7 @@ class Model(BaseModel):
                 "recall": 0.30,
                 "f1_score": 0.40,
                 "last_used": "2024-09-10T12:00:00",
+                "using": True,
             }
         }
 
@@ -57,10 +59,10 @@ class ModelUpdate(BaseModel):
     recall: Optional[float] = Field(None, description="Recall of the model")
     f1_score: Optional[float] = Field(None, description="F1 score of the model")
 
-
     last_used: Optional[datetime] = Field(
         None, description="Date when the model was last used"
     )
+    using: Optional[bool] = Field(..., description="If the model is being used")
 
     class Config:
         json_schema_extra = {
@@ -75,5 +77,6 @@ class ModelUpdate(BaseModel):
                 "recall": 0.30,
                 "f1_score": 0.40,
                 "last_used": "2024-09-10T12:00:00",
+                "using": True,
             }
         }
