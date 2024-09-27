@@ -8,22 +8,22 @@ import normalLogo from '@/assets/static/logo.png';
     <header class="fixed top-0 left-0 right-0 border-b-2 border-customBlue flex items-center p-4 bg-white z-50">
       <!-- Div on the left with the Logo and project name -->
       <div class="hover:scale-[101%] transition cursor-pointer flex items-center mr-12 ">
-        <Logo width="w-12" :logo="normalLogo" class="mt-1"/>
+        <Logo width="w-12" :logo="normalLogo" class="mt-1" />
         <p class="font-bold text-base">Cross The Line</p>
       </div>
 
       <!-- Div with the centered header buttons -->
       <div class="ml-12 absolute left-1/2 transform -translate-x-1/2 flex items-center gap-28">
-        <HeaderButton iconName="mdi:chart-timeline-variant-shimmer" label="Previsão Diária" />
-        <HeaderButton iconName="mdi:clipboard-text-outline" label="Histórico" redirect="/table"/>
-        <HeaderButton iconName="mdi:view-dashboard-outline" label="Dashboard" redirect="/dashboard"/>
-        <HeaderButton iconName="mdi:progress-download" label="Treinamento Mensal" redirect="/monthly"/>
+        <HeaderButton iconName="mdi:chart-timeline-variant-shimmer" label="Previsão Diária" redirect="/prediction" />
+        <HeaderButton iconName="mdi:clipboard-text-outline" label="Histórico" redirect="/table" />
+        <HeaderButton iconName="mdi:view-dashboard-outline" label="Dashboard" redirect="/dashboard" />
+        <HeaderButton iconName="mdi:progress-download" label="Treinamento Mensal" redirect="/monthly" />
       </div>
     </header>
 
     <!-- Page content area -->
     <div class="flex-grow p-4 mt-16 "> <!-- Added margin-top to offset the fixed header -->
-      <div class="min-h-[70vh]"> 
+      <div class="min-h-[70vh]">
         <slot /> <!-- Page content -->
       </div>
     </div>
