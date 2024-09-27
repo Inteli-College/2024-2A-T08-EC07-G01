@@ -1,25 +1,21 @@
 import pandas as pd
 
-
 def execute(df):
-    # excluir registros com valores nulos
+    '''
+    Function to prepare the data for the classification model, uses the fails dataset, AKA the dataset after main model is ran.
+
+    Parameters:
+    df: pandas DataFrame 
+    '''
     df_brute = df.dropna()
 
-    #Retira os valores MULTIVALUE
     df = df_brute.drop(df_brute[df_brute['S_GROUP_ID'] == '#MULTIVALUE'].index)
 
-    #Define o tipo da coluna S_GROUP_ID como inteiro
     df['S_GROUP_ID'] = df['S_GROUP_ID'].astype(int)
 
-    #Retira as colunas que não serão utilizadas
     df = df.drop(['USUARIO', 'FALHA', 'MODELO', 'ESTACAO', 'HALLE'], axis=1)
 
-    #Retira os registros que possuem MOTOR vazio
     df = df.drop(df[df['MOTOR'] == '   '].index)
-
-    ################################################
-    # One Hot Encoding da coluna de tipos de falha #
-    ################################################
 
     df_one_hot = pd.get_dummies(df, columns=['S_GROUP_ID'])
     columns = ['S_GROUP_ID_-2','S_GROUP_ID_1','S_GROUP_ID_2','S_GROUP_ID_4','S_GROUP_ID_5','S_GROUP_ID_133','S_GROUP_ID_137','S_GROUP_ID_140','S_GROUP_ID_9830946']
@@ -39,9 +35,8 @@ def execute(df):
     'S_GROUP_ID_9830946': 'sum'
     }).reset_index()
 
-    #############################################
-    #One Hot Encoding das Colunas de Cor e Motor#
-    #############################################
+
+    # TODO: Remove columns color and engine from the DF (They aren't present on vehicles that don't have failures)
 
     df_final = pd.get_dummies(grouped_df, columns=['COR','MOTOR'])
 
@@ -51,12 +46,8 @@ def execute(df):
     'COR_K2A1', 'COR_K2K2', 'MOTOR_CWL', 'MOTOR_CWS', 'MOTOR_DHS', 'MOTOR_DRP'
     ]   
 
-    # Converter as colunas de booleano para 0 e 1
     df_final[columns_to_convert] = df_final[columns_to_convert].astype(int)   
 
-    # Convertendo os dados das colunas S_GROUP_ID para booleano
     df_final['S_GROUP_ID_-2', 'S_GROUP_ID_1', 'S_GROUP_ID_2', 'S_GROUP_ID_4', 'S_GROUP_ID_5', 'S_GROUP_ID_133', 'S_GROUP_ID_137', 'S_GROUP_ID_140', 'S_GROUP_ID_9830946'] = df_final['S_GROUP_ID_-2', 'S_GROUP_ID_1', 'S_GROUP_ID_2', 'S_GROUP_ID_4', 'S_GROUP_ID_5', 'S_GROUP_ID_133', 'S_GROUP_ID_137', 'S_GROUP_ID_140', 'S_GROUP_ID_9830946'].astype(bool)
 
-    return df_final  
-
-    
+    return df_final
