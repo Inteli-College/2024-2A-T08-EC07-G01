@@ -3,7 +3,12 @@ from sklearn.preprocessing import MinMaxScaler
 
 
 def preprocess_torque(df):
-    """Realiza o pré-processamento na coluna VALUE do DataFrame."""
+    '''
+    Makes the pre-processement of the VALUE column in the torques dataset.
+
+    Parameters:
+    df: pandas DataFrame
+    '''
     df["VALUE"] = df["VALUE"].str.strip()  # Remove espaços em branco
     df["VALUE"] = df["VALUE"].replace("", pd.NA)  # Substitui strings vazias por NaN
     df["VALUE"] = df["VALUE"].str.replace(
@@ -16,13 +21,24 @@ def preprocess_torque(df):
 
 
 def aggregate_by_knr_unit(df):
-    """Agrupa os dados por KNR e UNIT, calculando a média dos valores."""
+    '''
+    Group the data by KNR and UNIT and pivot the data.
+
+    Parameters:
+    df: pandas DataFrame
+    '''
     df_grouped = df.groupby(["KNR", "UNIT"])["VALUE"].mean().reset_index()
     return df_grouped.pivot(index="KNR", columns="UNIT", values="VALUE").reset_index()
 
 
 def normalize_columns(df, exclude_columns):
-    """Normaliza as colunas numéricas do DataFrame, excluindo as especificadas."""
+    '''
+    Normalize the numeric columns of the DataFrame, and remove the UNIT and KNR columns.
+
+    Parameters:
+    df: pandas DataFrame
+    exclude_columns: list of columns to exclude from normalization
+    '''
     # Atualmente, as colunas a serem excluídas (que serão passadas como parâmetro exclude_columns) são KNR e UNIT, pois não serão usadas para treinamento
     columns_to_normalize = df.columns.difference(exclude_columns)
     numeric_columns = (
@@ -34,7 +50,12 @@ def normalize_columns(df, exclude_columns):
 
 
 def execute(df):
-    """Pipeline de pré-processamento completo dos dados."""
+    '''
+    Main file script to preprocess the whole DataFrame.
+    
+    Parameters:
+    df: pandas DataFrame
+    '''
     # Remover colunas indesejadas e espaços
     df = df[df["UNIT"] != "          "]  # Remove onde UNIT tem espaços
     df["UNIT"] = df["UNIT"].str.strip()  # Remove espaços em UNIT

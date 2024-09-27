@@ -2,6 +2,12 @@ import pandas as pd
 
 
 def execute(df):
+    '''
+    Function to prepare the data for the classification model, uses the fails dataset, AKA the dataset after main model is ran.
+    
+    Parameters:
+    df: pandas DataFrame 
+    '''
     # excluir registros com valores nulos
     df_brute = df.dropna()
 
