@@ -1,10 +1,23 @@
 from sklearn.preprocessing import MinMaxScaler
 
 def drop_colunas(df):
+    '''
+    Function to drop unused columns from the DF.
+
+    Parameters:
+    df: pandas DataFrame
+    '''
     colunas = ['UNIT', 'VALUE_ID', 'VALUE']
     df = df.drop(columns=colunas, axis=1)
 
 def agregar_por_id(df,id_value):
+    '''
+    Function to aggregate the data by ID.
+
+    Parameters:
+    df: pandas DataFrame
+    id_value: int
+    '''
     subset = df[df['ID'] == id_value]
     return subset.groupby('KNR').agg(
         NAME=('NAME', 'count'),  # Conta total de NAME
@@ -19,7 +32,16 @@ def agregar_por_id(df,id_value):
     })
 
 def normalizacao(df):
-        # Selecionando apenas as colunas específicas para normalização
+    '''
+    Function to normalize the selected columns
+
+    Parameters:
+    df: pandas DataFrame
+    '''
+
+    # TODO: Add the columns as a parameter
+
+    # Selecionando apenas as colunas específicas para normalização
     colunas_normalizacao = ['ID1NAME','ID1SOK', 'ID1SNOK', 'ID1DATA', 'ID2NAME', 'ID2SOK', 'ID2SNOK', 'ID2DATA', 'ID718NAME', 'ID718SOK', 'ID718SNOK', 'ID718DATA']
 
     # Inicializando o MinMaxScaler
@@ -31,6 +53,12 @@ def normalizacao(df):
     
 
 def execute(df):
+    '''
+    Script to preprocess the whole DataFrame.
+
+    Parameters:
+    df: pandas DataFrame
+    '''
     drop_colunas(df)
     
     id1 = agregar_por_id(df, 1)

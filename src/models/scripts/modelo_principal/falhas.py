@@ -1,6 +1,12 @@
 import pandas as pd
 
 def execute (file_path):
+    '''
+    Reads a CSV file and returns a DataFrame with the 'FALHA' column converted to 1 and all duplicates removed.
+
+    Parameters:
+    file_path: str
+    '''
     df = pd.read_csv(file_path)
     df['FALHA'] = df['FALHA'].str.upper()
     # Remove todas as linhas com KNR repetido

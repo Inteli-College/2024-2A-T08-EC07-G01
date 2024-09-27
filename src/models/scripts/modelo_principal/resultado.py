@@ -1,6 +1,12 @@
 import pandas as pd
 
 def execute(file_path):
+    '''
+    Script to read a CSV file and return a DataFrame with the 'DATA' column converted to datetime and all NaN values removed.
+
+    Parameters:
+    file_path: str
+    '''
     df = pd.read_csv(file_path)
     df= df.dropna() 
     df['DATA'] = pd.to_datetime(df['DATA'], errors='coerce')
