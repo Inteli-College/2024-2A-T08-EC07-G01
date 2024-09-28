@@ -2,33 +2,49 @@ from app.models.train import Train
 from app.repositories.models_repo import ModelRepository
 from app.pipeline.orchestrator import Orchestrator
 import json
+import base64
+import pandas as pd
+from io import StringIO
 
 class TrainService:
     def __init__(self, model_repo: ModelRepository):
         self.model_repo = model_repo
 
     def train_model(self, train: Train) -> str:
-        # DONE: call the train function
-        # TODO: Store the train data inside the database using the model_repo
-        # return self.model_repo.create_model(train)
+        # Decode base64 content to CSV strings
+        df_resultados_content = base64.b64decode(train.df_resultados).decode('utf-8')
+        df_falhas_content = base64.b64decode(train.df_falhas).decode('utf-8')
 
+        # Convert content to DataFrames
+        df_resultados = pd.read_csv(StringIO(df_resultados_content))
+        df_falhas = pd.read_csv(StringIO(df_falhas_content))
+
+        dataframes = {
+        "df_resultados": df_resultados,
+        "df_falhas": df_falhas,
+        }
+
+        # Load pipeline configuration
         with open("./pipeline/pipeline_classificacao.json", "r") as file:
             pipeline_config = json.load(file)
 
-       #prediction_steps = pipeline_config.get("prediction_steps", [])
         training_steps = pipeline_config.get("training_steps", [])
 
-        steps = training_steps
-
         orchestrator = Orchestrator(
-        pipeline_steps=steps,
-        initial_df=train.data,
-        mongo_uri="mongodb://localhost:27017",
-        db_name="cross_the_line",
-    )
+            pipeline_steps=training_steps,
+            initial_df=dataframes,
+            mongo_uri="mongodb://localhost:27017",
+            db_name="cross_the_line",
+        )
+
         orchestrator.run_dynamic_pipeline()
 
-        return 1
+        # TODO 1: Store the trained model metrics in the DB and the model also. 
+
+        # TODO 2: Return the model's metrics to make the user choose between the last model and the newest model.
+
+
+        return "Training completed successfully"
 
 
 class TrainServiceSingleton:
@@ -51,5 +67,4 @@ class TrainServiceSingleton:
             raise Exception(
                 "ModelServiceSingleton is not initialized. Call initialize() first."
             )
-
         return cls._instance
