@@ -1,4 +1,4 @@
-def merge(df_torques, df_falhas):
+def execute(df_torques, df_falhas):
     '''
     Merges both the torques and fails datasets, using the KNR column as the key.
 
