@@ -16,6 +16,9 @@ from app.repositories.predictions_repo import PredictionsRepository
 from app.services.predictions_service import PredictionsServiceSingleton
 from app.routers.predictions_router import router as predictions_router
 
+from app.services.train_service import TrainServiceSingleton
+from app.routers.train_router import router as train_router
+
 from dotenv import dotenv_values
 
 config = dotenv_values(".env")
@@ -31,6 +34,7 @@ async def app_lifespan(app: FastAPI):
     KNRServiceSingleton.initialize(KNRRepository(app.state.db))
     ModelServiceSingleton.initialize(ModelRepository(app.state.db))
     PredictionsServiceSingleton.initialize(PredictionsRepository(app.state.db))
+    TrainServiceSingleton.initialize(ModelRepository(app.state.db))
 
     print("Connected to the MongoDB database!")
 
@@ -55,6 +59,7 @@ app.add_middleware(
 app.include_router(knr_router)
 app.include_router(models_router)
 app.include_router(predictions_router)
+app.include_router(train_router)
 
 
 @app.get("/")
