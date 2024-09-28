@@ -3,15 +3,15 @@ from pymongo import MongoClient
 import importlib.util
 import os
 import tempfile
-import datetime as datetime
+import datetime
 import json
 import pandas as pd
 
 
 class Orchestrator:
-    def __init__(self, pipeline_steps, initial_df, mongo_uri, db_name):
+    def __init__(self, pipeline_steps, dataframes, mongo_uri, db_name):
         self.pipeline_steps = pipeline_steps
-        self.initial_df = initial_df
+        self.dataframes = dataframes  # Dictionary to store DataFrames
         self.logs = []
         self.client = MongoClient(mongo_uri)
         self.db = self.client[db_name]
@@ -25,10 +25,11 @@ class Orchestrator:
 
     def fetch_script_from_gridfs(self, file_path):
         try:
-            # grid_out = self.fs.get(file_path)
-            grid_out = open(file_path, "rb")
-            script_content = grid_out.read()
-            self.log(f"Script with ID {file_path} successfully fetched from GridFS.")
+            # For demonstration, we're reading from the local filesystem.
+            # Replace with GridFS retrieval logic if needed.
+            with open(file_path, "rb") as grid_out:
+                script_content = grid_out.read()
+            self.log(f"Script '{file_path}' successfully fetched.")
             return script_content
         except Exception as e:
             self.log(f"Error fetching script from GridFS: {e}", error=True)
@@ -46,10 +47,10 @@ class Orchestrator:
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
 
-            self.log(f"Module {module_name} successfully loaded from {temp_file.name}.")
+            self.log(f"Module '{module_name}' successfully loaded from {temp_file.name}.")
             return module
         except Exception as e:
-            self.log(f"Error loading module {module_name} from file: {e}", error=True)
+            self.log(f"Error loading module '{module_name}' from file: {e}", error=True)
             raise
         finally:
             # Clean up the temporary file after loading the module
@@ -65,7 +66,7 @@ class Orchestrator:
             return result
         except AttributeError as e:
             self.log(
-                f"Function {func_name} not found in {module.__name__}: {e}", error=True
+                f"Function '{func_name}' not found in module '{module.__name__}': {e}", error=True
             )
             raise
         except Exception as e:
@@ -73,11 +74,19 @@ class Orchestrator:
             raise
 
     def run_dynamic_pipeline(self):
-        last_result = self.initial_df
         for step in self.pipeline_steps:
             module_name = step["name"]
-            file_path = step["file_path"]  # Fetch the file path from GridFS
-            kwargs = step.get("kwargs", {})
+            file_path = step["file_path"]
+            kwargs = step.get("kwargs", {}).copy()
+
+            # Fetch required DataFrames
+            dataframes_needed = step.get("dataframes", [])
+            for df_name in dataframes_needed:
+                if df_name in self.dataframes:
+                    kwargs[df_name] = self.dataframes[df_name]
+                else:
+                    self.log(f"DataFrame '{df_name}' not found for step '{module_name}'.", error=True)
+                    raise ValueError(f"DataFrame '{df_name}' not found for step '{module_name}'.")
 
             # Fetch the script from GridFS
             script_content = self.fetch_script_from_gridfs(file_path)
@@ -85,12 +94,15 @@ class Orchestrator:
             # Load the module from the script content
             module = self.load_module_from_file(module_name, script_content)
 
-            kwargs.update({"df": last_result})
-
             # Execute the function from the loaded module
-            last_result = self.execute_step(step["name"], module, **kwargs)
+            result = self.execute_step(step["name"], module, **kwargs)
 
-        print(f"Pipeline completed successfully. Last result: {last_result}")
+            # Store the result if an output DataFrame name is provided
+            output_df_name = step.get("output_dataframe")
+            if output_df_name:
+                self.dataframes[output_df_name] = result
+
+        print("Pipeline completed successfully.")
 
     def save_logs(self):
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -103,29 +115,26 @@ class Orchestrator:
 
 
 if __name__ == "__main__":
-    # Correctly load JSON configuration
-    with open("./pipeline/pipeline_classificacao.json", "r") as file:
+    # Load JSON configuration
+    with open("./pipeline/pipeline_principal.json", "r") as file:
         pipeline_config = json.load(file)
-    
-    # Access the appropriate key based on your JSON structure
-    # Assuming you want to access "prediction_steps" and "training_steps"
-    prediction_steps = pipeline_config.get("prediction_steps", [])
-    training_steps = pipeline_config.get("training_steps", [])
-    
-    # Combine steps if necessary, or handle them separately
-    # For example, if Orchestrator expects a single list of steps:
-    steps = prediction_steps + training_steps
-    
-    # Load the initial DataFrame
-    initial_df = pd.read_csv("./pipeline/initial.csv")  # Corrected path if needed
-    
-    print("Pipeline steps:", steps)
-    print("Initial DataFrame shape:", initial_df.shape)
-    
+
+    # Combine prediction and training steps
+    steps = pipeline_config.get("prediction_steps", []) + pipeline_config.get("training_steps", [])
+
+    # Load the initial DataFrames into a dictionary
+    dataframes = {
+        "df_resultados": pd.read_csv("./pipeline/resultados.csv"),
+        "df_falhas": pd.read_csv("./pipeline/falha.csv"),
+    }
+
+    print("Pipeline steps:", [step["name"] for step in steps])
+    print("Initial DataFrames loaded.")
+
     # Initialize and run the orchestrator
     orchestrator = Orchestrator(
         pipeline_steps=steps,
-        initial_df=initial_df,
+        dataframes=dataframes,
         mongo_uri="mongodb://localhost:27017",
         db_name="cross_the_line",
     )
