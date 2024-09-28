@@ -1,16 +1,40 @@
+import axios from "axios";
+
 export interface TestPieChart {
-  'name': string;
-  'total': number;
-  'predicted' : number;
+  name: string;
+  total: number;
+  predicted: number;
 }
 
-export function getPieChart(): TestPieChart[]  {
-  return [
-    { name: 'Jan', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
-    { name: 'Feb', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
-    { name: 'Mar', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
-    { name: 'Apr', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
-    { name: 'May', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
-    { name: 'Jun', total: Math.floor(Math.random() * 2000) + 500, predicted: Math.floor(Math.random() * 2000) + 500 },
-  ];
-};
+const baseURL = "http://localhost:8000/api/predictions";
+
+export async function getTotalFailsChart(): Promise<TestPieChart[]> {
+  try {
+    const response = await axios.get(`${baseURL}/total-fails`);
+    const data = response.data;
+
+    return [
+      { name: "No Fails", total: data.no_fails, predicted: 0 },
+      { name: "Fails", total: data.fails, predicted: 0 },
+    ];
+  } catch (error) {
+    console.error("Error fetching total fails data:", error);
+    return [];
+  }
+}
+
+export async function getFailCodesChart(): Promise<TestPieChart[]> {
+  try {
+    const response = await axios.get(`${baseURL}/fail-codes-predicted`);
+    const data = response.data;
+
+    return Object.keys(data).map((key) => ({
+      name: `Code ${key}`,
+      total: data[key],
+      predicted: 0,
+    }));
+  } catch (error) {
+    console.error("Error fetching fail codes data:", error);
+    return [];
+  }
+}
