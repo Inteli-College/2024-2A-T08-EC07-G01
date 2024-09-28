@@ -14,8 +14,8 @@ export async function getTotalFailsChart(): Promise<TestPieChart[]> {
     const data = response.data;
 
     return [
-      { name: "No Fails", total: data.no_fails, predicted: 0 },
-      { name: "Fails", total: data.fails, predicted: 0 },
+      { name: "Sem Falha", total: data.no_fails, predicted: 0 },
+      { name: "Com Falha", total: data.fails, predicted: 0 },
     ];
   } catch (error) {
     console.error("Error fetching total fails data:", error);
@@ -29,7 +29,7 @@ export async function getFailCodesChart(): Promise<TestPieChart[]> {
     const data = response.data;
 
     return Object.keys(data).map((key) => ({
-      name: `Code ${key}`,
+      name: `Falha ${key}`,
       total: data[key],
       predicted: 0,
     }));

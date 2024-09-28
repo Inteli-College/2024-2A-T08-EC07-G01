@@ -44,17 +44,17 @@ const handleViewChange = (view) => {
         <div class="flex gap-6 w-full justify-center mb-8">
           <div class="flex flex-col gap-3 items-center">
             <h2>Quantidade de Falhas por Carros analisados</h2>
-            <PieChart :show-center="true" class="w-80 h-80" />
+            <PieChart :is-from-fails="true" :show-center="true" class="w-80 h-80" />
           </div>
 
           <div class="flex flex-col gap-3 items-center">
             <h2>Classes de Falhas por Total de falhas</h2>
-            <PieChart class="w-80 h-80" />
+            <PieChart :is-from-fails="false" class="w-80 h-80" />
           </div>
         </div>
 
         <div class="flex flex-col gap-3 items-center w-full mt-12 mb-6">
-          <h2 class="mb-4">Quantidade de Falhas por tempo</h2>
+          <h2 class="text-2xl font-semibold mb-4">Quantidade de Falhas por tempo</h2>
           <LineChart class="w-2/3" />
         </div>
       </template>
