@@ -34,6 +34,7 @@ class PredictionsRepository:
     def fail_codes_prediction(self) -> dict:
         pipeline = [
             {"$unwind": "$predicted_fail_codes"},
+            {"$match": {"predicted_fail_codes": {"$ne": -1}}},
             {"$group": {"_id": "$predicted_fail_codes", "count": {"$sum": 1}}},
             {"$sort": {"count": -1}},
         ]
