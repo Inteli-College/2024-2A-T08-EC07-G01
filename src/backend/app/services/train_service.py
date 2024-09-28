@@ -1,51 +1,85 @@
-from app.models.train import Train
+import json
+import os
+import pandas as pd
+from app.models.model import Model
 from app.repositories.models_repo import ModelRepository
 from app.pipeline.orchestrator import Orchestrator
-import json
-import base64
-import pandas as pd
-from io import StringIO
+import datetime
 
 class TrainService:
     def __init__(self, model_repo: ModelRepository):
         self.model_repo = model_repo
 
-    def train_model(self, train: Train) -> str:
-        # Decode base64 content to CSV strings
-        df_resultados_content = base64.b64decode(train.df_resultados).decode('utf-8')
-        df_falhas_content = base64.b64decode(train.df_falhas).decode('utf-8')
+    def train_model(self, df_resultados: pd.DataFrame, df_falhas: pd.DataFrame) -> dict:
+        # Load pipeline configuration
+        pipeline_file_path = os.path.join(os.getcwd(), 'app', 'pipeline', 'pipeline_principal.json')
+        print("Absolute Path to JSON file:", pipeline_file_path)
 
-        # Convert content to DataFrames
-        df_resultados = pd.read_csv(StringIO(df_resultados_content))
-        df_falhas = pd.read_csv(StringIO(df_falhas_content))
+        with open(pipeline_file_path, "r") as file:
+            pipeline_config = json.load(file)
 
+        steps = pipeline_config.get("prediction_steps", []) + pipeline_config.get("training_steps", [])
+
+        # Initialize dataframes for the pipeline
         dataframes = {
-        "df_resultados": df_resultados,
-        "df_falhas": df_falhas,
+            "df_resultados": df_resultados,
+            "df_falhas": df_falhas,
         }
 
+        # Create an orchestrator to run the pipeline
+        orchestrator = Orchestrator(
+            pipeline_steps=steps,
+            dataframes=dataframes,
+            mongo_uri="mongodb://db:27017",
+            db_name="cross_the_line",
+        )
+
+        # Run the pipeline and get the model metadata
+        model_metadata = orchestrator.run_dynamic_pipeline()
+
+        # Debug print to verify model metadata
+        print(f"[DEBUG] Orchestrator returned model metadata: {model_metadata}")
+
+        # Create a new Model object to store in the database
+        new_model = Model(
+            model_name=model_metadata.get("model_name"),
+            type_model=model_metadata.get("type_model"),
+            gridfs_path="path/to/model/in/gridfs",  # Replace with actual GridFS path
+            recipe_path="path/to/recipe/in/gridfs",  # Replace with actual GridFS path
+            accuracy=model_metadata["metrics"].get("accuracy", 0.0),
+            precision=model_metadata["metrics"].get("precision", 0.0),  # Calculate or provide this value
+            recall=model_metadata["metrics"].get("recall", 0.0),
+            f1_score=model_metadata["metrics"].get("f1", 0.0),
+            last_used=None,  # You can set this to `datetime.datetime.utcnow()` if needed
+            using=False  # Adjust based on your logic
+        )
+
+        # Save the model in the repository
+        try:
+            self.model_repo.create_model(new_model)
+            print(f"[INFO] Model '{new_model.model_name}' saved to repository.")
+        except Exception as e:
+            raise RuntimeError(f"Failed to save model: {str(e)}")
+
+        return model_metadata
+
+    def retrain_model(self, df_resultados: pd.DataFrame, df_falhas: pd.DataFrame) -> str:
         # Load pipeline configuration
         with open("./pipeline/pipeline_classificacao.json", "r") as file:
             pipeline_config = json.load(file)
 
-        training_steps = pipeline_config.get("training_steps", [])
+        steps = pipeline_config.get("prediction_steps", []) + pipeline_config.get("training_steps", [])
 
         orchestrator = Orchestrator(
-            pipeline_steps=training_steps,
-            initial_df=dataframes,
-            mongo_uri="mongodb://localhost:27017",
+            pipeline_steps=steps,
+            dataframes={"df_resultados": df_resultados, "df_falhas": df_falhas},
+            mongo_uri="mongodb://db:27017",
             db_name="cross_the_line",
         )
 
         orchestrator.run_dynamic_pipeline()
 
-        # TODO 1: Store the trained model metrics in the DB and the model also. 
-
-        # TODO 2: Return the model's metrics to make the user choose between the last model and the newest model.
-
-
-        return "Training completed successfully"
-
+        return "Retraining completed successfully"
 
 class TrainServiceSingleton:
     _instance: TrainService = None
