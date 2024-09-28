@@ -2,6 +2,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import GRU, Dense
 import numpy as np
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, recall_score, f1_score, precision_score
 
 
 def preparacao_dados(df):
@@ -24,7 +25,6 @@ def preparacao_dados(df):
     X_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 1))
 
     return X_train, X_test, y_train, y_test
-
 
 def execute(df_merged):
     '''
@@ -57,6 +57,24 @@ def execute(df_merged):
         X_train, y_train, epochs=100, batch_size=32, validation_data=(X_test, y_test)
     )
 
+    y_pred = model.predict(X_test)
+
+    y_pred = (y_pred > 0.5).astype(int).flatten()
+
+    accuracy = accuracy_score(y_test, y_pred)
+    recall = recall_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred)
+
     model.save("./pipeline/model.h5")
 
-    return model
+    return {
+        "model_name": "GRU",
+        "type_model": "Main Model",
+        "metrics": {
+            "accuracy": float(accuracy),  
+            "recall": float(recall),     
+            "f1": float(f1),
+            "precision": float(precision),           
+        }
+    }
