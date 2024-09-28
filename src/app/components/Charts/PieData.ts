@@ -6,35 +6,31 @@ export interface TestPieChart {
   predicted: number;
 }
 
-const baseURL = "http://localhost:8000/api/predictions";
+export async function fetchChartData(isFromFails: boolean): Promise<TestPieChart[]> {
+  const baseURL = "http://localhost:8000/api/predictions";
 
-export async function getTotalFailsChart(): Promise<TestPieChart[]> {
   try {
-    const response = await axios.get(`${baseURL}/total-fails`);
-    const data = response.data;
+    let response;
+    if (isFromFails) {
+      response = await axios.get(`${baseURL}/total-fails`);
+      const responseData = response.data;
 
-    return [
-      { name: "Sem Falha", total: data.no_fails, predicted: 0 },
-      { name: "Com Falha", total: data.fails, predicted: 0 },
-    ];
+      return [
+        { name: "Sem Falha", total: responseData.no_fails, predicted: 0 },
+        { name: "Com Falha", total: responseData.fails, predicted: 0 },
+      ];
+    } else {
+      response = await axios.get(`${baseURL}/fail-codes-predicted`);
+      const responseData = response.data;
+
+      return Object.keys(responseData).map((key) => ({
+        name: `Falha ${key}`,
+        total: responseData[key],
+        predicted: 0,
+      }));
+    }
   } catch (error) {
-    console.error("Error fetching total fails data:", error);
-    return [];
-  }
-}
-
-export async function getFailCodesChart(): Promise<TestPieChart[]> {
-  try {
-    const response = await axios.get(`${baseURL}/fail-codes-predicted`);
-    const data = response.data;
-
-    return Object.keys(data).map((key) => ({
-      name: `Falha ${key}`,
-      total: data[key],
-      predicted: 0,
-    }));
-  } catch (error) {
-    console.error("Error fetching fail codes data:", error);
-    return [];
+    console.error("Error fetching data:", error);
+    return []; // Reset to empty if there's an error
   }
 }

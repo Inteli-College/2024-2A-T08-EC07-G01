@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { DonutChart } from '@/components/ui/chart-donut'
-import { ref } from 'vue'
-import { getTotalFailsChart, getFailCodesChart, type TestPieChart } from './PieData';
+import { ref, onMounted, onUpdated } from 'vue'
+import { type TestPieChart, fetchChartData } from './PieData';
 
 
 // Props
@@ -9,24 +9,16 @@ const props = defineProps<{
   isFromFails: boolean
 }>()
 
+const data = await fetchChartData(props.isFromFails);
+
 // Definindo as cores manualmente para sincronizar com o gráfico
 const chartColors = ['#025159', '#027373', '#38b2ac', '#67d9d5', '#2b2d2f', '#414345', '#6b6d70', '#a0a2a5']
 
-const data = ref<Promise<TestPieChart[]>>(Promise.resolve([]))
+const showCenter = ref(false) // False vai remover o centro
 
-// Fetch data based on the chart type
-const fetchData = async () => {
-  if (props.isFromFails) {
-    data.value = await getTotalFailsChart();
-  } else if (!props.isFromFails) {
-    data.value = await getFailCodesChart();
-  }
-};
 
-// Call fetchData when the component is mounted or chartType changes
-onMounted(() => {
-  fetchData();
-});
+// Call fetchChartData when the component is mounted or props.isFromFails changes
+
 </script>
 
 <template>
