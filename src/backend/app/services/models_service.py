@@ -21,6 +21,9 @@ class ModelService:
 
     def delete_model(self, model_name: str) -> bool:
         return self.model_repo.delete_model(model_name)
+    
+    def get_models_by_type(self, model_type: str) -> List[Model]:
+        return self.model_repo.get_models_by_type(model_type)
 
 
 class ModelServiceSingleton:
