@@ -21,15 +21,15 @@ const handleViewChange = (view) => {
 
     <!-- Botões para alternar entre Falhas e Modelos -->
     <div class="flex justify-center gap-3">
-      <Button class="bg-customGreen text-white transition-all duration-300" :class="{
-        'bg-transparent border-2 border-customGreen text-customGreen': currentView === 'falhas',
+      <Button class="bg-transparent text-customBlue transition-all duration-300" :class="{
+        'bg-customGreen border-2 border-customGreen text-white': currentView === 'falhas',
         'hover:bg-transparent hover:border-2 hover:border-customGreen hover:text-customGreen': currentView !== 'falhas'
       }" @click="handleViewChange('falhas')">
         Falhas
       </Button>
 
-      <Button class="bg-customGreen text-white transition-all duration-300" :class="{
-        'bg-transparent border-2 border-customGreen text-customGreen': currentView === 'modelos',
+      <Button class="bg-transparent text-customBlue transition-all duration-300" :class="{
+        'bg-customGreen border-2 border-customGreen text-white': currentView === 'modelos',
         'hover:bg-transparent hover:border-2 hover:border-customGreen hover:text-customGreen': currentView !== 'modelos'
       }" @click="handleViewChange('modelos')">
         Modelos
