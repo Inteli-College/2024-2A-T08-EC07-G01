@@ -29,6 +29,9 @@ class PredictionService:
     def fail_codes_prediction(self) -> dict:
         return self.predict_repo.fail_codes_prediction()
 
+    def total_fails(self) -> dict:
+        return self.predict_repo.total_fails_prediction()
+
 
 class PredictionsServiceSingleton:
     _instance: Optional[PredictionService] = None

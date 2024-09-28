@@ -73,3 +73,13 @@ async def get_fail_codes_predicted():
         PredictionsServiceSingleton.get_instance().fail_codes_prediction()
     )
     return fail_codes_predicted
+
+
+@router.get(
+    "/total-fails",
+    response_model=dict,
+    response_description="Total of fails and no fails predicted",
+)
+async def get_total_fails():
+    total_fails = PredictionsServiceSingleton.get_instance().total_fails()
+    return total_fails

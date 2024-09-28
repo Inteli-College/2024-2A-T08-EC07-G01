@@ -39,3 +39,16 @@ class PredictionsRepository:
         ]
         result = self.collection.aggregate(pipeline)
         return {doc["_id"]: doc["count"] for doc in result}
+
+    def total_fails_prediction(self) -> dict:
+        no_fails = 0
+        fails = 0
+        documents = self.collection.find()
+
+        for document in documents:
+            if -1 in document.get("predicted_fail_codes", []):
+                no_fails += 1
+            else:
+                fails += 1
+
+        return {"no_fails": no_fails, "fails": fails}
