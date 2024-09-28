@@ -26,17 +26,19 @@ def preparacao_dados(df):
     return X_train, X_test, y_train, y_test
 
 
-def execute(df):
+def execute(df_merged):
     '''
     Script to build the GRU model for classification and train it.
-    
-    Parameters:
-    df: pandas DataFrame
-    '''
-    X_train, X_test, y_train, y_test = preparacao_dados(df)
-    # Construção do modelo com GRU
-    model = Sequential()
 
+    Parameters:
+    df_merged: pandas DataFrame
+
+    Returns:
+    Sequential: Trained Keras model.
+    '''
+    X_train, X_test, y_train, y_test = preparacao_dados(df_merged)
+    # Building the GRU model
+    model = Sequential()
     model.add(
         GRU(
             50,
@@ -50,9 +52,11 @@ def execute(df):
 
     model.compile(optimizer="adam", loss="binary_crossentropy")
 
-    # Treinamento do modelo
+    # Training the model
     model.fit(
         X_train, y_train, epochs=100, batch_size=32, validation_data=(X_test, y_test)
     )
+
+    model.save("./pipeline/model.h5")
 
     return model

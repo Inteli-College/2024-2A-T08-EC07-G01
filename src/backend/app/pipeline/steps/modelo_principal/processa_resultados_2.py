@@ -71,28 +71,32 @@ def normalizacao(df):
     return df
 
 
-def execute(df):
+def execute(df_resultados_processed_1):
     '''
-    Script to preprocess the whole DataFrame.
-    
+    Script to preprocess the 'df_resultados_processed_1' DataFrame.
+
     Parameters:
-    df: pandas DataFrame
+    df_resultados_processed_1: pandas DataFrame
+
+    Returns:
+    pandas DataFrame: Processed DataFrame.
     '''
+    df = df_resultados_processed_1.copy()
     drop_colunas(df)
 
     id1 = agregar_por_id(df, 1)
     id2 = agregar_por_id(df, 2)
     id718 = agregar_por_id(df, 718)
 
-    # Combinando os resultados em um único DataFrame
-    df = (
+    # Combining results into a single DataFrame
+    df_combined = (
         id1.join(id2, on="KNR", how="outer")
         .join(id718, on="KNR", how="outer")
         .reset_index()
     )
 
-    # Reordenando as colunas para o formato desejado
-    df = df[
+    # Reordering columns to desired format
+    df_combined = df_combined[
         [
             "KNR",
             "ID1NAME",
@@ -110,12 +114,11 @@ def execute(df):
         ]
     ]
 
-    df = normalizacao(df)
+    df_combined = normalizacao(df_combined)
 
-    df = df.fillna(0)
+    df_combined = df_combined.fillna(0)
 
-    return df
-
+    return df_combined
 
 # Exemplo de chamada da função
 if __name__ == "__main__":
