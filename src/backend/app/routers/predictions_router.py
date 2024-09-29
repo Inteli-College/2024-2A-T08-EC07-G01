@@ -3,6 +3,7 @@ from typing import List
 from app.models.predictions import Prediction, PredictionUpdate
 from app.models.knr import KNR
 from app.services.predictions_service import PredictionsServiceSingleton
+from app.utils.fail_code import FailCodeByMonthRequest
 
 router = APIRouter(prefix="/api/predictions", tags=["Predictions"])
 
@@ -83,3 +84,17 @@ async def get_fail_codes_predicted():
 async def get_total_fails():
     total_fails = PredictionsServiceSingleton.get_instance().total_fails()
     return total_fails
+
+
+@router.post(
+    "/fail-codes-by-month",
+    response_model=dict,
+    response_description="List of the quantity of each possible failure codes was predicted by month",
+)
+async def get_fail_codes_by_month(request: FailCodeByMonthRequest):
+    fail_code_count = (
+        PredictionsServiceSingleton.get_instance().get_fail_code_count_by_month(
+            request.year, request.fail_code
+        )
+    )
+    return fail_code_count
