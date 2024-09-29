@@ -53,3 +53,17 @@ class PredictionsRepository:
                 fails += 1
 
         return {"no_fails": no_fails, "fails": fails}
+
+    def get_predictions_by_knrs(self, knr_list, fail_code: int):
+        predictions = self.collection.find(
+            {"KNR": {"$in": knr_list}},
+            {"predicted_fail_codes": 1, "real_fail_codes": 1, "_id": 0},
+        )
+
+        return [
+            {
+                "predicted": doc.get("predicted_fail_codes", []),
+                "real": doc.get("real_fail_codes", []),
+            }
+            for doc in predictions
+        ]
