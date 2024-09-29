@@ -74,7 +74,7 @@ def execute(df_merged):
         "metrics": {
             "accuracy": float(accuracy),  
             "recall": float(recall),     
-            "f1": float(f1),
+            "f1_score": float(f1),
             "precision": float(precision),           
         }
     }
