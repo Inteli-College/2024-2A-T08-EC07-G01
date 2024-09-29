@@ -2,26 +2,18 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime
 
-
 class Model(BaseModel):
     model_name: str = Field(..., description="Name of the trained model")
-    gridfs_path: str = Field(
-        ..., description="Path in GridFS where the model is stored"
-    )
-    recipe_path: str = Field(
-        ..., description="Path in GridFS where the recipe is stored"
-    )
-
-    type_model: str = Field(..., description="Name of the trained model")
+    gridfs_path: str = Field(..., description="Path in GridFS where the model is stored")
+    recipe_path: str = Field(..., description="Path in GridFS where the recipe is stored")
+    type_model: str = Field(..., description="Type of the model")
     accuracy: float = Field(..., description="Accuracy of the model")
     precision: float = Field(..., description="Precision of the model")
     recall: float = Field(..., description="Recall of the model")
     f1_score: float = Field(..., description="F1 score of the model")
-
-    last_used: Optional[datetime] = Field(
-        None, description="Date when the model was last used"
-    )
+    last_used: Optional[datetime] = Field(None, description="Date when the model was last used")
     using: bool = Field(..., description="If the model is being used")
+    created_at: datetime = Field(default_factory=datetime.utcnow, description="Date when the model was created")
 
     class Config:
         json_schema_extra = {
@@ -36,8 +28,10 @@ class Model(BaseModel):
                 "f1_score": 0.40,
                 "last_used": "2024-09-10T12:00:00",
                 "using": True,
+                "created_at": "2024-09-10T12:00:00"
             }
         }
+
 
 
 class ModelUpdate(BaseModel):
