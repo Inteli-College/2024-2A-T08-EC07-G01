@@ -5,7 +5,7 @@ sidebar_position: 1
 
 ## **1.1** - Introdução
 
-Este documento apresenta a estrutura e funcionalidades do **Orchestrator**, um componente desenvolvido para gerenciar e executar pipelines dinâmicos de scripts Python. A principal finalidade do orquestrador é coordenar diferentes etapas de processamento, facilitando a execução de scripts armazenados em um banco de dados GridFS, extraindo resultados e manipulando DataFrames, além de gerenciar logs de execução.
+Este documento apresenta a estrutura e funcionalidades do **Orchestrator**, um componente desenvolvido para gerenciar e executar pipelines dinâmicos de scripts Python. A principal finalidade do orquestrador é coordenar diferentes etapas de processamento, facilitando a execução de scripts armazenados no sistema de arquivos do MongoDB, GridFS, extraindo resultados e manipulando DataFrames, além de gerenciar logs de execução.
 
 O **Orchestrator** foi projetado para receber uma lista de etapas (`pipeline_steps`) e DataFrames (`dataframes`), que são processados de forma ordenada. Cada etapa define um script a ser executado, seu local de armazenamento, os DataFrames necessários para sua execução, além de argumentos adicionais, garantindo a flexibilidade na execução de diferentes tarefas de processamento de dados. Ao longo da execução do pipeline, o orquestrador lida com o carregamento dinâmico dos scripts, a execução de funções específicas em cada módulo, e o gerenciamento de resultados, armazenando novos DataFrames e model metadata conforme necessário.
 
