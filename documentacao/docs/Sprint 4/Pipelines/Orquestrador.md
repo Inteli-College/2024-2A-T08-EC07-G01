@@ -407,6 +407,43 @@ Atualmente, o Orquestrador já está integrado no Backend, como dito na parte da
 
 É necessário ter o DF de resultados dentro da pasta pipeline, tanto quanto o JSON de configuração do pipeline. O Orquestrador irá processar o pipeline de acordo com as etapas definidas, processando os DataFrames e scripts conforme necessário.
 
+---
+
+## **3.2** - Fluxo de Processos do Orquestrador
+
+Nesta seção, apresentamos uma série de diagramas que ilustram o fluxo de processos de análise, consulta, e execução de receitas no orquestrador. Eles mostram como as diferentes partes do sistema, como o **FrontEnd**, **BackEnd**, **MongoDB**, e **Volkswagen**, interagem para processar dados e realizar análises.
+
+### **3.2.1** - Análise de Modelos
+O diagrama abaixo descreve o fluxo de trabalho relacionado à análise de modelos pelo orquestrador. Neste cenário, o **FrontEnd** inicia o processo ao solicitar uma análise dos modelos disponíveis ao **BackEnd**. O **BackEnd** atua como um intermediário, conectando-se ao **MongoDB** para coletar dados de testes recentes e iniciar o processo de análise.
+
+Durante a análise, o **BackEnd** executa uma série de operações em loop, processando os modelos disponíveis e comparando os resultados em tempo real. Essa etapa é crítica para garantir que a performance dos modelos seja constantemente verificada e aprimorada com base em novos dados. Ao finalizar o processo de análise, os resultados são enviados de volta ao **FrontEnd**, que os apresenta ao usuário final.
+
+![Análise de Modelos](/img/dia1.png)
+
+Neste fluxo, o **MongoDB** serve como a principal fonte de dados para a análise, enquanto o **BackEnd** realiza o processamento pesado de comparar e analisar os modelos em um loop contínuo. O **FrontEnd** permanece responsável por iniciar a análise e apresentar os resultados aos usuários, mantendo uma interface amigável e informativa.
+
+### **3.2.2** - Consulta de KNR
+O segundo diagrama ilustra o fluxo de consulta de KNR (número identificador único para cada veículo). Quando um usuário deseja verificar uma previsão associada a um veículo específico, o **FrontEnd** envia uma solicitação ao **BackEnd** para obter informações sobre o KNR desejado. O **BackEnd**, por sua vez, consulta a predição correspondente ao KNR no banco de dados **MongoDB**.
+
+Uma vez que os dados de predição são recuperados, eles são enviados de volta ao **FrontEnd**, que então exibe os resultados ao usuário. Este processo é importante para fornecer informações rápidas e precisas sobre o status de um veículo específico, permitindo que decisões sejam tomadas com base em dados atualizados.
+
+![Consulta de KNR](/img/dia2.png)
+
+Este fluxo reflete a capacidade do sistema de fornecer dados em tempo real. A comunicação eficiente entre o **FrontEnd** e o **BackEnd** é fundamental para manter uma experiência de usuário responsiva. O **MongoDB** atua como a base de armazenamento que contém todas as previsões associadas aos diferentes KNRs, tornando-se uma peça central para consultas rápidas e precisas.
+
+### **3.2.3** - Fluxo de Execução de Receita com Volkswagen
+O terceiro diagrama mostra um fluxo mais complexo, envolvendo o processamento de dados da Volkswagen e a execução de receitas para análises detalhadas. O processo se inicia quando a Volkswagen envia um arquivo `.csv` contendo dados de KNR ao **BackEnd**. Esses dados são fundamentais para que o sistema possa identificar e analisar cada veículo.
+
+Uma vez que o **BackEnd** recebe o arquivo, ele salva as informações de KNR no **MongoDB** para que sejam processadas posteriormente. Em seguida, ele consulta a receita ativa associada ao modelo, buscando informações no banco de dados para coletar a lógica de processamento necessária para esse fluxo. A receita ativa é um conjunto de instruções de processamento que determina como os dados do KNR serão tratados e analisados.
+
+Para executar essa receita, o **BackEnd** coleta o script necessário diretamente do **GridFS**. O **GridFS** funciona como um sistema de arquivos armazenado no **MongoDB**, contendo scripts e outros arquivos essenciais para o processo de análise. Uma vez coletado, o script é executado em loop pelo **BackEnd** até que todo o processamento necessário seja concluído. Finalmente, os resultados da predição são salvos no **MongoDB**, completando o ciclo de processamento.
+
+![Fluxo de Execução](/img/dia3.png)
+
+Este diagrama destaca a importância de uma integração fluida entre todas as partes do sistema. A comunicação com a Volkswagen fornece os dados necessários para o início do processamento, enquanto o **MongoDB** e o **GridFS** atuam como repositórios centrais para armazenamento de dados e scripts. O **BackEnd** executa o processamento em tempo real, garantindo que a análise dos dados ocorra de forma rápida e eficiente.
+
+Esses diagramas fornecem uma visão geral de como o **Orchestrator** coordena as diferentes etapas de análise, consulta, e processamento de dados. Eles mostram as interações e o fluxo de informações entre o **FrontEnd**, **BackEnd**, **MongoDB**, e outras entidades externas, destacando a flexibilidade e a capacidade de processamento dinâmico oferecidas pelo sistema.
+
 ## **4.1** - Conclusão
 
 O Orquestrador é uma solução robusta e flexível para gerenciar a execução de pipelines de scripts Python, proporcionando uma integração eficiente entre o processamento de dados, o treinamento de modelos, e o armazenamento de logs. Sua estrutura modular permite a execução sequencial de etapas, onde scripts são carregados dinamicamente do GridFS, executados, e seus resultados manipulados em DataFrames. Dessa forma, o orquestrador garante uma abordagem dinâmica e escalável para o processamento de dados, ao mesmo tempo em que possibilita o fácil monitoramento e análise de logs em tempo real.
