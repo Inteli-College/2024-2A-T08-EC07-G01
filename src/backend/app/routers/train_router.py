@@ -3,6 +3,7 @@ import pandas as pd
 from io import BytesIO
 from app.services.train_service import TrainServiceSingleton
 from app.models.train import Train, ModelComparison
+import datetime
 
 router = APIRouter(prefix="/api/train", tags=["Training"])
 
@@ -24,7 +25,21 @@ async def train_model(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Model training failed: {str(e)}")
 
-    return {"message": f"Model '{model_metadata['model_name']}' trained successfully."}
+    # Construct the response using the `Train` model
+    return Train(
+        model_name=model_metadata.get("model_name"),
+        gridfs_path=model_metadata.get("gridfs_path", "default/gridfs/path"),  # Replace with actual path
+        recipe_path=model_metadata.get("recipe_path", "default/recipe/path"),  # Replace with actual path
+        type_model=model_metadata.get("type_model"),
+        accuracy=model_metadata["metrics"].get("accuracy", 0.0),
+        precision=model_metadata["metrics"].get("precision", 0.0),
+        recall=model_metadata["metrics"].get("recall", 0.0),
+        f1_score=model_metadata["metrics"].get("f1_score", 0.0),
+        last_used=None,
+        using=False,
+        created_at=datetime.datetime.utcnow()
+    )
+
 
 @router.post(
     "/retrain",
