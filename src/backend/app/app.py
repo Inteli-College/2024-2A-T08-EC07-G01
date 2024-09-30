@@ -12,6 +12,9 @@ from app.repositories.models_repo import ModelRepository
 from app.services.models_service import ModelServiceSingleton
 from app.routers.models_router import router as models_router
 
+
+from app.routers.healthcheck_router import router as healthcheck_router
+
 from app.repositories.predictions_repo import PredictionsRepository
 from app.services.predictions_service import PredictionsServiceSingleton
 from app.routers.predictions_router import router as predictions_router
@@ -46,7 +49,9 @@ async def app_lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=app_lifespan)
 
-origins = ["*"]
+origins = [
+        "http://localhost:3001"
+]
 
 app.add_middleware(
     CORSMiddleware,
@@ -58,6 +63,7 @@ app.add_middleware(
 
 app.include_router(knr_router)
 app.include_router(models_router)
+app.include_router(healthcheck_router)
 app.include_router(predictions_router)
 app.include_router(train_router)
 
