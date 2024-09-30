@@ -1,5 +1,3 @@
-Claro, segue a versão aprimorada com introdução e conclusão em formato de texto dissertativo, e comentários mais aprofundados para cada tópico.
-
 ---
 
 title: "Visualização de Dados"  
