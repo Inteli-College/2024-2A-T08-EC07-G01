@@ -142,7 +142,44 @@ def get_prediction(self, knr: str) -> Optional[Prediction]:
 
 ### **3.1.3** - Serviço adicionar uma previsão
 
-# TODO FERNANDINHO ESSA É TUA
+Afim de adicionar/criar uma nova previsão, foi criado um método `predict` que insere uma nova previsão no repositório. Esse método é fundamental para armazenar as previsões geradas pelo modelo, garantindo que estejam disponíveis para consulta posterior. A seguir, o código completo desse método será apresentado para ilustrar sua implementação.
+
+```python
+def predict(self, knr: KNR) -> Prediction:
+        df_input = pd.DataFrame([knr.dict()])
+
+        pipeline_file_path = os.path.join(os.getcwd(), 'app', 'pipeline', 'pipeline_principal.json')
+        with open(pipeline_file_path, "r") as file:
+            pipeline_config = json.load(file)
+
+        # Passos de previsão
+        steps = pipeline_config.get("predict_steps", [])
+
+        dataframes = {
+        "df_input": df_input
+        }
+
+        orchestrator = Orchestrator(
+            pipeline_steps=steps,
+            dataframes=dataframes,
+            mongo_uri="mongodb://db:27017",
+            db_name="cross_the_line"
+        )
+
+        orchestrator.run_dynamic_pipeline()
+
+        prediction = orchestrator.dataframes.get("prediction_result")
+
+        response = Prediction(
+        KNR= knr.KNR,
+        predicted_fail_codes = [prediction],
+        real_fail_codes = [-1], 
+        indicated_tests = [""]  
+        )
+        return response
+```
+
+O método acima, chama o orquestrador, que por sua vez chama o script de Previsão, que é responsável por realizar a previsão. O orquestrador é responsável por chamar os scripts de acordo com o pipeline, que é um arquivo JSON que contém a ordem dos scripts que devem ser chamados.
 
 ### **3.1.4** - Serviço atualizar uma previsão
 
