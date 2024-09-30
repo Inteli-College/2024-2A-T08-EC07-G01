@@ -40,5 +40,13 @@
             "dataframes": ["df_merged"],
             "output_dataframe": "trained_model"
         }
+    ],
+    "predict_steps": [
+        {
+            "name": "predict_model",
+            "file_path": "/app/app/pipeline/steps/modelo_principal/predict.py",
+            "dataframes": ["df_input"],
+            "output_dataframe": "prediction_result"
+        }
     ]
 }

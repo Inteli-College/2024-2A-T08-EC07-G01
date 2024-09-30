@@ -50,8 +50,9 @@ class TrainService:
             precision=model_metadata["metrics"].get("precision", 0.0),  # Calculate or provide this value
             recall=model_metadata["metrics"].get("recall", 0.0),
             f1_score=model_metadata["metrics"].get("f1", 0.0),
-            last_used=None,  # You can set this to `datetime.datetime.utcnow()` if needed
-            using=False  # Adjust based on your logic
+            last_used=None,  
+            using=False,  # Adjust based on your logic
+            created_at=datetime.datetime.utcnow()
         )
 
         # Save the model in the repository
