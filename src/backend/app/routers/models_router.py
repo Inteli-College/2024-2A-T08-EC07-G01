@@ -20,7 +20,7 @@ async def get_all_models():
 
 
 @router.get(
-    "/{model_name}",
+    "/details/{model_name}",
     response_model=Model,
     response_description="Get information about a specific model",
 )
@@ -68,14 +68,29 @@ async def delete_model(model_name: str):
         raise HTTPException(status_code=404, detail="Model not found")
     return {"message": "Model deleted successfully"}
 
-@router.get('/compare_models/{model_type}', response_model=List[dict], response_description="Get all models of a specific type")
+
+@router.get(
+    "/best-metrics/{model_type}",
+    response_model=List[dict],
+    response_description="Get all models of a specific type",
+)
 async def compare_models(model_type: str, metrics_weights: MetricsWeights):
     models = ModelServiceSingleton.get_instance().get_models_by_type(model_type)
-    # Create a DataFrame from the models
-    df = pd.DataFrame([{
-        "model_name": model.model_name,
-        **calculate_weight(metrics_weights, model)
-    } for model in models])
-    # Convert DataFrame to a list of dictionaries
-    result = df.to_dict(orient='records')
+    df = pd.DataFrame(
+        [
+            {"model_name": model.model_name, **calculate_weight(metrics_weights, model)}
+            for model in models
+        ]
+    )
+    result = df.to_dict(orient="records")
     return result
+
+
+@router.get(
+    "/current-models",
+    response_model=List[Model],
+    response_description="Get all models currently in use",
+)
+async def get_current_models():
+    models = ModelServiceSingleton.get_instance().get_current_models()
+    return models
