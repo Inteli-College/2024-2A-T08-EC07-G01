@@ -3,6 +3,7 @@ from tensorflow.keras.layers import GRU, Dense
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, recall_score, f1_score, precision_score
+import os
 
 
 def preparacao_dados(df):
@@ -66,7 +67,9 @@ def execute(df_merged):
     f1 = f1_score(y_test, y_pred)
     precision = precision_score(y_test, y_pred)
 
-    model.save("./pipeline/model.h5")
+    model_path = os.path.join(os.getcwd(), 'app', 'pipeline', 'model.h5')
+
+    model.save(model_path)
 
     return {
         "model_name": "GRU",
