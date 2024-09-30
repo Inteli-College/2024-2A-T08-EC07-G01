@@ -192,7 +192,7 @@ def update_prediction(self, knr: str, prediction: PredictionUpdate) -> bool:
 
 ### **3.1.5** - Serviço deletar uma previsão
 
-Para deletar uma previsão, foi criado um método `delete_prediction` que remove a previsão correspondente ao **KNR** fornecido. Esse método é essencial para excluir previsões indesejadas, garantindo que o repositório permaneça organizado e atualizado. A seguir, o código completo desse método será apresentado para ilustrar sua implementação.
+Para deletar uma previsão, foi criado um método `delete_prediction` que remove a previsão correspondente ao **KNR** fornecido. Esse método exclui previsões indesejadas, garantindo que o repositório permaneça organizado e atualizado. A seguir, o código completo desse método será apresentado para ilustrar sua implementação.
 
 ```python
 def delete_prediction(self, knr: str) -> bool:
@@ -296,7 +296,7 @@ Foram adicionadas as seguintes propriedades ao modelo `Model`:
 - `using`: Indica se o modelo está sendo utilizado atualmente.
 - `created_at`: Data de criação do modelo.
 
-### **4.1.2** - Novo model de Treino
+### **4.1.2** - Novo `model` de Treino
 
 O mesmo segue o mesmo princípio do `model` de Modelos, todavia ele possui 2 novas classes que são `ModelMetrics` e `ModelComparison`, que são responsáveis por armazenar as métricas do modelo e a comparação entre os modelos respectivamente. A seguir, o código completo do modelo `Training` será apresentado para ilustrar as mudanças realizadas.
 
@@ -385,7 +385,7 @@ def get_current_models(self) -> list[Model]:
 
 #### **4.1.3.3** Adquirir ultimo modelo criado
 
-Foi criado um método `get_last_model` que retorna o último modelo criado. Esse método é essencial para recuperar o último modelo criado, permitindo que seja acessado e utilizado conforme necessário, além de garantir a escolha de modelos ao usuário. A seguir, o código completo desse método será apresentado para ilustrar sua implementação.
+Foi criado um método `get_last_model` que retorna o último modelo criado. Esse método serve para recuperar o último modelo criado, permitindo que seja acessado e utilizado conforme necessário, além de garantir a escolha de modelos ao usuário. A seguir, o código completo desse método será apresentado para ilustrar sua implementação.
 
 ```python
 def get_latest_model(self) -> Optional[Model]:
@@ -395,7 +395,7 @@ def get_latest_model(self) -> Optional[Model]:
 
 #### **4.1.3.4** Atualizar modelos para não estarem sendo usados
 
-Foi criado um método `unset_all_using` que atualiza todos os modelos para não estarem sendo usados. Esse método é essencial para garantir que apenas um modelo esteja sendo utilizado, evitando conflitos e garantindo a integridade dos dados. A seguir, o código completo desse método será apresentado para ilustrar sua implementação.
+Foi criado um método `unset_all_using` que atualiza todos os modelos para não estarem sendo usados. Esse método garante que apenas um modelo esteja sendo utilizado, evitando conflitos e garantindo a integridade dos dados. A seguir, o código completo desse método será apresentado para ilustrar sua implementação.
 
 ```python
 def unset_all_using(self):
@@ -404,7 +404,7 @@ def unset_all_using(self):
 
 #### **4.1.3.5** Atualizar modelo para estar sendo usado
 
-Foi criado um método `set_model_using` que atualiza um modelo para estar sendo usado. Esse método é essencial para definir qual modelo está sendo utilizado, permitindo que seja acessado e utilizado conforme necessário. A seguir, o código completo desse método será apresentado para ilustrar sua implementação.
+Foi criado um método `set_model_using` que atualiza um modelo para estar sendo usado. Esse método define qual modelo está sendo utilizado, permitindo que seja acessado e utilizado conforme necessário. A seguir, o código completo desse método será apresentado para ilustrar sua implementação.
 
 ```python
 def set_model_using(self, model_name: str):
@@ -430,11 +430,11 @@ async def get_current_models():
 
 ### **4.1.5** - Novo roteador de treino
 
-Para acomodar as operações de treinamento e retreinamento do modelo, foi criado um novo roteador para gerenciar essas operações. Esse roteador é essencial para direcionar as requisições relacionadas ao treinamento, garantindo que sejam processadas de maneira eficiente e organizada. A seguir, será apresentado o código em partes para ilustrar a implementação do novo roteador.
+Para acomodar as operações de treinamento e retreinamento do modelo, foi criado um novo roteador para gerenciar essas operações. Esse roteador é necessário para direcionar as requisições relacionadas ao treinamento, garantindo que sejam processadas de maneira eficiente e organizada. A seguir, será apresentado o código em partes para ilustrar a implementação do novo roteador.
 
 #### **4.1.5.1** Rota de treino
 
-Foi criada uma nova rota `/api/train` que permite treinar um modelo com base dataframe de **falhas** fornecidos. Essa rota é essencial para iniciar o processo de treinamento, garantindo que o modelo seja atualizado e aprimorado conforme necessário. A seguir, o código completo da nova rota será apresentado para ilustrar sua implementação.
+Foi criada uma nova rota `/api/train` que permite treinar um modelo com base dataframe de **falhas** fornecidos. Essa rota é usada para iniciar o processo de treinamento, garantindo que o modelo seja atualizado e aprimorado conforme necessário. A seguir, o código completo da nova rota será apresentado para ilustrar sua implementação.
 
 ```python
 
@@ -459,12 +459,12 @@ async def train_model(
 ```
 
 :::warning
-Foi levado em consideração, que o dataframe de resultados já estará no sistema da Volkswagen, por isso **não foi necessário** o upload do mesmo na hora do treino. Todavia o mesmo **é necessário**.
+Foi levado em consideração, que o dataframe de resultados já estará no sistema da Volkswagen, por isso **não foi necessário** o upload do mesmo na hora do treino. Todavia ao realizar o treino, é necessário que o mesmo esteja presente no sistema por meio de uma `API` externa.
 :::
 
 #### **4.1.5.2** Rota de retreino
 
-Foi criada uma nova rota `/api/train/retrain` que permite retreinar um modelo com base dataframe de **falhas** fornecidos. Essa rota é essencial para iniciar o processo de retreinamento, garantindo que o modelo seja atualizado e aprimorado conforme necessário. A seguir, o código completo da nova rota será apresentado para ilustrar sua implementação.
+Foi criada uma nova rota `/api/train/retrain` que permite retreinar um modelo com base dataframe de **falhas** fornecidos. Essa rota é utilizada para iniciar o processo de retreinamento, garantindo que o modelo seja atualizado e aprimorado conforme necessário. A seguir, o código completo da nova rota será apresentado para ilustrar sua implementação.
 
 ```python
 @router.post(
@@ -492,7 +492,7 @@ Este código retorna a comparação entre o novo modelo e o modelo anterior, per
 
 #### **4.1.5.3** Escolha modelo
 
-Por fim, foi criada uma nova rota `/api/train/select_model` que permite escolher um modelo para ser utilizado. Essa rota é essencial para definir qual modelo será utilizado, garantindo que apenas um modelo esteja em uso. A seguir, o código completo da nova rota será apresentado para ilustrar sua implementação.
+Por fim, foi criada uma nova rota `/api/train/select_model` que permite escolher um modelo para ser utilizado. Essa rota define qual modelo será utilizado, garantindo que apenas um modelo esteja em uso. A seguir, o código completo da nova rota será apresentado para ilustrar sua implementação.
 
 ```python
 @router.post(
@@ -515,7 +515,7 @@ A rota de selecionar o modelo deverá ser chamada **logo após a rota de retrein
 
 ### **4.1.6** - Mudanças serviço de modelo
 
-Para acomodar as operações de treinamento e retreinamento do modelo, foi necessário adicionar um novo método ao serviço. O mesmo serve para adquirir o modelo em uso atualmente. Esse método é essencial para recuperar o modelo em uso, permitindo que seja acessado e utilizado conforme necessário. A seguir, o código completo do novo método será apresentado para ilustrar sua implementação.
+Para acomodar as operações de treinamento e retreinamento do modelo, foi necessário adicionar um novo método ao serviço. O mesmo serve para adquirir o modelo em uso atualmente. Esse método recupera o modelo em uso, permitindo que seja acessado e utilizado conforme necessário. A seguir, o código completo do novo método será apresentado para ilustrar sua implementação.
 
 ```python
 def get_current_models(self) -> List[Model]:
@@ -524,7 +524,7 @@ def get_current_models(self) -> List[Model]:
 
 ### **4.1.7** - Criação do serviço de treino
 
-Para acomodar as operações de treinamento e retreinamento do modelo, foi criado um novo serviço para gerenciar essas operações. Esse serviço é essencial para coordenar o treinamento e retreinamento do modelo, garantindo que sejam realizados de maneira eficiente e organizada. A seguir, será apresentado o código em partes para ilustrar a implementação do novo serviço.
+Para acomodar as operações de treinamento e retreinamento do modelo, foi criado um novo serviço para gerenciar essas operações. Esse serviço coordena o treinamento e retreinamento do modelo, garantindo que sejam realizados de maneira eficiente e organizada. A seguir, será apresentado o código em partes para ilustrar a implementação do novo serviço.
 
 #### **4.1.7.1** Classe principal
 
@@ -684,40 +684,16 @@ class TrainService:
         self.model_repo.set_model_using(model_name)
 ```
 
-Está classe é essencial, pois é a responsável por chamar o orquestrador afim de treinar e retreinar o modelo, além de salvar o modelo no banco de dados. Elá também é capaz de comparar os modelos e selecionar o modelo que será utilizado.
+Essa classe é essencial, pois é a responsável por chamar o orquestrador afim de treinar e retreinar o modelo, além de salvar o modelo no banco de dados. Elá também é capaz de comparar os modelos e selecionar o modelo que será utilizado.
 
 #### **4.1.7.2** Singleton
 
 Foi implementado um Singleton para garantir que apenas uma instância do serviço seja criada. Essa abordagem evita duplicações e assegura a consistência das operações, prevenindo possíveis conflitos e melhorando a eficiência geral do sistema. A seguir, o código completo do Singleton será apresentado para ilustrar sua implementação.
 
-```python
-class TrainServiceSingleton:
-    _instance: TrainService = None
-
-    def __init__(self, *args, **kwargs):
-        raise RuntimeError("Call get_instance() instead")
-
-    def __new__(cls, *args, **kwargs):
-        raise RuntimeError("Call get_instance() instead")
-
-    @classmethod
-    def initialize(cls, model_repo: ModelRepository):
-        if cls._instance is None:
-            cls._instance = TrainService(model_repo)
-
-    @classmethod
-    def get_instance(cls) -> TrainService:
-        if cls._instance is None:
-            raise Exception(
-                "ModelServiceSingleton is not initialized. Call initialize() first."
-            )
-        return cls._instance
-```
-
 :::info
-Foi utilizado o padrão Singleton para garantir que apenas uma instância do serviço seja criada. Isso evita duplicações e assegura a consistência das operações, prevenindo possíveis conflitos e melhorando a eficiência geral do sistema.
-:::
 
+O código do mesmo pode ser visto mais acima na documentação
+:::
 
 
 ## **5.1** - Conclusão
