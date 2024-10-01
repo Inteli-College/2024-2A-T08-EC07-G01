@@ -19,7 +19,7 @@ const selectedSet = ref<string | null>(null); // Added this to avoid v-model iss
 // Function to fetch data from API using fetch
 const fetchData = async () => {
   try {
-    const response = await fetch('http://localhost:8000/api/models/'); // Replace with your actual endpoint
+    const response = await fetch('http://localhost:8000/api/models/current-models'); // Replace with your actual endpoint
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
