@@ -48,7 +48,7 @@ export default {
   methods: {
     async fetchBackendStatus() {
       try {
-        const response = await fetch('http://0.0.0.0:8000/');
+        const response = await fetch('http://localhost:8000/');
         this.backendStatus = `Status: ${response.status}`;
       } catch (error) {
         console.error('Error fetching backend data:', error);
@@ -57,17 +57,17 @@ export default {
     },
     async fetchDatabaseStatus() {
       try {
-        const response = await fetch('http://0.0.0.0:27017/', {
-          mode: 'cors', 
+        const response = await fetch('http://localhost:8000/healthcheck/mongodb', {
+          mode: 'cors',
           headers: {
             'Content-Type': 'application/json',
           },
-          credentials: 'include'
         });
-        const statusCode = response.status;
+        const data = await response.json();
+        const statusCode = data.status_code;
         console.log(`Database status: ${statusCode}`);
+        
         this.databaseStatus = `Status: ${statusCode}`;
-        console.log(this.databaseStatus);
       } catch (error) {
         console.error('Error fetching database data:', error);
         this.databaseStatus = 'Status: Error';
@@ -75,7 +75,7 @@ export default {
     },
     async fetchFrontendStatus() {
       try {
-        const response = await fetch('http://0.0.0.0:3000/', {
+        const response = await fetch('http://localhost:3000/', {
           mode: 'cors',
           headers: {
             'Content-Type': 'application/json',
