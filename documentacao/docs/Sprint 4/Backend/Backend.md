@@ -30,7 +30,7 @@ def get_all_predictions(self) -> List[Prediction]:
 ```
 
 :::warning
-A estrutura que ele retorna `Prediction` foi explicada anteriormente em [Base de Dados](/docs/).
+A estrutura que ele retorna `Prediction` foi explicada anteriormente em Base de Dados.
 :::
 
 ### **2.1.2** - Adicionar previsões

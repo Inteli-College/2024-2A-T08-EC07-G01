@@ -78,7 +78,7 @@ Após obter a receita do modelo ativo, o BackEnd entra em um loop para executar 
 Afim de descobrir como consultar os **KNRs** após serem enviados, cheque a parte abaixo sobre o **Fluxo de Consulta do KNR**.
 
 :::tip Info
-Afim de analisar a pipeline definida para realizar o ETL (Extração, Transformação e Carga) dos dados e o tratamento e preparação dos dados, acesse o documento [Pipeline](a-definir).
+Afim de analisar a pipeline definida para realizar o ETL (Extração, Transformação e Carga) dos dados e o tratamento e preparação dos dados, acesse o documento `Pipelines` presente nesta mesma seção.
 :::
 
 #### **1.2.3** Armazenamento dos Resultados
