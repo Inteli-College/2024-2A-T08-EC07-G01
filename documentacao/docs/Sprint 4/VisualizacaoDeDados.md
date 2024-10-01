@@ -1,52 +1,64 @@
 ---
 
 title: "Visualização de Dados"  
-sidebar_position: 1
+sidebar_position: 4
 
 ---
+
+# Visualização de Dados
 
 ## Introdução
 
-A visualização de dados é uma ferramenta crucial para a análise e interpretação de informações complexas, especialmente no contexto de projetos de manufatura e predição. No âmbito deste projeto, a visualização de dados se divide em duas partes principais: a análise de falhas na fabricação de automóveis e a avaliação de métricas dos modelos preditivos desenvolvidos. Essas visualizações fornecem insights valiosos que auxiliam tanto na identificação de padrões de falhas como na tomada de decisões sobre a eficácia dos modelos preditivos. Ao agrupar essas informações em gráficos interativos e acessíveis, a navegação entre diferentes análises se torna rápida e eficiente para o usuário.
+A visualização de dados é uma ferramenta essencial para análise e interpretação de informações complexas, principalmente no contexto de projetos de manufatura e predição. Neste projeto, a visualização de dados está dividida em duas partes principais: análise de falhas na fabricação de automóveis e avaliação de métricas dos modelos preditivos desenvolvidos. Esses gráficos interativos facilitam a identificação de padrões de falhas e a avaliação do desempenho dos modelos, auxiliando na tomada de decisões rápidas e informadas.
 
-Para facilitar a compreensão e a interação, as visualizações são organizadas na aba "Dashboards", onde botões permitem ao usuário navegar facilmente entre as diferentes telas, como ilustrado abaixo.
+Para promover uma experiência de usuário intuitiva, as visualizações estão organizadas na aba "Dashboards". Nela, botões de navegação permitem fácil transição entre diferentes telas de análise, como ilustrado abaixo:
 
 ![Previsão Diária](../../static/img/DockVisualizacao/select.png)
 
-A seguir, descrevemos com mais detalhes as duas principais seções de visualização: **Falhas** e **Modelo**.
+### Estrutura da Visualização
 
----
+A seguir, exploramos as duas seções principais de visualização: **Falhas** e **Modelo**, incluindo os endpoints que fornecem dados para esses gráficos e como funcionam as visualizações.
 
 ## Falhas
 
-A seção **Falhas** foi criada para fornecer uma visão detalhada sobre os problemas encontrados durante o processo de fabricação de automóveis. O objetivo é auxiliar os usuários a identificar tendências, propor melhorias, e compreender quais falhas são mais frequentes. Esta tela conta com três gráficos distintos, cada um com uma função específica para facilitar a análise dos dados coletados:
+A seção **Falhas** tem como objetivo oferecer uma visão detalhada dos problemas encontrados durante o processo de fabricação de automóveis. Ela auxilia na identificação de tendências e facilita a proposição de melhorias, destacando falhas recorrentes e permitindo um entendimento completo da qualidade da produção. Três gráficos compõem esta análise:
 
-- **Gráfico 1 (Gráfico de Pizza - Proporção de Carros com Falhas):** Este gráfico é fundamental para obter uma visão geral sobre o percentual de veículos que apresentaram falhas durante a análise. A escolha pelo gráfico de pizza facilita a compreensão da proporção de carros defeituosos em relação ao total analisado, tornando-o uma ferramenta útil para um rápido diagnóstico sobre a qualidade da produção.
+- **Gráfico de Pizza (Proporção de Carros com Falhas):** Mostra a proporção de veículos com falhas, facilitando uma análise rápida do percentual de carros defeituosos em relação ao total inspecionado. Os dados são buscados pelo endpoint `GET /api/failures/proportion`, que retorna um objeto JSON com a contagem de veículos com e sem falhas. A visualização usa esses dados para gerar um gráfico de pizza de fácil compreensão.
 
-- **Gráfico 2 (Gráfico de Pizza - Distribuição de Tipos de Falhas):** Aqui, o usuário pode observar a distribuição dos diferentes tipos de falhas encontradas, visualizando qual delas é mais recorrente. Esse tipo de visualização permite que se identifiquem rapidamente os problemas mais críticos no processo de fabricação e oferece uma base sólida para priorizar intervenções corretivas.
+- **Gráfico de Pizza (Distribuição dos Tipos de Falhas):** Este gráfico destaca os diferentes tipos de falhas, indicando quais são as mais frequentes. O endpoint `GET /api/failures/types-distribution` retorna um objeto JSON contendo a contagem de cada tipo de falha encontrada. A visualização transforma esses dados em uma segunda pizza, exibindo claramente quais tipos de falhas são mais comuns e auxiliando na priorização de correções.
 
-- **Gráfico 3 (Gráfico de Linha Temporal - Evolução das Falhas ao Longo do Tempo):** Diferente dos gráficos de pizza, este gráfico temporal mostra como o número de falhas variou ao longo dos meses. O usuário pode selecionar uma categoria específica de falha através de um dropdown, permitindo uma análise segmentada e facilitando a identificação de padrões sazonais ou picos de falhas que possam estar relacionados a eventos específicos na produção.
+- **Gráfico de Linha Temporal (Evolução das Falhas):** A evolução do número de falhas ao longo do tempo é apresentada neste gráfico. O usuário pode selecionar categorias específicas de falhas via dropdown, possibilitando uma análise segmentada. O gráfico obtém seus dados através do endpoint `GET /api/failures/timeline?fail_code=<categoria>`, onde `<categoria>` é o tipo de falha selecionado pelo usuário. Este endpoint retorna um histórico mensal da quantidade de falhas da categoria escolhida, permitindo identificar padrões temporais ou anomalias.
 
-Esses três gráficos, em conjunto, fornecem uma visão abrangente sobre as falhas, tanto em termos da quantidade total como em tendências temporais e tipos de falhas mais comuns.
+Esses gráficos fornecem uma visão abrangente das falhas, tanto em termos de quantidades totais quanto em tendências temporais e classificação de tipos.
 
 ![Falhas](../../static/img/DockVisualizacao/Falhas.png)
 
----
-
 ## Modelo
 
-A seção **Modelo** é dedicada à avaliação de desempenho dos modelos de predição, fornecendo insights sobre a eficácia dos algoritmos utilizados para identificar padrões e prever resultados. Através de um gráfico de barras interativo, é possível comparar diferentes modelos e analisar se eles estão atendendo aos padrões desejados de desempenho:
+A seção **Modelo** é destinada à avaliação de desempenho dos modelos preditivos. Com o auxílio de um gráfico de barras interativo, diferentes métricas são comparadas para medir a eficácia dos algoritmos em prever resultados e identificar padrões.
 
-- **Gráfico de Barra - Avaliação de Desempenho dos Modelos de Predição:** Neste gráfico, o usuário encontra uma comparação clara das métricas de avaliação dos modelos. Cada barra representa uma métrica de um modelo específico, e o gráfico oferece a opção de selecionar qual dos 10 modelos disponíveis terá suas métricas exibidas. Além disso, uma barra de cor mais escura, que atua como meta definida pelo usuário, é apresentada para auxiliar a comparação. Esta régua de avaliação permite verificar se o modelo está atendendo aos objetivos de desempenho estabelecidos e identificar áreas de melhoria.
+- **Gráfico de Barras (Avaliação de Desempenho dos Modelos de Predição):** O gráfico de barras exibe uma comparação clara das métricas de desempenho para cada modelo. Os dados são fornecidos pelo endpoint `GET /api/models/current-models`, que retorna um array de objetos JSON, onde cada objeto contém métricas de avaliação como `accuracy`, `precision`, `recall` e `f1_score` para diferentes modelos. O usuário pode selecionar qualquer um dos 10 modelos disponíveis para exibir suas métricas, com uma barra adicional de cor mais escura que atua como meta definida pelo usuário para comparação. Isso permite verificar se os modelos estão atendendo aos objetivos estabelecidos e facilita a identificação de áreas que necessitam de melhorias.
 
-A comparação visual dos modelos de predição auxilia na tomada de decisões sobre qual modelo melhor atende às necessidades do projeto e facilita ajustes baseados em evidências claras.
+A visualização detalhada dos modelos auxilia na escolha do modelo que melhor atende às necessidades do projeto e orienta ajustes baseados em dados concretos.
 
 ![Métricas](../../static/img/DockVisualizacao/metricas.png)
 
----
+## Funcionamento dos Gráficos
+
+### Atualização dos Dados
+
+Os gráficos são atualizados dinamicamente a partir dos endpoints descritos. Quando o usuário navega pelas abas ou interage com os dropdowns para escolher modelos ou tipos de falhas, são feitas requisições assíncronas aos endpoints usando `fetch` ou `axios`. Os dados retornados são então processados e formatados para se adequar à estrutura esperada pelos componentes de gráficos.
+
+### Estrutura dos Dados
+
+- **Gráficos de Pizza (Falhas):** Os dados são apresentados em um formato de contagem (`count`) para cada categoria (ex.: veículos com falhas, tipos de falhas). Esses dados são transformados em proporções, permitindo que os gráficos exibam a distribuição correta.
+
+- **Gráfico de Linha Temporal (Evolução de Falhas):** Os dados retornam como contagem por mês para diferentes tipos de falhas. A interface transforma esses dados em pontos ao longo do tempo, permitindo que o gráfico de linha mostre uma evolução mensal ou anual.
+
+- **Gráfico de Barras (Métricas de Modelos):** Os dados retornam como métricas (`accuracy`, `precision`, `recall`, `f1_score`) para até 10 modelos. O gráfico é construído para comparar essas métricas lado a lado, destacando as metas definidas pelo usuário.
 
 ## Conclusão
 
-A visualização de dados proposta neste projeto desempenha um papel essencial ao simplificar a análise de informações complexas sobre falhas na produção de automóveis e métricas de modelos preditivos. Ao organizar esses dados em gráficos interativos e intuitivos, os usuários são capacitados a identificar tendências, tomar decisões estratégicas e avaliar a eficácia dos modelos com facilidade e precisão. A aba "Dashboards" atua como um hub central para a navegação, garantindo uma experiência de usuário fluida e produtiva.
+A abordagem de visualização de dados adotada neste projeto simplifica a análise de informações complexas relacionadas a falhas de fabricação e avaliação de modelos preditivos. A organização em gráficos intuitivos e interativos capacita os usuários a identificar tendências, avaliar a eficácia dos modelos e tomar decisões estratégicas com precisão. A aba "Dashboards" funciona como um ponto central de navegação, proporcionando uma experiência fluida e eficiente.
 
-Ao apresentar os dados de forma organizada e acessível, este projeto permite uma análise mais aprofundada, apoiando a melhoria contínua dos processos de fabricação e a evolução dos modelos de previsão. A visualização clara e detalhada das informações facilita a comunicação dos resultados e fortalece a tomada de decisão baseada em dados concretos.
+Essa abordagem clara e detalhada apoia a melhoria contínua dos processos de manufatura e a evolução dos modelos de predição, fortalecendo a comunicação dos resultados e a tomada de decisão baseada em dados sólidos.
