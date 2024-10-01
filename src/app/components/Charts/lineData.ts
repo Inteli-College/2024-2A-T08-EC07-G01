@@ -1,148 +1,64 @@
+// assets/linedata.ts
+
 import axios from "axios";
-import LineChart from "./LineChart.vue";
-export interface LineChartData {
-  "real_fail_code_count": Month[];
-  "predicted_fail_code_count": Month[];
+
+// Interface para os dados de cada mês
+export interface FailCodeCount {
+  [month: string]: number;
 }
 
-export interface Month {
+export interface LineChartApiResponse {
+  predicted_fail_code_count: FailCodeCount;
+  real_fail_code_count: FailCodeCount;
+}
+
+export interface MonthData {
   name: string;
-  value: number;
+  Predito: number;
+  Real: number;
 }
 
+export type LineChartData = MonthData[];
 
-
-export async function fetchChartData(isFromFails: boolean): Promise<LineChartData> {
+/**
+ * Função para buscar os dados do gráfico a partir da API.
+ * @param failCode Número da classe de falhas selecionada.
+ * @param year Ano para o qual os dados devem ser buscados.
+ * @returns Promessa que resolve para os dados formatados para o gráfico.
+ */
+export async function fetchChartData(failCode: number, year: number = new Date().getFullYear()): Promise<LineChartData> {
   const baseURL = "http://localhost:8000/api/predictions";
 
   try {
-    let response;
-    if (isFromFails) {
-      response = await axios.get(`${baseURL}/fail-codes-by-month'`);
-      const responseData = response.data;
+    const response = await axios.post<LineChartApiResponse>(`${baseURL}/fail-codes-by-month`, {
+      year: year,
+      fail_code: failCode,
+    });
 
-      return [
-        { name: "Sem Falha", total: responseData.no_fails, predicted: 0 },
-        { name: "Com Falha", total: responseData.fails, predicted: 0 },
-      ];
-    } else {
-      response = await axios.get(`${baseURL}/fail-codes-predicted`);
-      const responseData = response.data;
+    const { predicted_fail_code_count, real_fail_code_count } = response.data;
 
-      // return Object.keys(responseData).map((key) => ({
-      //   name: `Falha ${key}`,
-      //   total: responseData[key],
-      //   predicted: 0,
-      // }));
-    }
+    // Lista dos meses no formato esperado (em lowercase)
+    const months = [
+      "january", "february", "march", "april", "may", "june",
+      "july", "august", "september", "october", "november", "december"
+    ];
+
+    // Função auxiliar para capitalizar a primeira letra
+    const capitalizeFirstLetter = (str: string): string => {
+      if (!str) return '';
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    };
+
+    // Mapeia os dados para o formato esperado pelo LineChart
+    const chartData: LineChartData = months.map(month => ({
+      name: capitalizeFirstLetter(month),
+      Predito: predicted_fail_code_count[month] || 0,
+      Real: real_fail_code_count[month] || 0,
+    }));
+
+    return chartData;
   } catch (error) {
     console.error("Error fetching data:", error);
-    return []; // Reset to empty if there's an error
+    return []; // Retorna um array vazio em caso de erro
   }
-}
-
-
-export function getLineChart(): DataSets {
-  return {
-    TodasFalhas: [
-      { year: 1970, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1971, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1972, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1973, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1974, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1975, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1976, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-
-    ],
-    Classe_1: [
-      { year: 1970, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1971, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1972, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1973, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1974, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1975, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1976, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-    ],
-
-    Classe_2: [
-      { year: 1970, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1971, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1972, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1973, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1974, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1975, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1976, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-    ],
-
-    Classe_3: [
-      { year: 1970, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1971, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1972, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1973, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1974, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1975, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1976, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-    ],
-
-    Classe_4: [
-      { year: 1970, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1971, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1972, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1973, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1974, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1975, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1976, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-    ],
-
-    Classe_5: [
-      { year: 1970, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1971, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1972, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1973, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1974, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1975, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1976, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-    ],
-
-    Classe_6: [
-      { year: 1970, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1971, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1972, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1973, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1974, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1975, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1976, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-    ],
-
-    Classe_7: [
-      { year: 1970, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1971, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1972, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1973, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1974, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1975, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1976, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-    ],
-
-    Classe_8: [
-      { year: 1970, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1971, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1972, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1973, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1974, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1975, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1976, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-    ],
-
-    Classe_9: [
-      { year: 1970, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1971, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1972, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1973, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1974, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1975, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-      { year: 1976, 'Export Growth Rate': Math.floor(Math.random() * 200) / 100, 'Import Growth Rate': Math.floor(Math.random() * 200) / 100 },
-    ],
-
-  };
 }
