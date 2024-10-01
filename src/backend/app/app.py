@@ -36,7 +36,9 @@ async def app_lifespan(app: FastAPI):
 
     KNRServiceSingleton.initialize(KNRRepository(app.state.db))
     ModelServiceSingleton.initialize(ModelRepository(app.state.db))
-    PredictionsServiceSingleton.initialize(PredictionsRepository(app.state.db))
+    PredictionsServiceSingleton.initialize(
+        PredictionsRepository(app.state.db), KNRRepository(app.state.db)
+    )
     TrainServiceSingleton.initialize(ModelRepository(app.state.db))
 
     print("Connected to the MongoDB database!")

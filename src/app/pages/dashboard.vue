@@ -21,15 +21,15 @@ const handleViewChange = (view) => {
 
     <!-- Botões para alternar entre Falhas e Modelos -->
     <div class="flex justify-center gap-3">
-      <Button class="bg-customGreen text-white transition-all duration-300" :class="{
-        'bg-transparent border-2 border-customGreen text-customGreen': currentView === 'falhas',
+      <Button class="bg-transparent text-customBlue transition-all duration-300" :class="{
+        'bg-customGreen border-2 border-customGreen text-white': currentView === 'falhas',
         'hover:bg-transparent hover:border-2 hover:border-customGreen hover:text-customGreen': currentView !== 'falhas'
       }" @click="handleViewChange('falhas')">
         Falhas
       </Button>
 
-      <Button class="bg-customGreen text-white transition-all duration-300" :class="{
-        'bg-transparent border-2 border-customGreen text-customGreen': currentView === 'modelos',
+      <Button class="bg-transparent text-customBlue transition-all duration-300" :class="{
+        'bg-customGreen border-2 border-customGreen text-white': currentView === 'modelos',
         'hover:bg-transparent hover:border-2 hover:border-customGreen hover:text-customGreen': currentView !== 'modelos'
       }" @click="handleViewChange('modelos')">
         Modelos
@@ -44,17 +44,17 @@ const handleViewChange = (view) => {
         <div class="flex gap-6 w-full justify-center mb-8">
           <div class="flex flex-col gap-3 items-center">
             <h2>Quantidade de Falhas por Carros analisados</h2>
-            <PieChart :show-center="true" class="w-80 h-80" />
+            <PieChart :is-from-fails="true" :show-center="true" class="w-80 h-80" />
           </div>
 
           <div class="flex flex-col gap-3 items-center">
             <h2>Classes de Falhas por Total de falhas</h2>
-            <PieChart class="w-80 h-80" />
+            <PieChart :is-from-fails="false" class="w-80 h-80" />
           </div>
         </div>
 
         <div class="flex flex-col gap-3 items-center w-full mt-12 mb-6">
-          <h2 class="mb-4">Quantidade de Falhas por tempo</h2>
+          <h2 class="text-2xl font-semibold mb-4">Quantidade de Falhas por tempo</h2>
           <LineChart class="w-2/3" />
         </div>
       </template>
