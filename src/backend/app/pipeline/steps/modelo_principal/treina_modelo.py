@@ -2,6 +2,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import GRU, Dense
 import numpy as np
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, recall_score, f1_score, precision_score
+import os
 
 
 def preparacao_dados(df):
@@ -25,12 +27,19 @@ def preparacao_dados(df):
 
     return X_train, X_test, y_train, y_test
 
+def execute(df_merged):
+    '''
+    Script to build the GRU model for classification and train it.
 
-def execute(df):
-    X_train, X_test, y_train, y_test = preparacao_dados(df)
-    # Construção do modelo com GRU
+    Parameters:
+    df_merged: pandas DataFrame
+
+    Returns:
+    Sequential: Trained Keras model.
+    '''
+    X_train, X_test, y_train, y_test = preparacao_dados(df_merged)
+    # Building the GRU model
     model = Sequential()
-
     model.add(
         GRU(
             50,
@@ -44,9 +53,31 @@ def execute(df):
 
     model.compile(optimizer="adam", loss="binary_crossentropy")
 
-    # Treinamento do modelo
+    # Training the model
     model.fit(
         X_train, y_train, epochs=100, batch_size=32, validation_data=(X_test, y_test)
     )
 
-    return model
+    y_pred = model.predict(X_test)
+
+    y_pred = (y_pred > 0.5).astype(int).flatten()
+
+    accuracy = accuracy_score(y_test, y_pred)
+    recall = recall_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred)
+
+    model_path = os.path.join(os.getcwd(), 'app', 'pipeline', 'model.h5')
+
+    model.save(model_path)
+
+    return {
+        "model_name": "GRU",
+        "type_model": "Main Model",
+        "metrics": {
+            "accuracy": float(accuracy),  
+            "recall": float(recall),     
+            "f1_score": float(f1),
+            "precision": float(precision),           
+        }
+    }
