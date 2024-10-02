@@ -38,6 +38,7 @@
           <Button
             class="w-1/6 mr-3 relative group bg-red-600 transition duration-300 ease-in-out overflow-hidden text-white hover:scale-[107%]"
             @click="revert"
+            :disabled="false"
           >
             <span class="absolute inset-0 w-full h-full bg-red-950 transform scale-y-0 group-hover:scale-y-100 origin-bottom transition duration-300 ease-in-out"></span>
             <span class="relative z-10 flex items-center">
@@ -48,6 +49,7 @@
           <Button
             class="w-1/6 ml-3 relative group bg-teal-500 transition duration-300 ease-in-out overflow-hidden text-white hover:scale-[107%]"
             @click="aproved"
+            :disabled="false"
           >
             <span class="absolute inset-0 w-full h-full bg-customBlue transform scale-y-0 group-hover:scale-y-100 origin-bottom transition duration-300 ease-in-out"></span>
             <span class="relative z-10 flex items-center">

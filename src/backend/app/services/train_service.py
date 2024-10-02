@@ -49,7 +49,7 @@ class TrainService:
             accuracy=model_metadata["metrics"].get("accuracy", 0.0),
             precision=model_metadata["metrics"].get("precision", 0.0),  # Calculate or provide this value
             recall=model_metadata["metrics"].get("recall", 0.0),
-            f1_score=model_metadata["metrics"].get("f1", 0.0),
+            f1_score=model_metadata["metrics"].get("f1_score", 0.0),
             last_used=None,  
             using=False,  # Adjust based on your logic
             created_at=datetime.datetime.utcnow()
@@ -124,7 +124,13 @@ class TrainService:
             # No previous model, so new model is the first model
             comparison = {
                 "message": "No previous model to compare with.",
-                "new_model_metrics": new_model_metadata["metrics"]
+                "new_model_metrics": {
+                    "model_name": new_model_metadata.get("model_name"),
+                    "accuracy": new_model_metadata["metrics"].get("accuracy", 0.0),
+                    "precision": new_model_metadata["metrics"].get("precision", 0.0),
+                    "recall": new_model_metadata["metrics"].get("recall", 0.0),
+                    "f1_score": new_model_metadata["metrics"].get("f1_score", 0.0),
+                }
             }
 
         # Return the comparison result

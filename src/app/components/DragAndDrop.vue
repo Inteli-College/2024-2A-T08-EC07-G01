@@ -5,10 +5,40 @@
     @dragleave.prevent="handleDragLeave"
     @drop.prevent="handleDrop"
     @click="triggerFileInput"
+    :class="{ 'opacity-50 pointer-events-none': isLoading }"
   >
+    <!-- Loading Overlay -->
+    <div v-if="isLoading" class="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center rounded-xl">
+      <div class="flex flex-col items-center">
+        <svg
+          class="animate-spin h-10 w-10 text-blue-500 mb-4"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8v8H4z"
+          ></path>
+        </svg>
+        <p class="text-blue-500 text-lg">Processando...</p>
+      </div>
+    </div>
+
+    <!-- Drag & Drop Area -->
     <div v-if="isDragging" class="absolute inset-0 bg-green-100 opacity-50 rounded-xl pointer-events-none"></div>
 
-    <div class="text-center z-10" :class="{'text-lightGreen': isDragging}" v-if="!file">
+    <!-- Upload Instructions -->
+    <div class="text-center z-10" :class="{ 'text-lightGreen': isDragging }" v-if="!file">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto mb-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v4a1 1 0 001 1h3m10 0h3a1 1 0 001-1V7m-4 10l-4 4m0 0l-4-4m4 4V4" />
       </svg>
@@ -16,8 +46,10 @@
       <p class="mt-1 text-gray-500">Ou clique para upload</p>
     </div>
 
+    <!-- Hidden File Input -->
     <input ref="fileInput" type="file" class="file-input" @change="handleFileUpload" />
 
+    <!-- File Information and Progress -->
     <div v-if="file" class="w-full mt-4">
       <p class="text-gray-600 font-semibold">{{ file.name }} ({{ formatFileSize(file.size) }})</p>
 
@@ -31,7 +63,7 @@
         <Button
           class="w-3/4 relative group bg-black transition duration-300 ease-in-out overflow-hidden text-white hover:scale-[107%]"
           @click="handleContinue"
-          :disabled="uploadProgress < 100"
+          :disabled="uploadProgress < 100 || isLoading"
         >
           <span class="absolute inset-0 w-full h-full bg-customBlue transform scale-y-0 group-hover:scale-y-100 origin-bottom transition duration-300 ease-in-out"></span>
           <span class="relative z-10 flex items-center">
@@ -43,6 +75,7 @@
     </div>
   </div>
 
+  <!-- Training Modal -->
   <TrainingModal
     :show="showModal"
     :previousMetrics="previousMetrics"
@@ -60,8 +93,8 @@ import TrainingModal from '@/components/Modal/TrainingModal.vue';
 
 const file = ref<File | null>(null);
 const uploadProgress = ref<number>(0);
-
 const showModal = ref(false);
+const isLoading = ref(false); // Loading state
 
 const isDragging = ref(false);
 const handleDragOver = () => (isDragging.value = true);
@@ -87,8 +120,10 @@ const handleDrop = (event: DragEvent) => {
   event.preventDefault();
   isDragging.value = false;
   const droppedFiles = Array.from(event.dataTransfer?.files || []);
-  file.value = droppedFiles[0];
-  uploadFile();
+  if (droppedFiles.length > 0) {
+    file.value = droppedFiles[0];
+    uploadFile();
+  }
 };
 
 const triggerFileInput = () => {
@@ -101,12 +136,15 @@ const triggerFileInput = () => {
 const handleFileUpload = (event: Event) => {
   const input = event.target as HTMLInputElement;
   const uploadedFiles = Array.from(input.files || []);
-  file.value = uploadedFiles[0];
-  uploadFile();
+  if (uploadedFiles.length > 0) {
+    file.value = uploadedFiles[0];
+    uploadFile();
+  }
 };
 
 const uploadFile = async () => {
   uploadProgress.value = 0;
+  isLoading.value = true; // Start loading
 
   const formData = new FormData();
   formData.append('df_falhas', file.value as Blob);
@@ -152,6 +190,8 @@ const uploadFile = async () => {
   } catch (error) {
     console.error('Upload failed:', error);
     alert('Upload failed. Please try again.');
+  } finally {
+    isLoading.value = false; // End loading
   }
 };
 
@@ -180,11 +220,25 @@ const handleRevert = () => {
 
 const handleAproved = async () => {
   try {
-    await axios.post('http://localhost:8000/api/train/select_model', null, {
-      params: {
-        model_name: responseData.value.new_model_metrics.model_name,
+    // Ensure that model_name exists
+    const modelName = responseData.value.new_model_metrics.model_name;
+    if (!modelName) {
+      throw new Error('Model name is undefined.');
+    }
+
+    console.log(responseData.value.new_model_metrics.model_name);
+    await axios.post(
+      'http://localhost:8000/api/train/select_model',
+      {
+        model_name: modelName,
       },
-    });
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
     alert('Changes approved. The new model is now in use.');
     closeModal();
   } catch (error) {
