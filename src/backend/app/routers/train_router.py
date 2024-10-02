@@ -2,7 +2,7 @@ from fastapi import APIRouter, UploadFile, File, HTTPException
 import pandas as pd
 from io import BytesIO
 from app.services.train_service import TrainServiceSingleton
-from app.models.train import Train, ModelComparison
+from app.models.train import Train, ModelComparison, SelectModelRequest
 import datetime
 
 router = APIRouter(prefix="/api/train", tags=["Training"])
@@ -58,7 +58,7 @@ async def retrain_model(
         comparison = TrainServiceSingleton.get_instance().retrain_model(df_resultados, df_falhas)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Model retraining failed: {str(e)}")
-
+    print("comparaca", comparison)
     return comparison
 
 @router.post(
@@ -66,8 +66,9 @@ async def retrain_model(
     response_description="Select a model to use"
 )
 async def select_model(
-    model_name: str
+    request: SelectModelRequest
 ):
+    model_name = request.model_name
     try:
         TrainServiceSingleton.get_instance().select_model(model_name)
     except Exception as e:

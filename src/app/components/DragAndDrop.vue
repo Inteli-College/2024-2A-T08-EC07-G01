@@ -7,7 +7,6 @@
     @click="triggerFileInput"
     :class="{ 'opacity-50 pointer-events-none': isLoading }"
   >
-    <!-- Loading Overlay -->
     <div v-if="isLoading" class="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center rounded-xl">
       <div class="flex flex-col items-center">
         <svg
@@ -34,10 +33,8 @@
       </div>
     </div>
 
-    <!-- Drag & Drop Area -->
     <div v-if="isDragging" class="absolute inset-0 bg-green-100 opacity-50 rounded-xl pointer-events-none"></div>
 
-    <!-- Upload Instructions -->
     <div class="text-center z-10" :class="{ 'text-lightGreen': isDragging }" v-if="!file">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto mb-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v4a1 1 0 001 1h3m10 0h3a1 1 0 001-1V7m-4 10l-4 4m0 0l-4-4m4 4V4" />
@@ -46,10 +43,8 @@
       <p class="mt-1 text-gray-500">Ou clique para upload</p>
     </div>
 
-    <!-- Hidden File Input -->
     <input ref="fileInput" type="file" class="file-input" @change="handleFileUpload" />
 
-    <!-- File Information and Progress -->
     <div v-if="file" class="w-full mt-4">
       <p class="text-gray-600 font-semibold">{{ file.name }} ({{ formatFileSize(file.size) }})</p>
 
@@ -75,7 +70,6 @@
     </div>
   </div>
 
-  <!-- Training Modal -->
   <TrainingModal
     :show="showModal"
     :previousMetrics="previousMetrics"
@@ -94,7 +88,7 @@ import TrainingModal from '@/components/Modal/TrainingModal.vue';
 const file = ref<File | null>(null);
 const uploadProgress = ref<number>(0);
 const showModal = ref(false);
-const isLoading = ref(false); // Loading state
+const isLoading = ref(false); 
 
 const isDragging = ref(false);
 const handleDragOver = () => (isDragging.value = true);
@@ -114,7 +108,7 @@ const currentMetrics = ref({
   f1_score: '',
 });
 
-const responseData = ref<any>(null); // To store the response data for later use
+const responseData = ref<any>(null);
 
 const handleDrop = (event: DragEvent) => {
   event.preventDefault();
@@ -144,7 +138,7 @@ const handleFileUpload = (event: Event) => {
 
 const uploadFile = async () => {
   uploadProgress.value = 0;
-  isLoading.value = true; // Start loading
+  isLoading.value = true; 
 
   const formData = new FormData();
   formData.append('df_falhas', file.value as Blob);
@@ -162,8 +156,8 @@ const uploadFile = async () => {
     });
 
     responseData.value = response.data;
+    console.log("Retrain Response:", response.data); 
 
-    // Extract metrics from the response
     currentMetrics.value = {
       accuracy: response.data.new_model_metrics.accuracy.toFixed(4),
       precision: response.data.new_model_metrics.precision.toFixed(4),
@@ -189,9 +183,19 @@ const uploadFile = async () => {
     showModal.value = true;
   } catch (error) {
     console.error('Upload failed:', error);
-    alert('Upload failed. Please try again.');
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        alert(`Upload failed: ${error.response.data.detail || 'Unknown error.'}`);
+      } else if (error.request) {
+        alert('Upload failed: No response from server.');
+      } else {
+        alert(`Upload failed: ${error.message}`);
+      }
+    } else {
+      alert('Upload failed. Please try again.');
+    }
   } finally {
-    isLoading.value = false; // End loading
+    isLoading.value = false; 
   }
 };
 
@@ -220,13 +224,12 @@ const handleRevert = () => {
 
 const handleAproved = async () => {
   try {
-    // Ensure that model_name exists
-    const modelName = responseData.value.new_model_metrics.model_name;
+    const modelName = responseData.value?.new_model_metrics?.model_name;
+    console.log("Approving model:", modelName); 
     if (!modelName) {
       throw new Error('Model name is undefined.');
     }
 
-    console.log(responseData.value.new_model_metrics.model_name);
     await axios.post(
       'http://localhost:8000/api/train/select_model',
       {
@@ -243,7 +246,17 @@ const handleAproved = async () => {
     closeModal();
   } catch (error) {
     console.error('Failed to approve the model:', error);
-    alert('Failed to approve the model. Please try again.');
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        alert(`Approval failed: ${error.response.data.detail || 'Unknown error.'}`);
+      } else if (error.request) {
+        alert('Approval failed: No response from server.');
+      } else {
+        alert(`Approval failed: ${error.message}`);
+      }
+    } else {
+      alert('Approval failed. Please try again.');
+    }
   }
 };
 </script>

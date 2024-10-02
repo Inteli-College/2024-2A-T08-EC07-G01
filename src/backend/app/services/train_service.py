@@ -65,7 +65,6 @@ class TrainService:
         return model_metadata
 
     def retrain_model(self, df_resultados: pd.DataFrame, df_falhas: pd.DataFrame) -> dict:
-        # Load pipeline configuration
         pipeline_file_path = os.path.join(os.getcwd(), 'app', 'pipeline', 'pipeline_principal.json')
         print("Absolute Path to JSON file:", pipeline_file_path)
 
@@ -136,8 +135,10 @@ class TrainService:
         # Return the comparison result
         return comparison
 
+
     def compare_models(self, new_model_metadata, last_model) -> dict:
         new_metrics = new_model_metadata["metrics"]
+        model_name = new_model_metadata.get("model_name")
         last_metrics = {
             "accuracy": last_model.accuracy,
             "precision": last_model.precision,
@@ -152,12 +153,16 @@ class TrainService:
             differences[metric] = new_value - last_value
 
         comparison = {
-            "new_model_metrics": new_metrics,
+            "new_model_metrics": {
+                "model_name": model_name,
+                **new_metrics
+            },
             "last_model_metrics": last_metrics,
             "differences": differences
         }
 
         return comparison
+
 
     def select_model(self, model_name: str):
         # Set 'using' to False for all models
