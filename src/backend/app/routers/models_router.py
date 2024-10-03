@@ -69,7 +69,7 @@ async def delete_model(model_name: str):
     return {"message": "Model deleted successfully"}
 
 
-@router.get(
+@router.post(
     "/best-metrics/{model_type}",
     response_model=List[dict],
     response_description="Get all models of a specific type",

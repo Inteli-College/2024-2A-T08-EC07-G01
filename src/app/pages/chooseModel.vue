@@ -38,26 +38,27 @@
         selectedModel: null,
         selectedModels: [],
         modelClasses: [
-          { name: "Modelo Y/N" },
-          { name: "Classe 1" },
-          { name: "Classe 2" },
-          { name: "Classe 3" },
-          { name: "Classe 4" },
-          { name: "Classe 5" },
-          { name: "Classe 6" },
-          { name: "Classe 7" },
-          { name: "Classe 8" },
-          { name: "Classe 9" },
+          { name: "Modelo Y/N", apiEndpoint: "/api/models/best-metrics/type0" },
+          { name: "Classe 1", apiEndpoint: "/api/models/best-metrics/type1" },
+          { name: "Classe 2", apiEndpoint: "/api/models/best-metrics/type2" },
+          { name: "Classe 3", apiEndpoint: "/api/models/best-metrics/type3" },
+          { name: "Classe 4", apiEndpoint: "/api/models/best-metrics/type4" },
+          { name: "Classe 5", apiEndpoint: "/api/models/best-metrics/type5" },
+          { name: "Classe 6", apiEndpoint: "/api/models/best-metrics/type6" },
+          { name: "Classe 7", apiEndpoint: "/api/models/best-metrics/type7" },
+          { name: "Classe 8", apiEndpoint: "/api/models/best-metrics/type8" },
+          { name: "Classe 9", apiEndpoint: "/api/models/best-metrics/type9" },
         ],
       };
     },
     methods: {
-      openModal(index) {
-        this.selectedModel = { ...this.modelClasses[index], index };
+      openModal(modelClass) {
+        this.selectedModel = { ...modelClass };
         this.isModalOpen = true;
       },
       updateSelectedModel(model) {
-        this.$set(this.selectedModels, model.index, model.name);
+        const index = this.modelClasses.findIndex((m) => m.name === this.selectedModel.name);
+        this.$set(this.selectedModels, index, model.model_name);
       },
       closeModal() {
         this.isModalOpen = false;
