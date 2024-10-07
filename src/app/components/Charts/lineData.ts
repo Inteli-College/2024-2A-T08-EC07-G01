@@ -27,7 +27,11 @@ export type LineChartData = MonthData[];
  * @returns Promessa que resolve para os dados formatados para o gráfico.
  */
 export async function fetchChartData(failCode: number, year: number = new Date().getFullYear()): Promise<LineChartData> {
-  const baseURL = "http://localhost:8000/api/predictions";
+
+  const config = useRuntimeConfig();
+  const apiURL = config.public.backendUrl;
+
+  const baseURL = `${apiURL}/api/predictions`;
 
   try {
     const response = await axios.post<LineChartApiResponse>(`${baseURL}/fail-codes-by-month`, {
