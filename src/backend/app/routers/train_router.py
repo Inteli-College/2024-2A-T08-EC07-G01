@@ -51,14 +51,13 @@ async def retrain_model(
 ):
     df_falhas_content = await df_falhas.read()
     df_falhas = pd.read_csv(BytesIO(df_falhas_content))
-    df_resultados = pd.read_csv("/app/app/pipeline/resultados.csv")
+    df_resultados = pd.read_csv("/app/app/pipeline/resultados.csv", compression='gzip')
 
     try:
         # Use the train service to retrain the model and get the comparison
         comparison = TrainServiceSingleton.get_instance().retrain_model(df_resultados, df_falhas)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Model retraining failed: {str(e)}")
-    print("comparaca", comparison)
     return comparison
 
 @router.post(
