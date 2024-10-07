@@ -24,9 +24,13 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile
+      args:
+        BACKEND_URL: http://localhost:8000
     container_name: frontend
     ports:
       - "3000:3000"
+    environment:
+      - BACKEND_URL=http://localhost:8000
     depends_on:
       - backend
     networks:
