@@ -18,6 +18,7 @@ import normalLogo from '@/assets/static/logo.png';
         <HeaderButton iconName="mdi:clipboard-text-outline" label="Histórico" redirect="/table" />
         <HeaderButton iconName="mdi:view-dashboard-outline" label="Dashboard" redirect="/dashboard" />
         <HeaderButton iconName="mdi:progress-download" label="Treinamento Mensal" redirect="/monthly" />
+        <HeaderButton iconName="mdi:folder-wrench" label="Escolha de Modelos" redirect="/chooseModel" />
       </div>
     </header>
 

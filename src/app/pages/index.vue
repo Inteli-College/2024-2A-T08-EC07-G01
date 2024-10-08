@@ -20,6 +20,8 @@ definePageMeta({
       <LandingPageButton iconName="mdi:clipboard-text-outline" label="Histórico" redirect="/table" />
       <LandingPageButton iconName="mdi:view-dashboard-outline" label="Dashboard" redirect="/dashboard" />
       <LandingPageButton iconName="mdi:progress-download" label="Treinamento Mensal" redirect="/monthly" />
+      <LandingPageButton iconName="mdi:folder-wrench" label="Escolha de Modelos" redirect="/chooseModel" />
+
     </div>
   </div>
 </template>
