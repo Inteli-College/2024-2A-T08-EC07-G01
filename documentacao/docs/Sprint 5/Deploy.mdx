@@ -152,11 +152,14 @@ Com o Docker e o Docker Compose instalados na instância EC2, o próximo passo �
            context: ./app
            dockerfile: Dockerfile
            args:
+           # highlight-next-line
                BACKEND_URL: http://localhost:8000
        container_name: frontend
        ports:
+       # highlight-next-line
            - "3000:3000"
        environment:
+       # highlight-next-line
            - BACKEND_URL=http://localhost:8000
        depends_on:
            - backend
@@ -174,11 +177,14 @@ Com o Docker e o Docker Compose instalados na instância EC2, o próximo passo �
            context: ./app
            dockerfile: Dockerfile
            args:
+           # highlight-next-line
                BACKEND_URL: http://IP-EC2:8000
        container_name: frontend
        ports:
+       # highlight-next-line
            - "80:3000"
        environment:
+       # highlight-next-line
            - BACKEND_URL=http://IP-EC2:8000
        depends_on:
            - backend

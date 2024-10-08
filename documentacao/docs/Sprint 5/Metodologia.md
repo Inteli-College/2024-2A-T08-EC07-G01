@@ -6,6 +6,18 @@ sidebar_position: 1
 ---
 
 
+## Índice
+
+- [1.1 Introdução](#11-introdução)  
+
+- [2.1 Soluções Implementadas](#21-soluções-implementadas)  
+
+- [3.1 Principais Mudanças](#31-principais-mudanças)  
+
+- [4.1 Próximos Passos](#41-próximos-passos)  
+
+- [5.1 Conclusão](#51-conclusão)  
+
 ## **1.1 Introdução**
 
 Este documento oferece uma visão abrangente sobre o desenvolvimento do sistema, destacando as principais etapas do processo e fornecendo um detalhamento das metodologias e ferramentas utilizadas. Nosso objetivo é garantir que qualquer pessoa, independentemente de seu conhecimento técnico, possa compreender o que foi realizado, como o sistema evoluiu, e quais foram os principais marcos atingidos durante as diferentes fases do projeto.
@@ -190,7 +202,7 @@ Com a conclusão do projeto atual, a equipe identifica várias oportunidades par
 
 A implementação dessas ações fortalecerá o sistema, permitindo que ele se mantenha robusto e adaptável diante de novas demandas. À medida que o modelo for aprimorado e o sistema receber novas funcionalidades, a Volkswagen poderá aproveitar ao máximo essa solução preditiva, otimizando ainda mais seus processos de manutenção e análise de dados. Com essas melhorias, a aplicação estará preparada para atender a uma variedade maior de cenários e para evoluir junto com as necessidades da empresa e do mercado.
 
-## **3.1 Conclusão**
+## **5.1 Conclusão**
 
 O projeto foi concluído com sucesso, atingindo todos os objetivos inicialmente propostos e entregando uma solução preditiva robusta, escalável e acessível para a Volkswagen. A equipe enfrentou diversos desafios técnicos e organizacionais ao longo do desenvolvimento, mas foi capaz de superá-los graças à dedicação e colaboração entre todos os membros. O resultado final é um sistema que fornece previsões confiáveis sobre falhas em veículos, permitindo que a Volkswagen tome decisões proativas, melhorando seus processos de inspeção e testes.
 
