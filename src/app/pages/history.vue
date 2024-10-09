@@ -11,7 +11,6 @@ const baseURL = `${apiURL}/api/predictions`;
 
 const data = ref<TableData[]>([]);
 
-console.log("Testes")
 onMounted(async () => {
     const response = await axios.get<Prediction[]>(`${baseURL}`)
     data.value = convertPredictionToTableData(response.data);

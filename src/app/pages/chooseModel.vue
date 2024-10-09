@@ -8,7 +8,7 @@
         @click="openModal(modelClass)">
         <p class="text-white flex-grow">{{ modelClass.name }}</p>
         <p class="flex w-7/12 align-baseline justify-end bg-white text-customBlue rounded-lg p-2">
-          {{ selectedModels[index] || 'Selecione um modelo' }}
+          {{ selectedModels[index]?.model_name || 'Selecione um modelo' }}
           <Icon :name="'mdi:arrow-down-drop-circle-outline'" class="ml-3 pt-6 text-2xl" />
         </p>
       </div>
@@ -20,7 +20,13 @@
 </template>
 
 <script>
+import axios from 'axios';
 import ChooseModelModal from '@/components/Modal/chooseModelModal.vue';
+
+const config = useRuntimeConfig();
+const apiURL = config.public.backendUrl;
+
+const baseURL = `${apiURL}/api/models/current-models`;
 
 export default {
   components: {
@@ -57,6 +63,18 @@ export default {
     closeModal() {
       this.isModalOpen = false;
     },
+    fetchModels() {
+      axios.get(`${baseURL}`)
+        .then((response) => {
+          this.selectedModels = response.data;
+        })
+        .catch((error) => {
+          console.error('Erro ao buscar os modelos:', error);
+        });
+    }
+  },
+  mounted() {
+    this.fetchModels();
   },
 };
 </script>
