@@ -50,7 +50,7 @@
 const config = useRuntimeConfig();
 const apiURL = config.public.backendUrl;
 
-const baseURL = `${apiURL}/api/models`;
+const baseURL = `${apiURL}/api/`;
 
 import axios from 'axios';
 
@@ -75,13 +75,15 @@ export default {
       }
 
       const body = {
-        using: true,
-        type: this.selectedModel.type,
+        model_name: "KNN_v1-type0",
+        model_type: this.selectedModel.type,
       };
 
-      axios.put(`${baseURL}/${this.currentModel.model_name}`, body)
+      console.log(body);
+      console.log(`${baseURL}train/select_model`);
+      axios.post(`${baseURL}train/select_model`, body)
         .then((response) => {
-          this.models = response.data;
+          console.log("Teste")
         })
         .catch((error) => {
           console.error('Erro ao atualizar o modelo:', error);
@@ -103,7 +105,7 @@ export default {
         recall: 1,
         f1_score: 1
       }
-      axios.post(`${baseURL}/${endpoint}`, body)
+      axios.post(`${baseURL}${endpoint}`, body)
         .then((response) => {
           this.models = response.data;
         })
