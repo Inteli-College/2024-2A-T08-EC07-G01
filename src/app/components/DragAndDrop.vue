@@ -90,6 +90,9 @@ const uploadProgress = ref<number>(0);
 const showModal = ref(false);
 const isLoading = ref(false); 
 
+const config = useRuntimeConfig();
+const apiURL = config.public.backendUrl;
+
 const isDragging = ref(false);
 const handleDragOver = () => (isDragging.value = true);
 const handleDragLeave = () => (isDragging.value = false);
@@ -143,7 +146,7 @@ const uploadFile = async () => {
   formData.append('df_falhas', file.value as Blob);
 
   try {
-    const response = await fetch('http://localhost:8000/api/train/retrain', {
+    const response = await fetch(`${apiURL}/api/train/retrain`, {
       method: 'POST',
       body: formData,
     });
@@ -218,7 +221,7 @@ const handleAproved = async () => {
       throw new Error('Model name is undefined.');
     }
 
-    const response = await fetch('http://localhost:8000/api/train/select_model', {
+    const response = await fetch(`${apiURL}/api/train/select_model`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
