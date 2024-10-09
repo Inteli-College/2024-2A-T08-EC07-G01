@@ -26,7 +26,7 @@ O projeto foi desenvolvido em sprints, que são ciclos curtos de trabalho, geral
 
 A cada nova iteração, a equipe revisou suas abordagens e adaptou metodologias para atender às demandas em mudança. Isso inclui a adoção de novas tecnologias, a revisão de processos de desenvolvimento e a atualização contínua da documentação. Este documento reflete o esforço contínuo da equipe em garantir que o sistema permaneça alinhado com os requisitos do projeto e que toda a informação necessária esteja devidamente registrada e organizada.
 
-### **1.2 Descirção do Problema**
+### **1.2 Descrição do Problema**
 
 Atualmente, a Volkswagen realiza uma série de testes de rodagem em todos os veículos que saem da linha de montagem, com o objetivo de identificar possíveis falhas. No entanto, essa abordagem padronizada não é a mais eficiente, pois todos os veículos passam pelos mesmos testes, independentemente das condições específicas de sua montagem. Isso resulta em um aumento considerável nos custos operacionais e no tempo necessário para validar a qualidade, já que não há uma forma de identificar previamente possíveis defeitos.
 
