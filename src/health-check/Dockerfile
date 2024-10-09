@@ -3,7 +3,7 @@ ARG NODE_VERSION=18.14.2
 # Usando a imagem base do Node.js
 FROM node:${NODE_VERSION}-slim as base
 
-ARG PORT=8008
+ARG PORT=3001
 
 # Definindo variáveis de ambiente
 ENV NODE_ENV=production
@@ -32,6 +32,8 @@ FROM base
 
 # Expondo a porta para o contêiner
 ENV PORT=$PORT
+
+EXPOSE $PORT
 
 COPY --from=build /src/health-check/.output /src/health-check/.output
 

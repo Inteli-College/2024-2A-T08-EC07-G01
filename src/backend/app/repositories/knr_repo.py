@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Optional
 
 from app.db.mongodb import MongoDB
@@ -31,3 +32,16 @@ class KNRRepository:
     def delete_knr(self, knr_id: str) -> bool:
         result = self.collection.delete_one({"KNR": knr_id})
         return result.deleted_count > 0
+
+    def get_knr_by_month(self, month: int, year: int):
+        start_date = datetime(year, month, 1)
+        if month == 12:
+            end_date = datetime(year + 1, 1, 1)
+        else:
+            end_date = datetime(year, month + 1, 1)
+
+        knr_documents = self.collection.find(
+            {"DATA": {"$gte": start_date, "$lt": end_date}}, {"KNR": 1, "_id": 0}
+        )
+
+        return [doc["KNR"] for doc in knr_documents]

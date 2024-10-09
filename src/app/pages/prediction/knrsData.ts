@@ -4,14 +4,63 @@ export interface KNRData {
     hasFailure: boolean;
     failureType: string | null;
   }
-  
-  // Dados mocados
-  export function getMockedKNRData(): KNRData[] {
-    return [
-      { knr: '7777', hasFailure: false, failureType: null },
-      { knr: '2023-2056234', hasFailure: true, failureType: 'Tipo 7' },
-      { knr: '1234', hasFailure: true, failureType: 'Tipo 3' },
-      { knr: '12345', hasFailure: true, failureType: 'Tipo 6' },
-    ];
+
+import { ref, onMounted, computed } from 'vue';
+
+export const failTypes = ref([
+  {
+      failType: 1,
+      title: 'Tipo 1',
+      description: 'Parte Traseira',
+      status: 'default'
+  },
+  {
+      failType: 2,
+      title: 'Tipo 2',
+      description: 'Parte Central',
+      status: 'default'
+  },
+  {
+      failType: 4,
+      title: 'Tipo 4',
+      description: 'Portas',
+      status: 'default'
+  },
+  {
+      failType: 5,
+      title: 'Tipo 5',
+      description: 'Parte Dianteira',
+      status: 'default'
+  },
+  {
+      failType: 133,
+      title: 'Tipo 133',
+      description: 'Geral',
+      status: 'default'
+  },
+  {
+      failType: 137,
+      title: 'Tipo 137',
+      description: 'Assoalho Externo',
+      status: 'default'
+  },
+  {
+      failType: 140,
+      title: 'Tipo 140',
+      description: 'Documentação',
+      status: 'default'
+  },
+  {
+      failType: 9830945,
+      title: 'Tipo 8',
+      description: 'Teste Backoffice',
+      status: 'default'
+  },
+  {
+      failType: 9830946,
+      title: 'Tipo 9830946',
+      description: 'Elétrica',
+      status: 'default'
   }
+]);
   
