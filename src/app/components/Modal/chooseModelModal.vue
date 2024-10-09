@@ -3,7 +3,7 @@
     <div class="bg-white p-6 rounded-lg shadow-lg max-w-4xl w-full">
       <h3 class="text-customBlue text-2xl font-bold mb-4">Escolha do Modelo {{ selectedModel.name }}</h3>
       <h4 class="text-customBlue text-xl font-semibold mb-4">Escolhas recomendadas</h4>
-      
+
       <table class="border-collapse border border-gray-300 w-full">
         <thead class="bg-gray-100">
           <tr>
@@ -23,23 +23,35 @@
             <td class="border border-gray-300 px-4 py-2">{{ model.f1_score }}</td>
             <td class="border border-gray-300 px-4 py-2">{{ model.precision }}</td>
             <td class="border border-gray-300 px-4 py-2 text-center">
-              <input type="radio" name="modelSelect" :checked="model.using" @click="selectModel(model)" />
+              <input type="radio" name="modelSelect" @click="selectModel(model)" :checked="model.using" :value="model"
+                v-model="currentModel" />
             </td>
           </tr>
         </tbody>
       </table>
-      
-      <button 
-        class="mt-4 bg-customBlue text-white px-4 py-2 rounded-lg flex items-center space-x-2 rounded-lg px-4 py-3 cursor-pointer transition-all duration-300 hover:bg-customGreen hover:border-2 hover:border-customGreen" 
-        @click="closeModal"
-      >
-        Fechar
-      </button>
+      <div class="flex flex justify-between">
+        <button
+          class="mt-4 bg-customBlue text-white px-4 py-2 rounded-lg flex items-center space-x-2 cursor-pointer transition-all duration-300 hover:bg-customGreen hover:border-2 hover:border-customGreen"
+          @click="updateModel">
+          Enviar
+        </button>
+        <button
+          class="mt-4 bg-white border-customBlue border text-customBlue px-4 py-2 rounded-lg flex items-center space-x-2 cursor-pointer transition-all duration-300 hover:bg-customGreen hover:border-2 hover:border-customGreen"
+          @click="closeModal">
+          Fechar
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+
+const config = useRuntimeConfig();
+const apiURL = config.public.backendUrl;
+
+const baseURL = `${apiURL}/api/models`;
+
 import axios from 'axios';
 
 export default {
@@ -52,13 +64,35 @@ export default {
   data() {
     return {
       models: [],
+      currentModel: null
     };
   },
   methods: {
+    updateModel() {
+      if (!this.currentModel) {
+        console.error("Nenhum modelo foi selecionado.");
+        return;
+      }
+
+      const body = {
+        using: true,
+        type: this.selectedModel.type,
+      };
+
+      axios.put(`${baseURL}/${this.currentModel.model_name}`, body)
+        .then((response) => {
+          this.models = response.data;
+        })
+        .catch((error) => {
+          console.error('Erro ao atualizar o modelo:', error);
+        });
+    },
+
     closeModal() {
       this.$emit('close');
     },
     selectModel(model) {
+      this.selectedModel = model; // Atualiza o modelo diretamente
       this.$emit('model-selected', model);
     },
     fetchModels() {
@@ -69,14 +103,14 @@ export default {
         recall: 1,
         f1_score: 1
       }
-      axios.post(`http://localhost:8000${endpoint}`, body)
+      axios.post(`${baseURL}/${endpoint}`, body)
         .then((response) => {
           this.models = response.data;
         })
         .catch((error) => {
           console.error('Erro ao buscar os modelos:', error);
         });
-    },
+    }
   },
   mounted() {
     this.fetchModels();
