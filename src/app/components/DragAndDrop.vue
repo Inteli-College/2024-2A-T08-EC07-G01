@@ -226,7 +226,7 @@ const handleAproved = async () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ model_name: modelName }),
+      body: JSON.stringify({ model_name: modelName, model_type: 'type0' }),
     });
 
     if (!response.ok) {
