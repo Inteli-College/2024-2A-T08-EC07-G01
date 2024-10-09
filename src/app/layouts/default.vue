@@ -15,7 +15,7 @@ import normalLogo from '@/assets/static/logo.png';
       <!-- Div with the centered header buttons -->
       <div class="ml-12 absolute left-1/2 transform -translate-x-1/2 flex items-center gap-28">
         <HeaderButton iconName="mdi:chart-timeline-variant-shimmer" label="Previsão Diária" redirect="/prediction" />
-        <HeaderButton iconName="mdi:clipboard-text-outline" label="Histórico" redirect="/table" />
+        <HeaderButton iconName="mdi:clipboard-text-outline" label="Histórico" redirect="/history" />
         <HeaderButton iconName="mdi:view-dashboard-outline" label="Dashboard" redirect="/dashboard" />
         <HeaderButton iconName="mdi:progress-download" label="Treinamento Mensal" redirect="/monthly" />
         <HeaderButton iconName="mdi:folder-wrench" label="Escolha de Modelos" redirect="/chooseModel" />
