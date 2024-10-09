@@ -8,7 +8,7 @@
         @click="openModal(modelClass)">
         <p class="text-white flex-grow">{{ modelClass.name }}</p>
         <p class="flex w-7/12 align-baseline justify-end bg-white text-customBlue rounded-lg p-2">
-          {{ selectedModels[index]?.model_name || 'Selecione um modelo' }}
+          {{ selectedModels[modelClass.type]?.model_name || 'Selecione um modelo' }}
           <Icon :name="'mdi:arrow-down-drop-circle-outline'" class="ml-3 pt-6 text-2xl" />
         </p>
       </div>
@@ -36,7 +36,7 @@ export default {
     return {
       isModalOpen: false,
       selectedModel: null,
-      selectedModels: [],
+      selectedModels: {},
       modelClasses: [
         { name: "Modelo Y/N", apiEndpoint: "models/best-metrics/type0", type: "type0" },
         { name: "Classe 1", apiEndpoint: "models/best-metrics/type1", type: "type1" },
@@ -57,8 +57,7 @@ export default {
       this.isModalOpen = true;
     },
     updateSelectedModel(model) {
-      const index = this.modelClasses.findIndex((m) => m.name === this.selectedModel.name);
-      this.$set(this.selectedModels, index, model.model_name);
+      this.$set(this.selectedModels, model.type_model, model);
     },
     closeModal() {
       this.isModalOpen = false;
@@ -67,7 +66,11 @@ export default {
     fetchModels() {
       axios.get(`${baseURL}`)
         .then((response) => {
-          this.selectedModels = response.data;
+          this.selectedModels = {};
+          response.data.forEach((model) => {
+            this.selectedModels[model.type_model] = model;
+          });
+          console.log('Modelos carregados:', this.selectedModels);
         })
         .catch((error) => {
           console.error('Erro ao buscar os modelos:', error);
