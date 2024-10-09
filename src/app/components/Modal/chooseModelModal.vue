@@ -73,9 +73,9 @@ export default {
         console.error("Nenhum modelo foi selecionado.");
         return;
       }
-
+      console.log(this.currentModel)
       const body = {
-        model_name: "KNN_v1-type0",
+        model_name: this.currentModel.model_name,
         model_type: this.selectedModel.type,
       };
 
@@ -83,7 +83,8 @@ export default {
       console.log(`${baseURL}train/select_model`);
       axios.post(`${baseURL}train/select_model`, body)
         .then((response) => {
-          console.log("Teste")
+          alert('Modelo atualizado com sucesso!');
+          this.closeModal();
         })
         .catch((error) => {
           console.error('Erro ao atualizar o modelo:', error);
