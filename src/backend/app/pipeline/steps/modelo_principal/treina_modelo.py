@@ -55,7 +55,7 @@ def execute(df_merged):
 
     # Training the model
     model.fit(
-        X_train, y_train, epochs=100, batch_size=32, validation_data=(X_test, y_test)
+        X_train, y_train, epochs=10, batch_size=32, validation_data=(X_test, y_test)
     )
 
     y_pred = model.predict(X_test)
@@ -72,7 +72,7 @@ def execute(df_merged):
     model.save(model_path)
 
     return {
-        "model_name": "GRU",
+        "model_name": "GRUOII",
         "type_model": "Main Model",
         "metrics": {
             "accuracy": float(accuracy),  

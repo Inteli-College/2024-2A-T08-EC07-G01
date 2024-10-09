@@ -48,17 +48,18 @@
     <div v-if="file" class="w-full mt-4">
       <p class="text-gray-600 font-semibold">{{ file.name }} ({{ formatFileSize(file.size) }})</p>
 
-      <Progress
+      <!-- Progress bar removed due to fetch limitations -->
+      <!-- <Progress
         class="mt-2"
         :modelValue="uploadProgress"
         aria-label="File Upload Progress"
-      />
+      /> -->
 
       <div class="flex justify-center mt-4">
         <Button
           class="w-3/4 relative group bg-black transition duration-300 ease-in-out overflow-hidden text-white hover:scale-[107%]"
           @click="handleContinue"
-          :disabled="uploadProgress < 100 || isLoading"
+          :disabled="isLoading"
         >
           <span class="absolute inset-0 w-full h-full bg-customBlue transform scale-y-0 group-hover:scale-y-100 origin-bottom transition duration-300 ease-in-out"></span>
           <span class="relative z-10 flex items-center">
@@ -82,13 +83,15 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import axios from 'axios';
 import TrainingModal from '@/components/Modal/TrainingModal.vue';
 
 const file = ref<File | null>(null);
 const uploadProgress = ref<number>(0);
 const showModal = ref(false);
 const isLoading = ref(false); 
+
+const config = useRuntimeConfig();
+const apiURL = config.public.backendUrl;
 
 const isDragging = ref(false);
 const handleDragOver = () => (isDragging.value = true);
@@ -116,7 +119,7 @@ const handleDrop = (event: DragEvent) => {
   const droppedFiles = Array.from(event.dataTransfer?.files || []);
   if (droppedFiles.length > 0) {
     file.value = droppedFiles[0];
-    uploadFile();
+    // Remove uploadFile() call here
   }
 };
 
@@ -132,45 +135,44 @@ const handleFileUpload = (event: Event) => {
   const uploadedFiles = Array.from(input.files || []);
   if (uploadedFiles.length > 0) {
     file.value = uploadedFiles[0];
-    uploadFile();
+    // Remove uploadFile() call here
   }
 };
 
 const uploadFile = async () => {
-  uploadProgress.value = 0;
   isLoading.value = true; 
 
   const formData = new FormData();
   formData.append('df_falhas', file.value as Blob);
 
   try {
-    const response = await axios.post('http://localhost:8000/api/train/retrain', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      onUploadProgress: (progressEvent) => {
-        if (progressEvent.total) {
-          uploadProgress.value = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-        }
-      },
+    const response = await fetch(`${apiURL}/api/train/retrain`, {
+      method: 'POST',
+      body: formData,
     });
 
-    responseData.value = response.data;
-    console.log("Retrain Response:", response.data); 
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.detail || response.statusText);
+    }
+
+    const data = await response.json();
+    responseData.value = data;
+    console.log("Retrain Response:", data); 
 
     currentMetrics.value = {
-      accuracy: response.data.new_model_metrics.accuracy.toFixed(4),
-      precision: response.data.new_model_metrics.precision.toFixed(4),
-      recall: response.data.new_model_metrics.recall.toFixed(4),
-      f1_score: response.data.new_model_metrics.f1_score.toFixed(4),
+      accuracy: data.new_model_metrics.accuracy.toFixed(4),
+      precision: data.new_model_metrics.precision.toFixed(4),
+      recall: data.new_model_metrics.recall.toFixed(4),
+      f1_score: data.new_model_metrics.f1_score.toFixed(4),
     };
 
-    previousMetrics.value = response.data.last_model_metrics
+    previousMetrics.value = data.last_model_metrics
       ? {
-          accuracy: response.data.last_model_metrics.accuracy.toFixed(4),
-          precision: response.data.last_model_metrics.precision.toFixed(4),
-          recall: response.data.last_model_metrics.recall.toFixed(4),
-          f1_score: response.data.last_model_metrics.f1_score.toFixed(4),
+          accuracy: data.last_model_metrics.accuracy.toFixed(4),
+          precision: data.last_model_metrics.precision.toFixed(4),
+          recall: data.last_model_metrics.recall.toFixed(4),
+          f1_score: data.last_model_metrics.f1_score.toFixed(4),
         }
       : {
           accuracy: '',
@@ -181,19 +183,9 @@ const uploadFile = async () => {
 
     // Show the modal
     showModal.value = true;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Upload failed:', error);
-    if (axios.isAxiosError(error)) {
-      if (error.response) {
-        alert(`Upload failed: ${error.response.data.detail || 'Unknown error.'}`);
-      } else if (error.request) {
-        alert('Upload failed: No response from server.');
-      } else {
-        alert(`Upload failed: ${error.message}`);
-      }
-    } else {
-      alert('Upload failed. Please try again.');
-    }
+    alert(`Upload failed: ${error.message}`);
   } finally {
     isLoading.value = false; 
   }
@@ -206,15 +198,14 @@ const formatFileSize = (size: number) => {
 
 const handleContinue = (event: Event) => {
   event.stopPropagation();
-  if (uploadProgress.value === 100) {
-    showModal.value = true;
+  if (file.value) {
+    uploadFile();
   }
 };
 
 const closeModal = () => {
   showModal.value = false;
   file.value = null;
-  uploadProgress.value = 0;
 };
 
 const handleRevert = () => {
@@ -230,33 +221,24 @@ const handleAproved = async () => {
       throw new Error('Model name is undefined.');
     }
 
-    await axios.post(
-      'http://localhost:8000/api/train/select_model',
-      {
-        model_name: modelName,
+    const response = await fetch(`${apiURL}/api/train/select_model`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+      body: JSON.stringify({ model_name: modelName }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.detail || response.statusText);
+    }
 
     alert('Changes approved. The new model is now in use.');
     closeModal();
-  } catch (error) {
+  } catch (error: any) {
     console.error('Failed to approve the model:', error);
-    if (axios.isAxiosError(error)) {
-      if (error.response) {
-        alert(`Approval failed: ${error.response.data.detail || 'Unknown error.'}`);
-      } else if (error.request) {
-        alert('Approval failed: No response from server.');
-      } else {
-        alert(`Approval failed: ${error.message}`);
-      }
-    } else {
-      alert('Approval failed. Please try again.');
-    }
+    alert(`Approval failed: ${error.message}`);
   }
 };
 </script>
