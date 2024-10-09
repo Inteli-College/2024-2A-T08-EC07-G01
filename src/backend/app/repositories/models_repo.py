@@ -44,8 +44,11 @@ class ModelRepository:
         document = self.collection.find_one(sort=[('_id', -1)])
         return Model(**document) if document else None
 
-    def unset_all_using(self):
-        self.collection.update_many({}, {'$set': {'using': False}})
+    def unset_all_using(self, type_model: str):
+        self.collection.update_many(
+            {'type_model': type_model},  
+            {'$set': {'using': False}}   
+        )
 
     def set_model_using(self, model_name: str):
         result = self.collection.update_one({'model_name': model_name}, {'$set': {'using': True}})

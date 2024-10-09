@@ -164,10 +164,10 @@ class TrainService:
         return comparison
 
 
-    def select_model(self, model_name: str):
-        # Set 'using' to False for all models
-        self.model_repo.unset_all_using()
-        # Set 'using' to True for the selected model
+    def select_model(self, model_name: str, model_type: str):
+        
+        self.model_repo.unset_all_using(model_type)
+        
         self.model_repo.set_model_using(model_name)
 class TrainServiceSingleton:
     _instance: TrainService = None
