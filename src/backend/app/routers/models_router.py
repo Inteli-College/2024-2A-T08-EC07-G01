@@ -78,7 +78,11 @@ async def compare_models(model_type: str, metrics_weights: MetricsWeights):
     models = ModelServiceSingleton.get_instance().get_models_by_type(model_type)
     df = pd.DataFrame(
         [
-            {"model_name": model.model_name, **calculate_weight(metrics_weights, model)}
+            {
+                "model_name": model.model_name,
+                **calculate_weight(metrics_weights, model),
+                "using": model.using,
+            }
             for model in models
         ]
     )
