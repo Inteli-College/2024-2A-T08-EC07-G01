@@ -62,6 +62,7 @@ export default {
     },
     closeModal() {
       this.isModalOpen = false;
+      this.fetchModels();
     },
     fetchModels() {
       axios.get(`${baseURL}`)
