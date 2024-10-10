@@ -5,23 +5,28 @@ sidebar_position: 5
 
 ## **1.1** Introdução
 
-Dado o escopo do projeto, de desenvolver um modelo preditivo para detectar falha nos veículos da Volkswagen, foi escolhido um modelo de **Redes Neurais Recorrentes (RNN)** do tipo **GRU (Gated Recurrent Unit)**, dada sua capacidade de capturar dependências temporais nos dados e seu bom desempenho em termos de **acurácia** e **recall**.
+Dado o escopo do projeto, de desenvolver um modelo preditivo para detectar falhas nos veículos da Volkswagen, foi escolhido um modelo de **Random Forest**, devido à sua capacidade de lidar com dados de alta dimensionalidade, flexibilidade, e bom desempenho em termos de **acurácia** e **recall**.
 
 Além disso, a pipeline de dados foi implementado de forma robusta para manipular grandes volumes de informações e integrá-las de maneira eficiente ao modelo, permitindo que o sistema fosse flexível e escalável.
 
 :::tip Info
 Para ter uma visão melhor de como foi feito o pipeline de dados, veja a documentação de [Engenharia de Dados](/Sprint%205/eng)
+:::
 
 ## **1.2** Lógica da implementação da Pipeline e escolha de Features
 
-Para a implementação do modelo de **Redes Neurais Recorrentes (RNN)** do tipo **GRU (Gated Recurrent Unit)**, foi necessário seguir uma lógica de implementação que garantisse a eficiência e a precisão do modelo. A escolha das features foi feita com base na relevância para a detecção de falhas, garantindo que o modelo tivesse acesso a informações críticas para realizar as previsões.
+Aqui está o parágrafo corrigido para refletir a utilização de Random Forest:
 
-### **1.2.1** Escolha do Modelo: GRU (Gated Recurrent Unit)
+## **1.2** Lógica da implementação da Pipeline e escolha de Features
 
-A escolha da arquitetura **GRU** foi feita com base em sua capacidade de lidar com dados sequenciais e dependências temporais, características comuns nos dados de falhas em veículos. O **GRU** foi escolhido em lugar de outras arquiteturas, como as **LSTMs**, devido à sua menor complexidade computacional e eficiência no treinamento, sem sacrificar o desempenho.
+Para a implementação do modelo de **Random Forest**, foi necessário seguir uma lógica de implementação que garantisse a eficiência e a precisão do modelo. A escolha das features foi feita com base na relevância para a detecção de falhas, garantindo que o modelo tivesse acesso a informações críticas para realizar as previsões.
+
+### **1.2.1** Escolha do Modelo: Random Forest
+
+A escolha do **Random Forest** foi feita devido à sua capacidade de lidar com grandes volumes de dados e identificar relações complexas entre as variáveis, sem a necessidade de supor dependências temporais como no caso de modelos de redes neurais. O **Random Forest** foi preferido em relação a outros modelos, como **Redes Neurais Recorrentes (RNN)** ou **LSTMs**, por sua flexibilidade, robustez contra overfitting, e eficiência computacional.
 
 :::tip Info
-**LSTMs** ou **Long Short-Term Memory** são um tipo de rede neural recorrente (RNN) que é capaz de aprender dependências temporais de longo prazo. No entanto, as **GRUs** são mais simples e eficientes, o que as torna uma escolha ideal para muitos problemas de sequência.
+**Random Forest** é um algoritmo de aprendizado de máquina que utiliza múltiplas árvores de decisão para melhorar a precisão e reduzir o risco de overfitting. Ele é eficiente e performa bem em uma ampla gama de problemas, sem a necessidade de modelar diretamente as dependências temporais.
 :::
 
 A principal razão para a escolha deste modelo foi o bom equilíbrio entre **acurácia** e **recall** nos testes, o que garantiu a capacidade do sistema de minimizar falsos negativos — falhas que não são detectadas. Isso é crucial, pois falhas não detectadas em veículos podem levar a consequências críticas.
@@ -30,7 +35,7 @@ A principal razão para a escolha deste modelo foi o bom equilíbrio entre **acu
 
 A pipeline de treinamento foi cuidadosamente estruturado para garantir que os dados fossem corretamente manipulados antes de serem usados no modelo. As etapas incluem:
 
-1. **Pré-processamento dos Dados**: Os dados são preparados por meio da função `preparacao_dados`, que separa as features e o target e transforma os dados em arrays NumPy. 
+1. **Pré-processamento dos Dados**: Os dados são preparados por meio da função `preparacao_dados`, que separa as features e o target e transforma os dados em arrays NumPy.
 2. **Estruturação do Modelo GRU**: A rede GRU é composta por duas camadas, cada uma com 50 unidades, seguidas por uma camada densa com ativação sigmoide para realizar a classificação binária (falha ou não).
 3. **Treinamento e Avaliação**: Após o treinamento, o modelo é avaliado com base nas métricas de **acurácia**, **recall**, **f1_score** e **precisão**.
 
@@ -39,14 +44,14 @@ A pipeline de treinamento foi cuidadosamente estruturado para garantir que os da
 ```python
 def execute(df_merged):
     X_train, X_test, y_train, y_test = preparacao_dados(df_merged)
-    
+
     model = Sequential()
     model.add(GRU(50, activation="relu", return_sequences=True, input_shape=(X_train.shape[1], 1)))
     model.add(GRU(50, activation="relu"))
     model.add(Dense(1, activation="sigmoid"))
 
     model.compile(optimizer="adam", loss="binary_crossentropy")
-    
+
     model.fit(X_train, y_train, epochs=10, batch_size=32, validation_data=(X_test, y_test))
 
     y_pred = model.predict(X_test)
@@ -66,7 +71,7 @@ Foi feita a consolidação do pipeline de dados em uma classe Python, permitindo
 
 ### **1.3.1** O Papel do Orquestrador
 
-O **Orchestrator** é a peça central do pipeline de dados, responsável por executar e coordenar dinamicamente cada etapa do processamento de forma organizada e modular. Ele permite a execução de várias fases do pipeline de forma automática, garantindo que o fluxo de dados ocorra sem interrupções. 
+O **Orchestrator** é a peça central do pipeline de dados, responsável por executar e coordenar dinamicamente cada etapa do processamento de forma organizada e modular. Ele permite a execução de várias fases do pipeline de forma automática, garantindo que o fluxo de dados ocorra sem interrupções.
 
 Um dos principais benefícios do **Orchestrator** é que ele pode carregar scripts de processamento dinamicamente de um sistema de arquivos distribuído, como o **GridFS**, permitindo que as etapas do pipeline sejam atualizadas ou modificadas sem que seja necessário interromper o sistema.
 
@@ -128,6 +133,7 @@ O orquestrador garante que cada uma dessas etapas seja executada de forma ordena
 :::info
 
 Para saber mais do Orquestrador, clique [aqui](/Sprint%204/Pipelines/Orquestrador)
+:::
 
 ## **2.1** Conclusão
 
