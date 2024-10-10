@@ -10,7 +10,7 @@ Dado o escopo do projeto, de desenvolver um modelo preditivo para detectar falha
 Além disso, a pipeline de dados foi implementado de forma robusta para manipular grandes volumes de informações e integrá-las de maneira eficiente ao modelo, permitindo que o sistema fosse flexível e escalável.
 
 :::tip Info
-Para ter uma visão melhor de como foi feito o pipeline de dados, veja a documentação de [Engenharia de Dados](/Sprint%205/eng)
+Para ter uma visão melhor de como foi feito o pipeline de dados, veja a documentação de [Engenharia de Dados](/Sprint%205/SubConteudos/eng)
 :::
 
 ## **1.2** Testes com Modelos para Classificar o Tipo de Falha

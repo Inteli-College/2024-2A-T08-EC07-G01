@@ -98,28 +98,25 @@ def preparacao_dados(df):
 
 Após a etapa de ETL, o próximo passo é construir e treinar o modelo preditivo.
 
-### **3.2** Construção do Modelo GRU
+## **3.2** Construção do Modelo Random Forest
 
-O modelo GRU é um tipo de rede neural recorrente (RNN) que é utilizado para lidar com dados sequenciais. Neste caso, ele é utilizado para realizar a classificação binária (se tem ou não falha). A função `execute` (função que é chamada no **Orquestrador**) constrói o modelo GRU utilizando camadas `GRU` e uma camada `Dense` com a função de ativação `sigmoid`, que é ideal para problemas de classificação binária. O modelo é compilado com a função de perda `binary_crossentropy` e o otimizador `adam`. Em seguida, o modelo é treinado com os dados processados.
+O modelo Random Forest é um conjunto de árvores de decisão que é utilizado para realizar a classificação binária (se tem ou não falha). A função execute (função que é chamada no Orquestrador) constrói o modelo Random Forest, configurando-o para realizar a classificação. O modelo é treinado com os dados processados.
 
 ```python
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import GRU, Dense
+from sklearn.ensemble import RandomForestClassifier
 
-# highlight-start
 def execute(df_merged):
-    X_train, X_test, y_train, y_test = preparacao_dados(df_merged)
-    model = Sequential()
-    model.add(GRU(50, activation="relu", return_sequences=True, input_shape=(X_train.shape[1], 1)))
-    model.add(GRU(50, activation="relu"))
-    model.add(Dense(1, activation="sigmoid"))
-    model.compile(optimizer="adam", loss="binary_crossentropy")
-    model.fit(X_train, y_train, epochs=10, batch_size=32, validation_data=(X_test, y_test))
-    return model
-# highlight-end
+X_train, X_test, y_train, y_test = preparacao_dados(df_merged)
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+return model
 ```
 
 ### **3.3** Avaliação do Modelo
+
+:::tip Info
+Para ter uma visão melhor de como foi escolhido o modelo a ser utilizado, veja a documentação de **[Modelagem e implementação da I.A](/Sprint%205/SubConteudos/mod)**
+:::
 
 Após o treinamento, o modelo é avaliado com base em várias métricas importantes, como a **acurácia** (accuracy), **recall**, **f1_score** e **precisão** (precision). Essas métricas permitem avaliar a performance do modelo em diferentes aspectos, como a proporção de predições corretas e a capacidade de identificar corretamente as classes positivas (falhas).
 
