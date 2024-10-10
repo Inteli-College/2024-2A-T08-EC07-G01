@@ -103,6 +103,26 @@ Segue abaixo uma imagem da página de **Landing Page**:
 
 ![Landing Page](/img/webapp/landing.png)
 
+### **2.1.7** Página de Healthcheck
+
+**Descrição**: A **Healthcheck** é uma página que exibe o status de saúde do sistema, incluindo informações sobre a conexão com a API, a disponibilidade do banco de dados, e a integridade do Frontend. É um sistema adjacente ao sistema principal, que visa garantir que o sistema principal esteja funcionando corretamente. 
+
+:::tip
+O mesmo funciona mesmo se o container do Frontend principal da aplicação estiver fora do ar.
+:::
+
+**Fuhcionamento**:
+- A página exibe informações sobre o status de saúde do sistema, incluindo mensagens de erro ou alertas caso algo esteja fora do normal.
+
+Segue abaixo uma imagem da página de **Healthcheck**:
+
+A imagem abaixo mostra o status de saúde do sistema, com todos os módulo fora do ar:
+
+![Healthcheck](/img/HealthCheckFail.png)
+
+Já a imagem abaixo mostra o status de saúde do sistema, com todos os módulo funcionando corretamente:
+
+![Healthcheck](/img/HealthCheckPositivo.png)
 
 ## **3.1** Conclusão
 
