@@ -26,7 +26,7 @@ const fetchData = async () => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    
+
     const apiData: ModelMetrics[] = await response.json(); // Parse JSON from response
     console.log("apiData", apiData);
 
@@ -60,11 +60,9 @@ onMounted(() => {
       <label for="modelSelect" class="block mb-1 font-medium text-gray-700">
         Select Model
       </label>
-      <select
-        id="modelSelect"
+      <select id="modelSelect"
         class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        v-model="selectedSet"
-      >
+        v-model="selectedSet">
         <option v-for="model in models" :key="model" :value="model">
           {{ model }}
         </option>
@@ -72,15 +70,10 @@ onMounted(() => {
     </div>
 
     <!-- Bar Chart -->
-    <BarChart
-      :data="data"
-      index="metric"
-      :categories="models"
-      :y-formatter="(tick) => {
-        return typeof tick === 'number'
-          ? tick.toFixed(2)
-          : ''
-      }"
-    />
+    <BarChart :data="data" index="metric" :categories="models" :y-formatter="(tick) => {
+      return typeof tick === 'number'
+        ? tick.toFixed(2)
+        : ''
+    }" />
   </div>
 </template>
