@@ -68,8 +68,19 @@ import { defineProps, defineEmits } from 'vue';
 
 const props = defineProps({
   show: Boolean,
-  previousMetrics: Object,
-  currentMetrics: Object,
+  previousMetrics: {
+    type: Object,
+    default: () => ({
+      accuracy: 0,
+      precision: 0,
+      recall: 0,
+      f1_score: 0,
+    }),
+  },
+  currentMetrics: {
+    type: Object,
+    required: true,
+  },
 });
 
 const emit = defineEmits(['close', 'revert', 'aproved']);

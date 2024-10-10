@@ -26,38 +26,79 @@ class PredictionService:
         return self.predict_repo.get_prediction(knr)
 
     def predict(self, knr: KNR) -> Prediction:
+        # Convert KNR object to DataFrame
         df_input = pd.DataFrame([knr.dict()])
 
-        pipeline_file_path = os.path.join(os.getcwd(), 'app', 'pipeline', 'pipeline_principal.json')
-        with open(pipeline_file_path, "r") as file:
-            pipeline_config = json.load(file)
+        # Load the main pipeline configuration
+        main_pipeline_file_path = os.path.join(os.getcwd(), 'app', 'pipeline', 'pipeline_principal.json')
+        with open(main_pipeline_file_path, "r") as file:
+            main_pipeline_config = json.load(file)
 
-        steps = pipeline_config.get("predict_steps", [])
+        main_steps = main_pipeline_config.get("predict_steps", [])
 
+        # Prepare dataframes for the orchestrator
         dataframes = {
-        "df_input": df_input
+            "df_input": df_input
         }
 
-        orchestrator = Orchestrator(
-            pipeline_steps=steps,
+        # Create an orchestrator for the main pipeline
+        main_orchestrator = Orchestrator(
+            pipeline_steps=main_steps,
             dataframes=dataframes,
             mongo_uri="mongodb://db:27017",
             db_name="cross_the_line"
         )
 
-        # Run the prediction pipeline
-        orchestrator.run_dynamic_pipeline()
+        # Run the main prediction pipeline
+        main_orchestrator.run_dynamic_pipeline()
 
-        # Get the prediction result
-        prediction = orchestrator.dataframes.get("prediction_result")
+        # Get the prediction result from the orchestrator's results
+        main_prediction = main_orchestrator.dataframes.get("prediction_result")
 
+        # Build the initial prediction response
         response = Prediction(
-        KNR= knr.KNR,
-        predicted_fail_codes = [prediction],
-        real_fail_codes = [-1], 
-        indicated_tests = [""]  
+            KNR=knr.KNR,
+            predicted_fail_codes=[main_prediction] if main_prediction is not None else [],
+            real_fail_codes=[-1],  # Placeholder for real fail codes
+            indicated_tests=[""]   # Placeholder for indicated tests
         )
-        # Return the prediction
+
+        # If the main prediction fails (main_prediction == 1), run the classification pipeline
+        if main_prediction == 1:
+            classification_pipeline_file_path = os.path.join(os.getcwd(), 'app', 'pipeline', 'pipeline_classificacao.json')
+            with open(classification_pipeline_file_path, "r") as file:
+                classification_pipeline_config = json.load(file)
+            
+            classification_steps = classification_pipeline_config.get("predict_steps", [])
+
+            # Create an orchestrator for the classification pipeline
+            classification_orchestrator = Orchestrator(
+                pipeline_steps=classification_steps,
+                dataframes=dataframes,
+                mongo_uri="mongodb://db:27017",
+                db_name="cross_the_line"
+            )
+
+            # Run the classification prediction pipeline
+            classification_orchestrator.run_dynamic_pipeline()
+
+            # Extract predictions from the classification pipeline results
+            classification_predictions = {
+                key: value for key, value in classification_orchestrator.dataframes.items() if key.startswith('prediction_S_GROUP_ID')
+            }
+
+            # Extract the predicted fail codes based on classification results
+            predicted_fail_codes = [
+                key.replace('prediction_', '') for key, pred in classification_predictions.items() if pred == 1
+            ]
+
+            # Update the response with classification predicted fail codes
+            response.predicted_fail_codes = predicted_fail_codes
+
+        # Save the prediction to MongoDB using the PredictionsRepository
+        self.predict_repo.create_prediction(response)
+
+        # Return the prediction response
         return response
 
     def update_prediction(self, knr: str, prediction: PredictionUpdate) -> bool:

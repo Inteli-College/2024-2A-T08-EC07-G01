@@ -3,6 +3,7 @@ ARG NODE_VERSION=18.14.2
 FROM node:${NODE_VERSION}-slim as base
 
 ARG PORT=3000
+ARG BACKEND_URL
 
 ENV NODE_ENV=production
 
@@ -10,6 +11,10 @@ WORKDIR /src
 
 # Build
 FROM base as build
+
+ARG BACKEND_URL
+
+ENV BACKEND_URL=${BACKEND_URL}
 
 COPY --link package.json package-lock.json .
 RUN npm install --production=false

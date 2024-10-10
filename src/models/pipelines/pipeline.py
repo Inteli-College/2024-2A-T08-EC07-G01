@@ -6,7 +6,7 @@ from tensorflow.keras.models import load_model
 import json
 
 def aggregate_by_id(df, id_value):
-    subset = df[df['ID'] == id_value]
+    subset = df[df['ID'] == id_value]   
     return subset.groupby('KNR').agg(
         NAME=('NAME', 'count'),
         SOK=('STATUS', lambda x: (x == 10).sum()),

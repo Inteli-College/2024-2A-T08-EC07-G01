@@ -4,21 +4,37 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, recall_score, f1_score, precision_score
 import os
+import pandas as pd
 
 
 def preparacao_dados(df):
     # Separando as features (X) e o target (y)
-    X = df.drop(
-        columns=["FALHA", "KNR"]
-    )  # 'KNR' é apenas um identificador, então deve ser removido
+    X = df.drop(columns=["FALHA", "KNR"], errors='ignore')
     y = df["FALHA"]
+
+    # Convert all feature columns to numeric, coercing errors to NaN
+    X = X.apply(pd.to_numeric, errors='coerce')
+
+    # Handle missing values by imputing or dropping
+    # Here, we'll fill NaNs with 0. Adjust as needed
+    X = X.fillna(0)
+    y = y.fillna(0)  # Ensure target has no NaNs
+
+    # Ensure target is binary (0 and 1)
+    y = y.apply(lambda x: 1 if x > 0 else 0)
+
     # Separando em dados de treino e teste
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
+        X, y, test_size=0.2, random_state=42, stratify=y
     )
-    # Converte X_train e X_test para arrays NumPy, caso ainda não sejam.
-    X_train = np.array(X_train)
-    X_test = np.array(X_test)
+
+    # Converte X_train e X_test para arrays NumPy com dtype float32
+    X_train = np.array(X_train).astype(np.float32)
+    X_test = np.array(X_test).astype(np.float32)
+
+    # Converte y_train e y_test para arrays NumPy com dtype float32
+    y_train = np.array(y_train).astype(np.float32)
+    y_test = np.array(y_test).astype(np.float32)
 
     # Reestrutura X_train e X_test para ter 3 dimensões.
     # A nova forma do array será (n_samples, n_features, 1)
@@ -26,6 +42,7 @@ def preparacao_dados(df):
     X_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 1))
 
     return X_train, X_test, y_train, y_test
+
 
 def execute(df_merged):
     '''
@@ -37,6 +54,7 @@ def execute(df_merged):
     Returns:
     Sequential: Trained Keras model.
     '''
+    print(df_merged)
     X_train, X_test, y_train, y_test = preparacao_dados(df_merged)
     # Building the GRU model
     model = Sequential()
@@ -55,7 +73,7 @@ def execute(df_merged):
 
     # Training the model
     model.fit(
-        X_train, y_train, epochs=100, batch_size=32, validation_data=(X_test, y_test)
+        X_train, y_train, epochs=1, batch_size=32, validation_data=(X_test, y_test)
     )
 
     y_pred = model.predict(X_test)
@@ -72,8 +90,8 @@ def execute(df_merged):
     model.save(model_path)
 
     return {
-        "model_name": "GRU",
-        "type_model": "Main Model",
+        "model_name": "GRUOII",
+        "type_model": "type0",
         "metrics": {
             "accuracy": float(accuracy),  
             "recall": float(recall),     

@@ -7,7 +7,10 @@ export interface TestPieChart {
 }
 
 export async function fetchChartData(isFromFails: boolean): Promise<TestPieChart[]> {
-  const baseURL = "http://localhost:8000/api/predictions";
+  const config = useRuntimeConfig();
+  const apiURL = config.public.backendUrl;
+
+  const baseURL = `${apiURL}/api/predictions`;
 
   try {
     let response;

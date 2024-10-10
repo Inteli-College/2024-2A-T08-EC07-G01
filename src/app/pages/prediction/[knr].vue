@@ -37,6 +37,8 @@ import { failTypes } from './knrsData.ts';
 
 import Axios from 'axios';
 
+const config = useRuntimeConfig();
+const apiURL = config.public.backendUrl;
 
 const knr = useRoute().params.knr;
 
@@ -62,8 +64,7 @@ const styles = {
     }
 };
 
-
-const res = await Axios.get(`http://localhost:8000/api/predictions/details/${knr}`);
+const res = await Axios.get(`${apiURL}/api/predictions/details/${knr}`);
 
 const failType = res.data.predicted_fail_codes;
 
@@ -80,7 +81,7 @@ onMounted(() => {
 });
 
 
-const result = computed(() => (failType[0] !== -1 ? 'fail' : 'success'));
+const result = computed(() => (failType[0] !== -1 && failType.length != 0 ? 'fail' : 'success'));
 const resultStyle = computed(() => styles[result.value]);
 const resultText = computed(() => (result.value === 'fail' ? 'Falha prevista' : 'Sem falha prevista'));
 
