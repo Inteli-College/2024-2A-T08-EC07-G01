@@ -28,36 +28,61 @@ class PredictionService:
     def predict(self, knr: KNR) -> Prediction:
         df_input = pd.DataFrame([knr.dict()])
 
-        pipeline_file_path = os.path.join(os.getcwd(), 'app', 'pipeline', 'pipeline_principal.json')
-        with open(pipeline_file_path, "r") as file:
-            pipeline_config = json.load(file)
+        main_pipeline_file_path = os.path.join(os.getcwd(), 'app', 'pipeline', 'pipeline_principal.json')
+        with open(main_pipeline_file_path, "r") as file:
+            main_pipeline_config = json.load(file)
 
-        steps = pipeline_config.get("predict_steps", [])
+        main_steps = main_pipeline_config.get("predict_steps", [])
 
         dataframes = {
         "df_input": df_input
         }
 
-        orchestrator = Orchestrator(
-            pipeline_steps=steps,
+        main_orchestrator = Orchestrator(
+            pipeline_steps=main_steps,
             dataframes=dataframes,
             mongo_uri="mongodb://db:27017",
             db_name="cross_the_line"
         )
 
         # Run the prediction pipeline
-        orchestrator.run_dynamic_pipeline()
+        main_orchestrator.run_dynamic_pipeline()
 
         # Get the prediction result
-        prediction = orchestrator.dataframes.get("prediction_result")
+        main_prediction = main_orchestrator.dataframes.get("prediction_result")
 
         response = Prediction(
         KNR= knr.KNR,
-        predicted_fail_codes = [prediction],
+        predicted_fail_codes = [main_prediction],
         real_fail_codes = [-1], 
         indicated_tests = [""]  
         )
-        # Return the prediction
+        
+        if main_prediction == 1:
+            classification_pipeline_file_path = os.path.join(os.getcwd(), 'app', 'pipeline', 'pipeline_classificacao.json')
+
+            with open(classification_pipeline_file_path, "r") as file:
+                classification_pipeline_config = json.load(file)
+            
+            classification_steps = classification_pipeline_config.get("predict_steps", [])
+
+            classification_orchestrator = Orchestrator(
+                pipeline_steps=classification_steps,
+                dataframes=dataframes,
+                mongo_uri="mongodb://db:27017",
+                db_name="cross_the_line"
+            )
+
+            classification_orchestrator.run_dynamic_pipeline()
+
+            classification_predictions = {
+                        key: value[0] for key, value in classification_orchestrator.dataframes.items() if key.startswith('prediction_S_GROUP_ID')
+                    }
+            
+            predicted_fail_codes = [key.replace('prediction_', '') for key, pred in classification_predictions.items() if pred == 1]
+
+            response.predicted_fail_codes = predicted_fail_codes
+
         return response
 
     def update_prediction(self, knr: str, prediction: PredictionUpdate) -> bool:
