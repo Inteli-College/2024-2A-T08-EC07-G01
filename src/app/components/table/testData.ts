@@ -28,13 +28,13 @@ export const convertPredictionToTableData = (
       prediction.real_fail_codes
         .map((code) => getFailDescription(code))
         .filter((desc) => desc !== null)
-        .join(", ") || "No Failures";
+        .join(", ") || "Sem Falhas";
 
     const predictedFailDescriptions =
       prediction.predicted_fail_codes
         .map((code) => getFailDescription(code))
         .filter((desc) => desc !== null)
-        .join(", ") || "No Failures";
+        .join(", ") || "Sem Falhas";
 
     return {
       knr: prediction.KNR,
@@ -42,8 +42,8 @@ export const convertPredictionToTableData = (
       tipoFalha:
         predictedFailDescriptions.length > 0
           ? predictedFailDescriptions
-          : "Not Predicted",
-      testeIndicado: prediction.indicated_tests.join(", ") || "No Tests",
+          : "Não Previsto",
+      testeIndicado: prediction.indicated_tests.join(", ") || "Sem Testes",
     };
   });
 };

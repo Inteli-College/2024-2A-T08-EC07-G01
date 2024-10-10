@@ -88,6 +88,19 @@
             "output": "prediction_S_GROUP_ID_133"
         },
         
+        {
+            "name": "predict_S_GROUP_ID_137",
+            "file_path": "/app/app/pipeline/steps/modelo_classificacao/predict137.py",
+            "dataframes": ["df_preprocessed_input"],
+            "output": "prediction_S_GROUP_ID_137"
+        },
+
+        {
+            "name": "predict_S_GROUP_ID_140",
+            "file_path": "/app/app/pipeline/steps/modelo_classificacao/predict140.py",
+            "dataframes": ["df_preprocessed_input"],
+            "output": "prediction_S_GROUP_ID_140"
+        },
         
         {
             "name": "predict_S_GROUP_ID_9830946",

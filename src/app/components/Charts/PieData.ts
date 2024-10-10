@@ -26,12 +26,14 @@ export async function fetchChartData(isFromFails: boolean): Promise<TestPieChart
       response = await axios.get(`${baseURL}/fail-codes-predicted`);
       const responseData = response.data;
 
-      return Object.keys(responseData).map((key) => ({
+      return Object.keys(responseData)
+      .filter((key) => key != "0")
+      .map((key) => ({
         name: `Falha ${key}`,
         total: responseData[key],
         predicted: 0,
       }));
-    }
+  }
   } catch (error) {
     console.error("Error fetching data:", error);
     return []; // Reset to empty if there's an error

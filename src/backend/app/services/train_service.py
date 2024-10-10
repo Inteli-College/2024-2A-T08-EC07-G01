@@ -227,40 +227,27 @@ class TrainService:
         )
 
         # Run the main pipeline and get the main model's metadata
+       # Get main model metadata from the orchestrator
         main_model_metadata = main_orchestrator.run_dynamic_pipeline()
 
-        # Debug print to verify main models metadata
-        print(
-            f"[DEBUG] Main Orchestrator returned models metadata: {main_model_metadata}"
-        )
+        # Debug print to verify main model's metadata
+        print(f"[DEBUG] Main Orchestrator returned models metadata: {main_model_metadata}")
 
-        # Define model_type mapping for the main model
-        main_model_type_mapping = {
-            "train_main_model": "type0"  # Assuming 'train_main_model' is the key in main_models_metadata
-        }
-
-        # Process Main Model Metadata
-        main_model_key = "train_main_model_metadata"  # Replace with actual output key from pipeline_principal.json
-        main_model_meta = main_model_metadata.get(main_model_key)
-
-        if main_model_meta and isinstance(main_model_meta, dict):
-            model_name = main_model_meta.get("model_name")
-            metrics = main_model_meta.get("metrics", {})
-            model_type = main_model_meta.get(
-                "type_model", main_model_type_mapping.get("train_main_model", "unknown")
-            )
+        # Check if main_model_metadata contains the necessary keys
+        if isinstance(main_model_metadata, dict):
+            model_name = main_model_metadata.get("model_name")
+            metrics = main_model_metadata.get("metrics", {})
+            model_type = main_model_metadata.get("type_model", "unknown")
 
             if not model_name:
-                print(
-                    f"[ERROR] 'model_name' missing in main model metadata for key '{main_model_key}'."
-                )
+                print("[ERROR] 'model_name' missing in main model metadata.")
             else:
-                # Create a new Model object to store in the database
+                # Construct a new Model object with the metadata
                 new_model = Model(
                     model_name=model_name,
                     type_model=model_type,
-                    gridfs_path=f"path/to/models/{model_name}.h5",  # Replace with actual GridFS path
-                    recipe_path=f"path/to/recipes/{model_name}_recipe.json",  # Replace with actual GridFS path
+                    gridfs_path=f"path/to/models/{model_name}.h5",  # Update with actual GridFS path
+                    recipe_path=f"path/to/recipes/{model_name}_recipe.json",  # Update with actual recipe path
                     accuracy=metrics.get("accuracy", 0.0),
                     precision=metrics.get("precision", 0.0),
                     recall=metrics.get("recall", 0.0),
@@ -270,20 +257,16 @@ class TrainService:
                     created_at=datetime.datetime.utcnow(),
                 )
 
-                # Save the main model in the repository
+                # Attempt to save the model in the repository
                 try:
                     self.model_repo.create_model(new_model)
-                    print(
-                        f"[INFO] Main Model '{new_model.model_name}' saved to repository."
-                    )
+                    print(f"[INFO] Main Model '{new_model.model_name}' saved to repository.")
                 except Exception as e:
-                    raise RuntimeError(
-                        f"Failed to save main model '{new_model.model_name}': {str(e)}"
-                    )
+                    raise RuntimeError(f"Failed to save main model '{new_model.model_name}': {str(e)}")
+
         else:
-            print(
-                f"[WARNING] Main model metadata key '{main_model_key}' not found or not a dict."
-            )
+            print("[ERROR] The main model metadata is not in the expected format.")
+
 
         # Initialize dataframes for the classification pipeline
         classification_dataframes = {

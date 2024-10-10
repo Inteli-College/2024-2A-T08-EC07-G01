@@ -47,7 +47,9 @@ class PredictionsRepository:
         documents = self.collection.find()
 
         for document in documents:
-            if -1 in document.get("predicted_fail_codes", []):
+            predicted_fail_codes = document.get("predicted_fail_codes", [])
+            
+            if 0 in predicted_fail_codes:
                 no_fails += 1
             else:
                 fails += 1
