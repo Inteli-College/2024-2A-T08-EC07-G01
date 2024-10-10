@@ -82,7 +82,7 @@ onMounted(() => {
 });
 
 
-const result = computed(() => (failType[0] !== -1 ? 'fail' : 'success'));
+const result = computed(() => (failType[0] !== -1 || failType.length != 0 ? 'fail' : 'success'));
 const resultStyle = computed(() => styles[result.value]);
 const resultText = computed(() => (result.value === 'fail' ? 'Falha prevista' : 'Sem falha prevista'));
 
