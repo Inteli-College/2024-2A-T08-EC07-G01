@@ -26,7 +26,15 @@ O projeto foi desenvolvido em sprints, que são ciclos curtos de trabalho, geral
 
 A cada nova iteração, a equipe revisou suas abordagens e adaptou metodologias para atender às demandas em mudança. Isso inclui a adoção de novas tecnologias, a revisão de processos de desenvolvimento e a atualização contínua da documentação. Este documento reflete o esforço contínuo da equipe em garantir que o sistema permaneça alinhado com os requisitos do projeto e que toda a informação necessária esteja devidamente registrada e organizada.
 
-### **1.2 Objetivo do Projeto**
+### **1.2 Descrição do Problema**
+
+Atualmente, a Volkswagen realiza uma série de testes de rodagem em todos os veículos que saem da linha de montagem, com o objetivo de identificar possíveis falhas. No entanto, essa abordagem padronizada não é a mais eficiente, pois todos os veículos passam pelos mesmos testes, independentemente das condições específicas de sua montagem. Isso resulta em um aumento considerável nos custos operacionais e no tempo necessário para validar a qualidade, já que não há uma forma de identificar previamente possíveis defeitos.
+
+O desafio é antecipar, logo após a montagem, quais veículos têm maior probabilidade de apresentar defeitos e em quais áreas específicas. Isso pode ser feito analisando dados específicos do processo de montagem, como o torque aplicado nos parafusos e o tempo gasto em diferentes etapas da linha de produção, entre outros fatores. Com base nessa análise preditiva, é possível orientar a equipe responsável pelos testes de rodagem para realizar verificações direcionadas, focadas nas potenciais inconsistências apontadas pelos modelos preditivos.
+
+Essa solução tem o potencial de otimizar o processo de testes, reduzindo custos e tempo. Além disso, melhora a eficácia na detecção de defeitos, garantindo que os recursos sejam aplicados de maneira mais inteligente e eficiente.
+
+### **1.3 Objetivo do Projeto**
 
 O principal objetivo deste projeto foi criar um sistema preditivo baseado em **machine learning** capaz de antecipar falhas em veículos da Volkswagen antes que eles fossem enviados para o teste de rodagem. Isso não apenas proporcionaria uma previsão das falhas, mas também ofereceria aos operadores informações valiosas sobre o desempenho esperado dos veículos, permitindo uma análise proativa. Dessa forma, a empresa poderia reduzir custos e aumentar a eficiência no processo de inspeção e teste dos veículos.
 
@@ -36,7 +44,7 @@ O segundo objetivo do projeto foi garantir que a aplicação fosse acessível re
 
 Por fim, o projeto visava não só melhorar a experiência do usuário final, mas também garantir que o sistema fosse escalável e flexível, permitindo futuras adaptações e a integração de novos dados ou modelos de machine learning sem necessidade de grandes mudanças na infraestrutura existente.
 
-### **1.3 Metodologia**
+### **1.4 Metodologia**
 
 O desenvolvimento do projeto foi guiado por metodologias ágeis, focadas em entregas contínuas e melhorias incrementais. A principal metodologia adotada foi o **Scrum**, que organiza o trabalho em sprints. Cada sprint tem uma duração fixa (duas semanas, neste caso), durante as quais a equipe define um conjunto de tarefas a serem concluídas. Ao final de cada sprint, realizamos uma revisão para verificar se os objetivos foram atingidos e para planejar as etapas seguintes.
 
@@ -46,7 +54,7 @@ O **Code Review** foi outra prática importante implementada durante o desenvolv
 
 A **documentação** foi elaborada ao longo do projeto para garantir que todas as funcionalidades fossem devidamente registradas. Além de documentação técnica, também criamos guias para auxiliar no uso do sistema, com o objetivo de facilitar sua adoção por parte de novos usuários e desenvolvedores que se envolverão com o projeto no futuro.
 
-### **1.4 Ferramentas Utilizadas**
+### **1.5 Ferramentas Utilizadas**
 
 Durante o desenvolvimento do projeto, várias ferramentas tecnológicas foram utilizadas para garantir a eficiência e qualidade do sistema. Cada uma dessas ferramentas desempenhou um papel fundamental em diferentes partes do processo. Aqui está uma visão geral das principais ferramentas:
 
