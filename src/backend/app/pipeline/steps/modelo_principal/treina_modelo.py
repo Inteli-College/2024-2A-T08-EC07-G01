@@ -73,7 +73,7 @@ def execute(df_merged):
 
     # Training the model
     model.fit(
-        X_train, y_train, epochs=1, batch_size=32, validation_data=(X_test, y_test)
+        X_train, y_train, epochs=10, batch_size=32, validation_data=(X_test, y_test)
     )
 
     y_pred = model.predict(X_test)

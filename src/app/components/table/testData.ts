@@ -1,5 +1,3 @@
-import { failTypes } from "../../pages/prediction/knrsData";
-
 export interface Prediction {
   KNR: string;
   predicted_fail_codes: number[];
@@ -9,143 +7,32 @@ export interface Prediction {
 
 export interface TableData {
   knr: string;
-  //   dataPrevisao: string;
   falha: string;
   tipoFalha: string;
   testeIndicado: string;
 }
+
 export const convertPredictionToTableData = (
   predictionData: Prediction[]
 ): TableData[] => {
-  // Helper function to map fail codes to their descriptions
-  const getFailDescription = (failCode: number): string | null => {
-    const failType = failTypes.value.find((ft) => ft.failType === failCode);
-    return failType ? failType.description : null;
-  };
-
   return predictionData.map((prediction) => {
-    const realFailDescriptions =
-      prediction.real_fail_codes
-        .map((code) => getFailDescription(code))
-        .filter((desc) => desc !== null)
-        .join(", ") || "Sem Falhas";
+    // Check if there is any non-zero value in predicted_fail_codes
+    const hasFailure = prediction.predicted_fail_codes.some(code => code !== 0);
 
-    const predictedFailDescriptions =
-      prediction.predicted_fail_codes
-        .map((code) => getFailDescription(code))
-        .filter((desc) => desc !== null)
-        .join(", ") || "Sem Falhas";
+    // Falha column should return "Possui Falha" if any predicted_fail_codes is non-zero
+    const falha = hasFailure ? "Possui Falha" : "Sem Falhas";
+
+    // Tipo de Falha is set to "Não Previsto" as no specific type is mentioned
+    const tipoFalha = hasFailure ? "Parte Traseira" : "Não Previsto";
+
+    // Teste Indicado always returns "To-Do"
+    const testeIndicado = "To-Do";
 
     return {
       knr: prediction.KNR,
-      falha: realFailDescriptions,
-      tipoFalha:
-        predictedFailDescriptions.length > 0
-          ? predictedFailDescriptions
-          : "Não Previsto",
-      testeIndicado: prediction.indicated_tests.join(", ") || "Sem Testes",
+      falha: falha,
+      tipoFalha: tipoFalha,
+      testeIndicado: testeIndicado
     };
   });
 };
-
-// export const TestData: TableData[] = [
-//   {
-//     knr: "12345",
-//     // dataPrevisao: "2024-08-30",
-//     falha: "Conexão Interrompida",
-//     tipoFalha: "Hardware",
-//     testeIndicado: "Verificar Cabos",
-//   },
-//   {
-//     knr: "67890",
-//     // dataPrevisao: "2024-09-15",
-//     falha: "Erro de Software",
-//     tipoFalha: "Software",
-//     testeIndicado: "Reinstalar Sistema",
-//   },
-//   {
-//     knr: "11223",
-//     // dataPrevisao: "2024-10-01",
-//     falha: "Superaquecimento",
-//     tipoFalha: "Hardware",
-//     testeIndicado: "Limpeza de Ventoinha",
-//   },
-//   {
-//     knr: "44556",
-//     // dataPrevisao: "2024-11-20",
-//     falha: "Falha de Rede",
-//     tipoFalha: "Network",
-//     testeIndicado: "Testar Conexão",
-//   },
-//   {
-//     knr: "11223",
-//     // dataPrevisao: "2024-10-01",
-//     falha: "Superaquecimento",
-//     tipoFalha: "Hardware",
-//     testeIndicado: "Limpeza de Ventoinha",
-//   },
-//   {
-//     knr: "11223",
-//     // dataPrevisao: "2024-10-01",
-//     falha: "Superaquecimento",
-//     tipoFalha: "Hardware",
-//     testeIndicado: "Limpeza de Ventoinha",
-//   },
-//   {
-//     knr: "11223",
-//     // dataPrevisao: "2024-10-01",
-//     falha: "Superaquecimento",
-//     tipoFalha: "Hardware",
-//     testeIndicado: "Limpeza de Ventoinha",
-//   },
-//   {
-//     knr: "11223",
-//     // dataPrevisao: "2024-10-01",
-//     falha: "Superaquecimento",
-//     tipoFalha: "Hardware",
-//     testeIndicado: "Limpeza de Ventoinha",
-//   },
-//   {
-//     knr: "11223",
-//     // dataPrevisao: "2024-10-01",
-//     falha: "Superaquecimento",
-//     tipoFalha: "Hardware",
-//     testeIndicado: "Limpeza de Ventoinha",
-//   },
-//   {
-//     knr: "11223",
-//     // dataPrevisao: "2024-10-01",
-//     falha: "Superaquecimento",
-//     tipoFalha: "Hardware",
-//     testeIndicado: "Limpeza de Ventoinha",
-//   },
-//   {
-//     knr: "11223",
-//     // dataPrevisao: "2024-10-01",
-//     falha: "Superaquecimento",
-//     tipoFalha: "Hardware",
-//     testeIndicado: "Limpeza de Ventoinha",
-//   },
-//   {
-//     knr: "11223",
-//     // dataPrevisao: "2024-10-01",
-//     falha: "Superaquecimento",
-//     tipoFalha: "Hardware",
-//     testeIndicado: "Limpeza de Ventoinha",
-//   },
-//   {
-//     knr: "11223",
-//     // dataPrevisao: "2024-10-01",
-//     falha: "Superaquecimento",
-//     tipoFalha: "Hardware",
-//     testeIndicado: "Limpeza de Ventoinha",
-//   },
-//   {
-//     knr: "11223",
-//     // dataPrevisao: "2024-10-01",
-//     falha: "Superaquecimento",
-//     tipoFalha: "Hardware",
-//     testeIndicado: "Limpeza de Ventoinha",
-//   },
-// ];
-// //
