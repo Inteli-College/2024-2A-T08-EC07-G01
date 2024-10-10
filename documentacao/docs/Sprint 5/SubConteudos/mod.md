@@ -13,49 +13,74 @@ Além disso, a pipeline de dados foi implementado de forma robusta para manipula
 Para ter uma visão melhor de como foi feito o pipeline de dados, veja a documentação de [Engenharia de Dados](/Sprint%205/eng)
 :::
 
-## **1.2** Lógica da implementação da Pipeline e escolha de Features
+## **1.2** Testes com Modelos para Classificar o Tipo de Falha
 
-Aqui está o parágrafo corrigido para refletir a utilização de Random Forest:
+Utilizamos diferentes algoritmos de aprendizado de máquina, como Regressão Logística, XGBoost e Random Forest, pois estes são amplamente reconhecidos por sua eficácia em problemas de classificação.
 
-## **1.2** Lógica da implementação da Pipeline e escolha de Features
+A escolha desses modelos se baseia em sua capacidade de lidar com dados complexos e não-lineares, além de fornecerem uma boa balanceamento entre interpretabilidade e desempenho. A Regressão Logística, por exemplo, é um modelo simples que permite uma fácil interpretação dos coeficientes, enquanto que o XGBoost e o Random Forest são conhecidos por sua alta performance em conjuntos de dados desbalanceados, comuns em problemas de classificação de falhas.
 
-Para a implementação do modelo de **Random Forest**, foi necessário seguir uma lógica de implementação que garantisse a eficiência e a precisão do modelo. A escolha das features foi feita com base na relevância para a detecção de falhas, garantindo que o modelo tivesse acesso a informações críticas para realizar as previsões.
+### **1.2.1** Objetivos
 
-### **1.2.1** Escolha do Modelo: Random Forest
+Neste notebook ( `src/models/modelo_todas_classes.ipynb`) Focamos em testar esses três modelos para identificar qual deles apresenta o melhor desempenho no conjunto de dados fornecido. A eficácia de cada modelo é medida por meio de métricas como acurácia, **precisão**, **recall** e **F1-Score**, que nos fornecem uma visão abrangente do desempenho do modelo em relação às classes majoritária e minoritária.
 
-A escolha do **Random Forest** foi feita devido à sua capacidade de lidar com grandes volumes de dados e identificar relações complexas entre as variáveis, sem a necessidade de supor dependências temporais como no caso de modelos de redes neurais. O **Random Forest** foi preferido em relação a outros modelos, como **Redes Neurais Recorrentes (RNN)** ou **LSTMs**, por sua flexibilidade, robustez contra overfitting, e eficiência computacional.
+### **1.2.2** Metodologia
+
+No notebook localizado em `src/models/modelo_classificacao_falha1.ipynb`, foram realizados testes preliminares utilizando redes neurais. No entanto, para aprofundar nossa análise, neste documento, exploramos o desempenho de modelos de Regressão Logística, XGBoost e Random Forest, com o objetivo de encontrar o modelo mais adequado para classificar os tipos de falha associados ao `S_GROUP_ID_1`.
+
+Durante o desenvolvimento do projeto, foi constatado que não era possível construir uma série temporal válida, pois os dados de data eram lançados todos ao mesmo tempo, dificultando a montagem de uma ordem cronológica coerente. Devido a essa limitação, **redes neurais**, especialmente aquelas que dependem de sequências temporais como as **RNNs** ou **GRUs**, não eram a escolha mais adequada. Por essa razão, optou-se pela utilização do modelo de **Random Forest**, que não depende de informações temporais para realizar boas predições.
+
+#### **1.2.2.1** Detalhes dos Testes
+
+- Carregamento dos Dados: Iniciamos o processo carregando o DataFrame que contém os dados de falhas e torques, assegurando que os dados estejam limpos e prontos para serem utilizados nos modelos.
+
+- Pré-processamento: As colunas foram convertidas para representações binárias para refletir a presença ou ausência de falhas, e colunas com dados faltantes foram removidas para garantir a integridade dos dados.
+
+- Modelo Random Forest: Implementamos o Random Forest como um dos modelos de referência, reconhecido por sua robustez e capacidade de lidar com grandes volumes de dados.
+
+- Modelo XGBoost: Em seguida, utilizamos o XGBoost, um modelo de gradient boosting que tem se mostrado eficaz em competições de ciência de dados devido à sua capacidade de lidar com complexidades no conjunto de dados.
+
+- Modelo de Regressão Logística: Por último, implementamos a Regressão Logística para uma comparação direta com os modelos mais complexos, permitindo uma visão clara das suas diferenças em termos de performance.
+
+- Avaliação do Modelo: As previsões de cada modelo foram avaliadas usando métricas apropriadas, que nos permitiram determinar não apenas a acurácia, mas também a capacidade de cada modelo de identificar corretamente as classes de falhas.
+
+Esses passos garantem que a análise seja não apenas rigorosa, mas também alinhada com as melhores práticas em ciência de dados, visando encontrar a solução mais eficaz para a classificação do tipo de falha.
+
+## **1.3** Lógica da Implementação da Pipeline e Escolha de Features
+
+### **1.3.1** Escolha do Modelo: Random Forest
+
+O **Random Forest** foi escolhido devido à sua robustez em lidar com grandes volumes de dados e sua capacidade de identificar padrões complexos entre as features sem a necessidade de ordenar os dados temporalmente. Esse algoritmo é uma variação do método de árvores de decisão, onde múltiplas árvores são construídas durante o treinamento e cada árvore contribui com uma "votação" para determinar a predição final.
+
+O **Random Forest** se destaca por:
+
+- Redução do Overfitting: Ao combinar as predições de várias árvores, o modelo consegue reduzir o risco de overfitting, o que é comum em modelos baseados em uma única árvore de decisão.
+- Flexibilidade: Ele é capaz de lidar com dados de alta dimensionalidade e variáveis categóricas e numéricas sem a necessidade de normalização.
+- Resistência a Ruído: A média das predições de várias árvores torna o modelo mais resistente ao ruído presente nos dados.
 
 :::tip Info
-**Random Forest** é um algoritmo de aprendizado de máquina que utiliza múltiplas árvores de decisão para melhorar a precisão e reduzir o risco de overfitting. Ele é eficiente e performa bem em uma ampla gama de problemas, sem a necessidade de modelar diretamente as dependências temporais.
+**Random Forest** é um algoritmo de aprendizado de máquina baseado em um conjunto de árvores de decisão. Durante o treinamento, várias árvores são construídas a partir de subconjuntos aleatórios dos dados e das features, e a predição final é feita com base na votação da maioria das árvores. Isso o torna robusto, capaz de capturar interações complexas entre as variáveis, e eficiente para lidar com conjuntos de dados onde não há dependências temporais.
 :::
+A escolha do **Random Forest** garantiu um bom equilíbrio entre acurácia e recall nos testes, permitindo ao modelo minimizar falsos negativos — falhas que não são detectadas. Isso é essencial no contexto da detecção de falhas em veículos, onde a não detecção de problemas pode acarretar em consequências graves..
 
-A principal razão para a escolha deste modelo foi o bom equilíbrio entre **acurácia** e **recall** nos testes, o que garantiu a capacidade do sistema de minimizar falsos negativos — falhas que não são detectadas. Isso é crucial, pois falhas não detectadas em veículos podem levar a consequências críticas.
+### **1.3.2** Pipeline de Treinamento
 
-### **1.2.2** Pipeline de Treinamento
+A pipeline de treinamento foi cuidadosamente estruturada para garantir que os dados fossem corretamente manipulados antes de serem usados no modelo. As etapas incluem:
 
-A pipeline de treinamento foi cuidadosamente estruturado para garantir que os dados fossem corretamente manipulados antes de serem usados no modelo. As etapas incluem:
-
-1. **Pré-processamento dos Dados**: Os dados são preparados por meio da função `preparacao_dados`, que separa as features e o target e transforma os dados em arrays NumPy.
-2. **Estruturação do Modelo GRU**: A rede GRU é composta por duas camadas, cada uma com 50 unidades, seguidas por uma camada densa com ativação sigmoide para realizar a classificação binária (falha ou não).
-3. **Treinamento e Avaliação**: Após o treinamento, o modelo é avaliado com base nas métricas de **acurácia**, **recall**, **f1_score** e **precisão**.
-
-**Código do Modelo GRU:**
+1. **Pré-processamento dos Dados**: Os dados são preparados por meio da função preparacao_dados, que separa as features e o target e transforma os dados em arrays NumPy.
+2. **Estruturação do Modelo Random Forest**: O modelo Random Forest é criado com um número especificado de árvores, cada uma treinada em uma amostra aleatória dos dados. O modelo é configurado para realizar a classificação binária (falha ou não).
+3. **Treinamento e Avaliação**: Após o treinamento, o modelo é avaliado com base nas métricas de acurácia, recall, f1_score e precisão.
 
 ```python
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, recall_score, f1_score, precision_score
+
 def execute(df_merged):
     X_train, X_test, y_train, y_test = preparacao_dados(df_merged)
 
-    model = Sequential()
-    model.add(GRU(50, activation="relu", return_sequences=True, input_shape=(X_train.shape[1], 1)))
-    model.add(GRU(50, activation="relu"))
-    model.add(Dense(1, activation="sigmoid"))
-
-    model.compile(optimizer="adam", loss="binary_crossentropy")
-
-    model.fit(X_train, y_train, epochs=10, batch_size=32, validation_data=(X_test, y_test))
+    model = RandomForestClassifier(n_estimators=100, random_state=42)
+    model.fit(X_train, y_train)
 
     y_pred = model.predict(X_test)
-    y_pred = (y_pred > 0.5).astype(int).flatten()
 
     return {
         "accuracy": accuracy_score(y_test, y_pred),
@@ -65,17 +90,17 @@ def execute(df_merged):
     }
 ```
 
-## **1.3** Consolidação do pipeline de dados com encapsulamento em classes e adequado para um deploy contínuo
+## **1.4** Consolidação do pipeline de dados com encapsulamento em classes e adequado para um deploy contínuo
 
 Foi feita a consolidação do pipeline de dados em uma classe Python, permitindo que o processo de treinamento e avaliação do modelo GRU seja executado de forma modular e organizada. A classe encapsula as etapas de preparação dos dados, treinamento do modelo e avaliação, facilitando a reutilização e manutenção do código.
 
-### **1.3.1** O Papel do Orquestrador
+### **1.4.1** O Papel do Orquestrador
 
 O **Orchestrator** é a peça central do pipeline de dados, responsável por executar e coordenar dinamicamente cada etapa do processamento de forma organizada e modular. Ele permite a execução de várias fases do pipeline de forma automática, garantindo que o fluxo de dados ocorra sem interrupções.
 
 Um dos principais benefícios do **Orchestrator** é que ele pode carregar scripts de processamento dinamicamente de um sistema de arquivos distribuído, como o **GridFS**, permitindo que as etapas do pipeline sejam atualizadas ou modificadas sem que seja necessário interromper o sistema.
 
-### **1.3.2** Explicação Detalhada do Código do Orquestrador
+### **1.4.2** Explicação Detalhada do Código do Orquestrador
 
 O **Orchestrator** foi projetado para oferecer flexibilidade e escalabilidade ao pipeline. Suas principais funcionalidades incluem:
 
@@ -120,7 +145,7 @@ class Orchestrator:
         return self.dataframes
 ```
 
-### **1.3.3** Exemplo de Execução de Múltiplas Etapas
+### **1.4.3** Exemplo de Execução de Múltiplas Etapas
 
 O pipeline processa e normaliza os dados de entrada antes de serem alimentados no modelo GRU. As principais etapas incluem:
 

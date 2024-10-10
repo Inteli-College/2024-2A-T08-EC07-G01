@@ -15,7 +15,7 @@ Ao longo da pipeline foram utilizadas certas ferramentas essenciais para o desen
 - **Pandas**: Uma biblioteca de software escrita como extensão da linguagem de programação Python para manipulação e análise de dados.
 - **Sklearn**: Uma biblioteca de software para aprendizado de máquina e mineração de dados.
 
-Entre outras principais do Python, como **Numpy**, etc
+Entre outras principais do Python, como **Numpy**, etc.
 
 ## **2.1** ETL (Extração, Transformação e Carregamento)
 
@@ -65,7 +65,7 @@ def drop_colunas(df):
 def agregar_por_id(df, id_value):
     subset = df[df["ID"] == id_value]
     return subset.groupby("KNR").agg({
-        "NAME": "count", 
+        "NAME": "count",
         "STATUS": lambda x: (x == 10).sum()
     })
 
