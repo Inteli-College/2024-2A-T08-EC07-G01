@@ -72,7 +72,31 @@ Para ler toda a documentação do projeto, [clique aqui](https://inteli-college.
 
 ## 💻 | Inicialização
 
-To-Do
+Para inicializar o projeto, basta inicializar o docker principal do mesmo.
+
+Para fazer, siga os passos abaixo:
+
+Clonar o repositório
+
+```bash
+git clone https://github.com/Inteli-College/2024-2A-T08-EC07-G01
+```
+
+Navegar a pasta `SRC`
+
+```bash
+cd 2024-2A-T08-EC07-G01/src
+```
+
+OBS: Para instalar o docker-compose siga o tutorial [aqui](https://docs.docker.com/compose/install/)
+
+Executar o docker-compose
+
+```bash
+docker-compose up
+```
+
+Após isto, a aplicação está pronta para ser utilizada. Basta acessar o endereço [http://localhost:3000](http://localhost:3000)
 
 ---
 
