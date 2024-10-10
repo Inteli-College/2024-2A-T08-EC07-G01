@@ -24,15 +24,15 @@
 ## 🧑‍🏫 | Professores:
 
 ### Orientador(a)
-<a href="#"> Murilo Zanini De Carvalho </a>
+<a href="https://www.linkedin.com/in/murilo-zanini-de-carvalho-0980415b/"> Murilo Zanini De Carvalho </a>
 
 ### Instrutores
 
-- <a href="#"> Ricardo Missori </a>
-- <a href="#"> Guilherme Henrique de Oliveira Cestari </a>
-- <a href="#"> Lisane Valdo </a>
-- <a href="#"> Mônica Anastassiu </a>
-- <a href="#"> Rafael Matsuyama </a>
+- <a href="#"> Geraldo Vasconcelos </a>
+- <a href="https://www.linkedin.com/in/gui-cestari/"> Guilherme Henrique de Oliveira Cestari </a>
+- <a href="https://www.linkedin.com/in/lisane-valdo/"> Lisane Valdo </a>
+- <a href="https://www.linkedin.com/in/monica-anastassiu-d-sc-2568522/"> Mônica Anastassiu </a>
+- <a href="https://www.linkedin.com/in/rafaelmatsuyama/"> Rafael Matsuyama </a>
 
 ---
 
@@ -107,6 +107,34 @@ Após isto, a aplicação está pronta para ser utilizada. Basta acessar o ender
   - Arquitetura do sistema
   - Identidade visual do grupo
   - Modelagem inicial da I.A junto da preparação e análise dos dados
+
+- 0.2.0 - 02/09/2024
+  - Desenvolvimento do front-end
+  - Arquitetura do Sistema
+  - Início do desenvolvimento do back-end
+  - Melhoria do modelo de I.A
+
+- 0.3.0 - 16/09/2024
+  - Finalização do front-end
+  - Finalização do back-end
+  - Melhoria do modelo de I.A
+  - Dockerização de toda aplicação
+
+- 0.4.0 - 30/09/2024
+  - Processo de ETL
+  - Criação da Pipeline
+  - Criação do Orquestrador
+  - Criação do Dashboard
+  - Refatoração dos Jupyter Notebooks
+  - Melhoria do modelo de classificação
+
+- 0.5.0 - 10/10/2024
+  - Finalização do Dashboard
+  - Finalização do Orquestrador
+  - Finalização da Pipeline
+  - Finalização do ETL
+  - Finalização do modelo de classificação
+  - Finalização do projeto
 
 # 🗃 | Licença/License
 
