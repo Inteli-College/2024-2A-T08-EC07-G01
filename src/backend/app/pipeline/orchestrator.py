@@ -94,6 +94,7 @@ class Orchestrator:
 
             print(f"[DEBUG] Step '{module_name}' executed successfully. Output DataFrame: {output_df_name}")
 
+
             # Capture model metadata if the step is 'treina_modelo'
             if module_name == "treina_modelo":
                 model_metadata = result
