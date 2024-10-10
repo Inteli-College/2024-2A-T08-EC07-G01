@@ -73,7 +73,7 @@ def execute(df_merged):
 
     return {
         "model_name": "GRUOII",
-        "type_model": "Main Model",
+        "type_model": "type0",
         "metrics": {
             "accuracy": float(accuracy),  
             "recall": float(recall),     

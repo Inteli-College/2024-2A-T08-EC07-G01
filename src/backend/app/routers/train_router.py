@@ -68,8 +68,9 @@ async def select_model(
     request: SelectModelRequest
 ):
     model_name = request.model_name
+    model_type = request.model_type
     try:
-        TrainServiceSingleton.get_instance().select_model(model_name)
+        TrainServiceSingleton.get_instance().select_model(model_name, model_type)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to select model: {str(e)}")
     return {"message": f"Model '{model_name}' is now in use."}

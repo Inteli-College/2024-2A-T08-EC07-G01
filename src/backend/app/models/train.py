@@ -84,3 +84,4 @@ class ModelComparison(BaseModel):
 
 class SelectModelRequest(BaseModel):
     model_name: str
+    model_type: str

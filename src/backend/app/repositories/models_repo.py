@@ -37,17 +37,27 @@ class ModelRepository:
         return [Model(**document) for document in documents]
 
     def get_current_models(self) -> list[Model]:
-        documents = self.collection.find({"using": True})
-        return [Model(**document) for document in documents]
-    
+        pipeline = [
+            {"$match": {"using": True}},
+            {"$sort": {"created_at": -1}},
+            {"$group": {"_id": "$type_model", "latest_model": {"$first": "$$ROOT"}}},
+            {"$sort": {"_id": 1}},
+        ]
+        documents = self.collection.aggregate(pipeline)
+        return [Model(**doc["latest_model"]) for doc in documents]
+
     def get_latest_model(self) -> Optional[Model]:
-        document = self.collection.find_one(sort=[('_id', -1)])
+        document = self.collection.find_one(sort=[("_id", -1)])
         return Model(**document) if document else None
 
-    def unset_all_using(self):
-        self.collection.update_many({}, {'$set': {'using': False}})
+    def unset_all_using(self, type_model: str):
+        self.collection.update_many(
+            {"type_model": type_model}, {"$set": {"using": False}}
+        )
 
     def set_model_using(self, model_name: str):
-        result = self.collection.update_one({'model_name': model_name}, {'$set': {'using': True}})
+        result = self.collection.update_one(
+            {"model_name": model_name}, {"$set": {"using": True}}
+        )
         if result.matched_count == 0:
             raise ValueError(f"Model '{model_name}' not found.")

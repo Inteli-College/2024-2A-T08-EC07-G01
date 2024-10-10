@@ -69,7 +69,7 @@ async def delete_model(model_name: str):
     return {"message": "Model deleted successfully"}
 
 
-@router.get(
+@router.post(
     "/best-metrics/{model_type}",
     response_model=List[dict],
     response_description="Get all models of a specific type",
@@ -78,7 +78,11 @@ async def compare_models(model_type: str, metrics_weights: MetricsWeights):
     models = ModelServiceSingleton.get_instance().get_models_by_type(model_type)
     df = pd.DataFrame(
         [
-            {"model_name": model.model_name, **calculate_weight(metrics_weights, model)}
+            {
+                "model_name": model.model_name,
+                **calculate_weight(metrics_weights, model),
+                "using": model.using,
+            }
             for model in models
         ]
     )
