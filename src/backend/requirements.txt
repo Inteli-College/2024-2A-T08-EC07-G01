@@ -5,3 +5,4 @@ pytest
 tensorflow
 pandas
 scikit-learn
+xgboost

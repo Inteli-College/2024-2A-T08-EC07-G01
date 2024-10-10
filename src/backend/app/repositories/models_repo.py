@@ -45,15 +45,13 @@ class ModelRepository:
         ]
         documents = self.collection.aggregate(pipeline)
         return [Model(**doc["latest_model"]) for doc in documents]
-
-    def get_latest_model(self) -> Optional[Model]:
-        document = self.collection.find_one(sort=[("_id", -1)])
+    
+    def get_latest_model(self, model_type: str) -> Optional[Model]:
+        document = self.collection.find_one({'type_model': model_type}, sort=[('_id', -1)])
         return Model(**document) if document else None
 
-    def unset_all_using(self, type_model: str):
-        self.collection.update_many(
-            {"type_model": type_model}, {"$set": {"using": False}}
-        )
+    def unset_all_using(self, model_type: str):
+        self.collection.update_many({'type_model': model_type}, {'$set': {'using': False}})
 
     def set_model_using(self, model_name: str):
         result = self.collection.update_one(
